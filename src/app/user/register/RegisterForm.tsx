@@ -136,7 +136,7 @@ const RegisterForm = () => {
               <span>Or</span>
               <Link
                 className="bg-blue-950 w-[18vw] text-center rounded-xl text-white  px-4 py-2 m-2 "
-                href="/user/register"
+                href="/user/login"
               >
                 Login
               </Link>

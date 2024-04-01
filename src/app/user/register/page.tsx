@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import RegisterForm from "./RegisterForm";
 
 const page = () => {
   return (
     <div>
-      <RegisterForm />
+      <Suspense>
+        <RegisterForm />
+      </Suspense>
     </div>
   );
 };
