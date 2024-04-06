@@ -5,3 +5,29 @@
 body {
     background: radial-gradient(#000000,#000010);
 }
+
+
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .custom-file-upload img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+  
+  #fileInput {
+    display: none;
+  }
+  

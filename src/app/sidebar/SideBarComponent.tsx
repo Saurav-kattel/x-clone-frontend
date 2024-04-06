@@ -2,6 +2,9 @@ import React from "react";
 import { items } from "./items";
 import SideItems from "./SideItems";
 
+
+
+
 const SideBarComponent = () => {
   return (
     <div className=" flex flex-col w-[20vw] items-center p-2 text-white justify-center gap-1">

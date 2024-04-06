@@ -15,9 +15,10 @@ import { handleSubmit } from "./handleSubmit";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(5),
@@ -40,11 +41,17 @@ const LoginForm = () => {
     const timeoutId = setTimeout(() => {
       setResponse(undefined);
     }, 2000);
-    if (response && response.status == 200) {
-      redirect("/");
-    }
+
+    const redirectTimeoutId = setTimeout(() => {
+      if (response && response.status == 200) {
+        router.refresh();
+        redirect("/");
+      }
+    }, 500);
+
     return () => {
       clearTimeout(timeoutId);
+      clearTimeout(redirectTimeoutId);
     };
   }, [response]);
 
@@ -108,6 +115,13 @@ const LoginForm = () => {
               {response && response.status != 200 ? (
                 <div className="text-red-500 capitalize  text-xl ">
                   Opps! {response.res.message}
+                </div>
+              ) : null}
+            </div>
+            <div className="">
+              {response && response.status == 200 ? (
+                <div className="text-green-500 capitalize text-xl">
+                  logged in successfully
                 </div>
               ) : null}
             </div>

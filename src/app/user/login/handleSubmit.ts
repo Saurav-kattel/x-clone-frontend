@@ -1,5 +1,5 @@
 import { backendUrl } from "@/lib/exportEnvs";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export async function handleSubmit(data: { email: string; password: string }) {
   try {
@@ -15,6 +15,7 @@ export async function handleSubmit(data: { email: string; password: string }) {
       }),
     });
     const json = await response.json();
+
     return json;
   } catch (err) {
     console.log(err);

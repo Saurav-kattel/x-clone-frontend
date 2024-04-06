@@ -18,4 +18,7 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/" && !cookie) {
     return NextResponse.redirect(new URL("/user/login", req.url), 307);
   }
+  if (pathname === "/user/profile" && !cookie) {
+    return NextResponse.redirect(new URL("/user/login", req.url), 307);
+  }
 }

@@ -18,7 +18,8 @@ function SideBarWrapper({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex ">
         <SideBar />
-        <div className="w-[80vw]">{children}</div>
+        <div className="w-[60vw]">{children}</div>
+        <div className="w-[20vw] border-l-[1px] border-l-slate-700"></div>
       </div>
     );
   }
