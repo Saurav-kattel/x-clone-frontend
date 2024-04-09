@@ -16,8 +16,10 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import { handleSubmit } from "./handleSubmit";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const formSchema = z.object({
     username: z.string().min(3),
     email: z.string().email().max(100),
@@ -42,9 +44,11 @@ const RegisterForm = () => {
     const timeoutId = setTimeout(() => {
       setResponse(undefined);
     }, 2000);
+
     if (response && response.status == 200) {
-      redirect("/");
+      router.refresh();
     }
+
     return () => {
       clearTimeout(timeoutId);
     };

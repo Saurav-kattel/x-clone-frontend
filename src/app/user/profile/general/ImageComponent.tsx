@@ -11,7 +11,7 @@ const ImageComponent = ({
   if (imageData.status != 200) {
     return (
       <div className="rounded-[50%] flex justify-center items-center text-center w-[100px] bg-gray-200 h-[100px]">
-        <span className="text-4xl font-bold ">
+        <span className="text-4xl text-slate-600 font-bold ">
           {username.slice(0, 1).toUpperCase()}
         </span>
       </div>

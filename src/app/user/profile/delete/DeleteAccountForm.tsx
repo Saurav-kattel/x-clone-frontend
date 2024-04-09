@@ -8,15 +8,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { handleSubmit } from "./deleteAccount";
 import { Input } from "@/components/ui/input";
 import { ResponseType } from "../../login/LoginForm";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-const DeleteAccountForm = () => {
+const DeleteAccountForm = ({ cookie }: { cookie: string }) => {
   const formSchema = z.object({
     password: z.string().min(6),
   });
@@ -27,15 +28,20 @@ const DeleteAccountForm = () => {
       password: "",
     },
   });
-
+  const router = useRouter();
   const [response, setResponse] = useState<ResponseType>();
+
+  useEffect(() => {
+    router.refresh();
+  }, [response]);
+
   return (
     <div>
       <Form {...form}>
         <form
-          className="flex flex-col justify-center items-center gap-1 p-4 border w-[30vw] shadow   shadow-slate-400  border-slate-800 rounded-lg"
+          className="flex flex-col justify-center items-center gap-1 p-4 border w-[30vw] shadow   shadow-red-400  border-red-800 rounded-lg"
           onSubmit={form.handleSubmit(async (data) => {
-            setResponse(await handleSubmit(data));
+            setResponse(await handleSubmit(data, cookie));
             setTimeout(() => {
               setResponse(undefined);
             }, 2000);
@@ -52,7 +58,7 @@ const DeleteAccountForm = () => {
                 <FormItem className="flex flex-col justify-center items-start flex-wrap">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" />
+                    <Input autoComplete="false" {...field} type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

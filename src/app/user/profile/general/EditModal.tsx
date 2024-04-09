@@ -53,7 +53,7 @@ const EditModal = ({
     <div className="absolute w-[50vw] flex-col h-[80vh] flex justify-center items-center border border-slate-700 rounded-lg p-4 bg-[#000009]">
       <div className="font-semibold text-xl absolute top-2 flex items-center w-[50vw] justify-between">
         <span
-          className="text-3xl mx-2 p-2 font-bold"
+          className="text-3xl hover:cursor-pointer hover:scale-110 mx-2 p-2 font-bold"
           onClick={() => setVisibility((res) => !res)}
         >
           X
@@ -68,12 +68,20 @@ const EditModal = ({
       </div>
       <div className="">
         <label className="flex justify-center gap-2 border-[1px] rounded-lg my-2 p-2 font-bold items-center">
-          <img
-            src={imgSrc}
-            alt="Selected Image"
-            className="w-[100px] h-[100px] rounded-[100px] my-2 hover:cursor-pointer"
-            onClick={() => ref.current?.click()}
-          />
+          {imageData.res.image ? (
+            <img
+              src={imgSrc}
+              alt="Selected Image"
+              className="w-[100px] h-[100px] rounded-[100px] my-2 hover:cursor-pointer"
+              onClick={() => ref.current?.click()}
+            />
+          ) : (
+            <div className="rounded-[50%] flex justify-center items-center text-center w-[100px] bg-gray-200 h-[100px]">
+              <span className="text-4xl text-slate-600 font-bold ">
+                {data.username.slice(0, 1).toUpperCase()}
+              </span>
+            </div>
+          )}
           <span>change profile image</span>
 
           <input

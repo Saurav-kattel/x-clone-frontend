@@ -39,8 +39,13 @@ const UpdatePasswordComp = ({ cookie }: { cookie: string }) => {
         <form
           className="flex flex-col justify-center items-center gap-1 p-4 border w-[30vw] shadow   shadow-slate-400  border-slate-800 rounded-lg"
           onSubmit={form.handleSubmit(async (data) => {
-            setResponse(await handleSubmit(data));
+            let res = await handleSubmit(data);
+            setResponse(res);
+
             setTimeout(() => {
+              if (res && res.status == 200) {
+                form.reset();
+              }
               setResponse(undefined);
             }, 2000);
           })}

@@ -1,3 +1,4 @@
+"use client";
 import { backendUrl } from "@/lib/exportEnvs";
 import {
   faCalendar,
@@ -6,6 +7,7 @@ import {
   faUserAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export interface UserData {
@@ -18,9 +20,14 @@ export interface UserData {
 }
 
 async function handleLogout() {
-  await fetch(backendUrl + "/api/v1/user/account/logout");
+  let res = await fetch(backendUrl + "/api/v1/user/account/logout", {
+    method: "GET",
+    credentials: "include",
+  });
+  return await res.json();
 }
 const BasicDetails = ({ data }: { data: UserData }) => {
+  const router = useRouter();
   return (
     <div>
       <div className="text-white flex font-semibold text-md flex-col p-4">
@@ -37,7 +44,15 @@ const BasicDetails = ({ data }: { data: UserData }) => {
         </span>
         <span className="flex gap-1 items-center justify-start">
           <FontAwesomeIcon icon={faSignOut} />
-          <span className="hover:cursor-pointer" onClick={handleLogout}>
+          <span
+            className="hover:cursor-pointer"
+            onClick={async () => {
+              const res = await handleLogout();
+              if (res.status == 200) {
+                router.refresh();
+              }
+            }}
+          >
             Logout
           </span>
         </span>
