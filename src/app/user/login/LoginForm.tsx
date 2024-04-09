@@ -17,6 +17,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 
+export type ResponseType =
+  | { status: number; res: { message: string } }
+  | undefined;
+
 const LoginForm = () => {
   const router = useRouter();
   const formSchema = z.object({
@@ -33,9 +37,7 @@ const LoginForm = () => {
   });
 
   // using state to store api response
-  const [response, setResponse] = useState<
-    { status: number; res: { message: string } } | undefined
-  >();
+  const [response, setResponse] = useState<ResponseType>();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

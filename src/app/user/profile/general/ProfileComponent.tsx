@@ -1,7 +1,6 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import BasicDetails, { UserData } from "./BasicDetails";
-import { boolean } from "zod";
 import EditModal from "./EditModal";
 const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
