@@ -1,14 +1,30 @@
-import React from "react";
-import { getImageData } from "./getImage";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/app/store";
+import { getProfileImage } from "@/app/redux/features/profileImageSlice";
 
 const ImageComponent = ({
   username,
-  imageData,
+  cookie,
 }: {
-  imageData: any;
   username: string;
+  cookie: string;
 }) => {
-  if (imageData.status != 200) {
+  const dispatch = useDispatch<AppDispatch>();
+  const imageData = useSelector((state: RootState) => state.profileImg.res);
+  const { loading } = useSelector((state: RootState) => state.profileImg);
+
+  useEffect(() => {
+    if (!imageData) {
+      dispatch(getProfileImage({ cookie: cookie }));
+    }
+  }, []);
+
+  if (loading) {
+    return "loading...";
+  }
+
+  if (!imageData || !imageData.res.image) {
     return (
       <div className="rounded-[50%] flex justify-center items-center text-center w-[100px] bg-gray-200 h-[100px]">
         <span className="text-4xl text-slate-600 font-bold ">

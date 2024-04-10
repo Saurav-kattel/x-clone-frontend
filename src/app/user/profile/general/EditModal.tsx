@@ -2,23 +2,27 @@
 import { useRef, useState } from "react";
 import { UserData } from "./BasicDetails";
 import { handleProfileEdit } from "./handleProfileChange";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/app/store";
 
 const EditModal = ({
   data,
-  imageData,
   setVisibility,
   cookies,
 }: {
   data: UserData;
-  imageData: any;
   cookies: string;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [username, setUsername] = useState<string>(data.username);
   const [formFile, setFormFile] = useState<FormData>();
-  const [res, setRes] = useState<any>();
+  const [response, setResponse] = useState<any>();
+  const { res, error, loading } = useSelector(
+    (state: RootState) => state.profileImg
+  );
+
   const [imgSrc, setImgSrc] = useState<any>(
-    `data:image/jpeg;base64,${imageData.res.image}`
+    `data:image/jpeg;base64,${res?.res.image}`
   );
 
   async function handleProfileUpdate() {
@@ -27,9 +31,9 @@ const EditModal = ({
       imageData: formFile,
       cookies: cookies,
     });
-    setRes(response);
+    setResponse(response);
     setTimeout(() => {
-      setRes(undefined);
+      setResponse(undefined);
     }, 1000);
   }
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +52,10 @@ const EditModal = ({
   };
 
   const ref = useRef<HTMLInputElement>(null);
+
+  if (loading) {
+    return "Loading..";
+  }
 
   return (
     <div className="absolute w-[50vw] flex-col h-[80vh] flex justify-center items-center border border-slate-700 rounded-lg p-4 bg-[#000009]">
@@ -68,7 +76,7 @@ const EditModal = ({
       </div>
       <div className="">
         <label className="flex justify-center gap-2 border-[1px] rounded-lg my-2 p-2 font-bold items-center">
-          {imageData.res.image ? (
+          {res?.res.image ? (
             <img
               src={imgSrc}
               alt="Selected Image"
@@ -104,10 +112,10 @@ const EditModal = ({
         />
       </label>
       <div className="text-red-600">
-        {res && res.length > 0 ? "error occured" : null}
+        {response && response.length > 0 ? "error occured" : null}
       </div>
       <div className="text-green-600">
-        {res && res.length <= 0 ? "updated successfully" : null}
+        {response && response.length <= 0 ? "updated successfully" : null}
       </div>
     </div>
   );

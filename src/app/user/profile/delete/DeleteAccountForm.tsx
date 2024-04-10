@@ -36,7 +36,7 @@ const DeleteAccountForm = ({ cookie }: { cookie: string }) => {
   }, [response]);
 
   return (
-    <div>
+    <div className="h-[20vh]">
       <Form {...form}>
         <form
           className="flex flex-col justify-center items-center gap-1 p-4 border w-[30vw] shadow   shadow-red-400  border-red-800 rounded-lg"

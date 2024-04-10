@@ -50,7 +50,10 @@ const UpdatePasswordComp = ({ cookie }: { cookie: string }) => {
             }, 2000);
           })}
         >
-          <h2 className="p-2 m-2 font-semibold text-xl">Update Password</h2>
+          <h2 className="p-2 m-2 font-semibold text-white text-xl">
+            Update Password
+          </h2>
+
           <FormField
             control={form.control}
             name="oldPassword"
@@ -66,6 +69,7 @@ const UpdatePasswordComp = ({ cookie }: { cookie: string }) => {
               );
             }}
           />
+
           <FormField
             control={form.control}
             name="newPassword"

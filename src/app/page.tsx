@@ -1,5 +1,8 @@
-export default function Home() {
+import Home from "./home/page";
+export default function page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-[radial-gradient(#000000,#000010)] p-24"></main>
+    <main>
+      <Home />
+    </main>
   );
 }
