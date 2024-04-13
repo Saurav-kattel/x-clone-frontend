@@ -62,9 +62,8 @@ const Header = ({ cookie }: { cookie: string }) => {
       reader.readAsDataURL(file);
     }
   }
-  console.log(response)
   return (
-    <div style={{ height: parentHeight }}>
+    <div>
       {profileImgRes?.status !== 200 && profileImgRes?.status !== 404 ? (
         <div>{profileImgRes?.res.message}</div>
       ) : profileImgLoading ? (

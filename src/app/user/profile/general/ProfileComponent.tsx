@@ -12,15 +12,14 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.user.res);
-  const error = useSelector((state: RootState) => state.user.error);
   const loading = useSelector((state: RootState) => state.user.loading);
 
   useEffect(() => {
     if (!data) {
       dispatch(getUserData({ cookie: cookies }));
     }
-  }, []);
-
+  }, [data]);
+  console.log("running")
   return (
     <>
       {!loading ? (

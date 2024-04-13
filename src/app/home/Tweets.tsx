@@ -1,8 +1,11 @@
 import React from 'react'
+import TweetComponent from './TweetComponent'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
   return (
-    <div className='w-[58vw] box-border  flex p-2 bg-blue-200'>Tweets</div>
+    <div className='box-border  flex p-2 overflow-hidden'>
+      <TweetComponent />
+    </div>
   )
 }
 
