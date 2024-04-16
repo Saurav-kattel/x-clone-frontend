@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/app/store";
 import { getProfileImage } from "@/app/redux/features/profileImageSlice";
+import Image from "next/image"
 
 const ImageComponent = ({
   username,
@@ -36,8 +37,10 @@ const ImageComponent = ({
 
   return (
     <div className="flex items-center justify-start ">
-      <img
+      <Image
         height={100}
+        alt="tweet"
+        fetchPriority="low"
         width={100}
         className="w-[100px] h-[100px] rounded-full bg-contain object-fit"
         src={`data:image/jpeg;base64,${imageData.res.image}`}

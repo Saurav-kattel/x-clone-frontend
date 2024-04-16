@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Header from "./Header";
 import { cookies } from "next/headers";
-import Tweets from "./Tweets";
+import Tweet from "../tweets/page";
 const page = () => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? "";
 
@@ -9,8 +9,8 @@ const page = () => {
     <>
       <Suspense fallback={"Loading.."}>
         <Header cookie={cookie} />
+        <Tweet />
       </Suspense>
-      <Tweets cookie={cookie} />
     </>
   );
 };

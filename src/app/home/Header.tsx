@@ -14,7 +14,6 @@ import { handleCreateTweet } from "./handleCreateTweet";
 const Header = ({ cookie }: { cookie: string }) => {
   const [formFile, setFormFile] = useState<FormData>();
   const [imgSrc, setImgSrc] = useState<any>();
-  const [parentHeight, _] = useState<string>("15vh");
   const [content, setContent] = useState<string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -32,7 +31,9 @@ const Header = ({ cookie }: { cookie: string }) => {
 
   useEffect(() => {
     if (!profileImgRes) {
-      dispatch(getProfileImage({ cookie }));
+      setTimeout(() => {
+        dispatch(getProfileImage({ cookie }));
+      }, 600)
     }
     if (!userData) {
       dispatch(getUserData({ cookie }));
@@ -65,7 +66,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   return (
     <div>
       {profileImgRes?.status !== 200 && profileImgRes?.status !== 404 ? (
-        <div>{profileImgRes?.res.message}</div>
+        <div className="flex h-[90vh] w-[58vw] justify-center font-bold items-center text-red-600">Error: {profileImgRes?.res.message}</div>
       ) : profileImgLoading ? (
         "Loading..."
       ) : (
@@ -89,7 +90,7 @@ const Header = ({ cookie }: { cookie: string }) => {
 
           {isOpen ? (
             <div
-              className={`flex justify-center  ${parentHeight} p-2 items-start gap-1 flex-col`}
+              className={`flex justify-center 15vh p-2 items-start gap-1 flex-col`}
             >
               <textarea
                 ref={inputRef}
