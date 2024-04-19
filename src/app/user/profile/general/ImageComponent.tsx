@@ -16,9 +16,11 @@ const ImageComponent = ({
   const { loading } = useSelector((state: RootState) => state.profileImg);
 
   useEffect(() => {
-    if (!imageData) {
-      dispatch(getProfileImage({ cookie: cookie }));
-    }
+    setTimeout(() => {
+      if (!imageData) {
+        dispatch(getProfileImage({ cookie: cookie }));
+      }
+    }, 50)
   }, []);
 
   if (loading) {

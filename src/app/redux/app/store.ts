@@ -1,11 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "../features/userSlice";
 import profileImageSlice from "../features/profileImageSlice";
+import tweetsSlice from "../features/tweetsSlice";
+import tweetImageSlice from "../features/tweetImageSlice";
+import autorImageSlice from "../features/autorImageSlice";
+import likeCountSlice from "../features/likeCountSlice";
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     profileImg: profileImageSlice,
+    tweets: tweetsSlice,
+    tweetImg: tweetImageSlice,
+    authorImg: autorImageSlice,
+    likes: likeCountSlice,
   },
 });
 

@@ -9,6 +9,8 @@ const page = () => {
     <>
       <Suspense fallback={"Loading.."}>
         <Header cookie={cookie} />
+      </Suspense>
+      <Suspense fallback={"Fucking idiot"}>
         <Tweet />
       </Suspense>
     </>

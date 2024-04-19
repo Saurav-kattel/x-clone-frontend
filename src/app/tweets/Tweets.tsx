@@ -1,13 +1,26 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import TweetComponent from './TweetComponent'
-import { getTweets } from './getTweets'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/app/store'
+import { getTweets } from '../redux/features/tweetsSlice'
 
-const Tweets = async ({ cookie }: { cookie: string }) => {
-  let data = await getTweets();
+const Tweets = ({ cookie }: { cookie: string }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { tweets, loading } = useSelector((state: RootState) => state.tweets)
+  useEffect(() => {
+    if (tweets === undefined || tweets === null) {
+      dispatch(getTweets({ pageNum: 1, pageSize: 8 }))
+    }
+  }, [])
   return (
-    <div className='box-border  flex flex-col  gap-2 p-2 overflow-hidden'>
-      {data?.status === 200 && data.res.map((tweet) => <TweetComponent key={tweet.id} data={tweet} />)}
-    </div>
+    <>
+      {
+        loading ? <span>Loading...</span> : <div className='box-border  flex flex-col  gap-2 p-2 overflow-hidden'>
+          {tweets?.status === 200 && tweets.res.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
+        </div>
+      }
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import Reat, { Suspense } from 'react'
 import Tweets from './Tweets'
 import { cookies } from 'next/headers'
 

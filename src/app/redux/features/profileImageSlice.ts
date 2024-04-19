@@ -3,9 +3,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type UserProfileImage =
   | {
-      status: number;
-      res: { image: string; id: string; message: string | undefined };
-    }
+    status: number;
+    res: { image: string; id: string; message: string | undefined };
+  }
   | undefined;
 
 const initialState: {
@@ -32,7 +32,7 @@ const getProfileImage = createAsyncThunk(
 );
 
 const profileImageSlice = createSlice({
-  name: "userSlice",
+  name: "profileImageSlice",
   initialState,
   reducers: {},
   extraReducers(builder) {
