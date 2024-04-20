@@ -1,17 +1,21 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../redux/app/store'
-import { getTweetImage } from '../redux/features/tweetImageSlice'
+import { getImage } from './getImages'
 
 const TweetImage = ({ imageId }: { imageId: string }) => {
-  const { image, loading } = useSelector((state: RootState) => state.tweetImg)
-  const dispatch = useDispatch<AppDispatch>();
+
+  const [image, setImage] = useState<{ status: number; res: { image: string } } | undefined>();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(getTweetImage({ imageId }))
+    setLoading(true)
+    setTimeout(async () => {
+      let data = await getImage(imageId);
+      setImage(data);
+      setLoading(false)
+
     }, 300)
   }, [])
+
   return (
     <div>
       {loading ? "Loading" : image && <img
