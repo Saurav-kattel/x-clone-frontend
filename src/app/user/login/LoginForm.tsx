@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 
 export type ResponseType =
   | { status: number; res: { message: string } }
@@ -27,6 +28,8 @@ const LoginForm = () => {
     email: z.string().email(),
     password: z.string().min(5),
   });
+
+  const { pending } = useFormStatus()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,7 +108,7 @@ const LoginForm = () => {
                 );
               }}
             />
-            <Button className="p-4 m-2">Login</Button>
+            <Button disabled={pending} className="p-4 m-2">{pending ? "Loading.." : "Login"}</Button>
             <span>Or</span>
             <Link
               className="bg-blue-950 rounded-xl text-white  px-4 py-2 m-2 "
