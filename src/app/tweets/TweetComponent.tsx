@@ -1,9 +1,7 @@
 "use client"
-import { faEllipsisV, faHeart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import React, { useEffect, useState } from 'react'
 import { Tweets } from '../redux/features/tweetsSlice'
-import { handleLike } from './handleLike'
 import { getLikeCount } from './getLikeCount'
 import { getLikedUsers } from './getLikedUser'
 import { hasUserLiked } from './hasUserLiked'
@@ -19,6 +17,12 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
   const [response, setResponse] = useState<{ status: number; res: number; }>()
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [clicked, setClicked] = useState(false)
+
+  const update = () => {
+    setClicked(state => !state)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,14 +39,20 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
     setTimeout(() => {
       fetchData();
     }, 200)
-  }, [likeState]);
+  }, [likeState, clicked]);
 
   return (
     <div className='flex flex-col justify-center m-2 w-[58vw] relative rounded-md border-[0.2px] p-2 items-center '>
 
-      <HeaderSection data={data} setShowModal={setShowModal} />
+      <HeaderSection update={update} clicked={clicked} setClicked={setClicked} token={token} data={data} setShowModal={setShowModal} userId={userData?.res.id} />
       <div className='flex w-[58vw] justify-end items-center p-2 '>
-        <MoreInfoModal showModal={showModal} setShowModal={setShowModal} />
+        <MoreInfoModal
+          token={token}
+          tweetId={data.id}
+          authorId={data.userId}
+          userId={userData?.res.id}
+          showModal={showModal}
+          setShowModal={setShowModal} />
       </div>
       < div className='p-4 flex w-[58vw]  flex-col justify-center 1items-start text-wrap' >
         <p className='text-md text-start p-2'>
