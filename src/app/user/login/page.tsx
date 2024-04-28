@@ -1,20 +1,13 @@
 import React from "react";
-import { checkLoginCookie } from "@/lib/checkLoginCookies";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+
 import LoginForm from "./LoginForm";
+import { cookies } from "next/headers";
 
 const page = () => {
+  const cookie = cookies().get("auth_token_x_clone")?.value || ""
   return (
     <div>
-      <LoginForm />
+      <LoginForm cookie={cookie} />
     </div>
   );
 };

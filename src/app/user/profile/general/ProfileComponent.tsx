@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/app/store";
 import { getUserData } from "@/app/redux/features/userSlice";
 import { getFollowers } from "./getFollowers";
+import { getFollowing } from "./getFollowing";
 const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
 export type UserDataRes = { status: number; res: UserData } | undefined;
@@ -15,19 +16,25 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
   const data = useSelector((state: RootState) => state.user.res);
   const loading = useSelector((state: RootState) => state.user.loading);
   const [followers, setFollowers] = useState<any>()
+  const [following, setFollowing] = useState<any>()
+
   useEffect(() => {
     if (!data) {
       dispatch(getUserData({ cookie: cookies }));
     }
-
     getFollowers({ token: cookies }).then((data) => {
       setFollowers(data)
     }).catch((err) => {
       console.error(err)
     })
+    getFollowing({ token: cookies }).then((data) => {
+      setFollowing(data)
+    }).catch((err) => {
+      console.error(err)
+    })
 
-  }, [data]);
-  console.log(followers)
+
+  }, [data, cookies]);
   return (
     <>
       {!loading ? (
@@ -53,8 +60,8 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
                     Edit profile
                   </div>
                   <div className="flex justify-between items-center">
-                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Followers </span><span className="font-bold text-white"> {followers?.res.length.toString()} </span></div>
-                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Following </span><span className="font-bold text-white">{followers?.res.length.toString()}  </span></div>
+                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Followers </span><span className="font-bold text-white"> {followers?.res ? followers?.res.length.toString() : 0} </span></div>
+                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Following </span><span className="font-bold text-white">{following?.res ? following?.res.length.toString() : 0}  </span></div>
                   </div>
                 </div>
               </div>

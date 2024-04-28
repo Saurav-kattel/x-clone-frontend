@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import React from "react";
-
+import { clear } from '@/app/redux/features/userSlice'
 export interface UserData {
   id: string;
   username: string;
@@ -50,6 +50,7 @@ const BasicDetails = ({ data }: { data: UserData }) => {
               const res = await handleLogout();
               if (res.status == 200) {
                 router.refresh();
+                clear()
               }
             }}
           >

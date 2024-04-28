@@ -1,5 +1,4 @@
 import { backendUrl } from "@/lib/exportEnvs";
-import { useRouter } from "next/navigation";
 
 export async function handleSubmit(data: { email: string; password: string }) {
   try {

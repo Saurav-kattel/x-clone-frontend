@@ -17,12 +17,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
-
 export type ResponseType =
   | { status: number; res: { message: string } }
   | undefined;
 
-const LoginForm = () => {
+const LoginForm = ({ cookie }: { cookie: string }) => {
   const router = useRouter();
   const formSchema = z.object({
     email: z.string().email(),
@@ -73,7 +72,8 @@ const LoginForm = () => {
           <form
             className="flex lg:w-[35vw] outline-[1px] outline-green-200 flex-col justify-center items-center gap-1 text-white"
             onSubmit={form.handleSubmit(async (data) => {
-              setResponse(await handleSubmit(data));
+              let responseData = await handleSubmit(data);
+              setResponse(responseData)
             })}
           >
             <span className="lg:hidden p-2 text-2xl">welcome to x clone</span>
