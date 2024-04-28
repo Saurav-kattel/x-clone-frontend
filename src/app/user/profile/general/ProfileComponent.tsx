@@ -5,6 +5,7 @@ import EditModal from "./EditModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/app/store";
 import { getUserData } from "@/app/redux/features/userSlice";
+import { getFollowers } from "./getFollowers";
 const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
 export type UserDataRes = { status: number; res: UserData } | undefined;
@@ -13,13 +14,20 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.user.res);
   const loading = useSelector((state: RootState) => state.user.loading);
-
+  const [followers, setFollowers] = useState<any>()
   useEffect(() => {
     if (!data) {
       dispatch(getUserData({ cookie: cookies }));
     }
+
+    getFollowers({ token: cookies }).then((data) => {
+      setFollowers(data)
+    }).catch((err) => {
+      console.error(err)
+    })
+
   }, [data]);
-  console.log("running")
+  console.log(followers)
   return (
     <>
       {!loading ? (
@@ -37,11 +45,17 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
                     cookie={cookies}
                   />
                 </Suspense>
-                <div
-                  onClick={() => setVisibility((vis) => !vis)}
-                  className="border  border-slate-700 text-white py-1 px-2 bg-slate-950 hover:cursor-pointer  hover:scale-110 rounded-lg"
-                >
-                  Edit profile
+                <div className="flex flex-col gap-2 justify-center items-center">
+                  <div
+                    onClick={() => setVisibility((vis) => !vis)}
+                    className="border  border-slate-700 text-white py-1 px-2 bg-slate-950 hover:cursor-pointer  hover:scale-110 rounded-lg"
+                  >
+                    Edit profile
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Followers </span><span className="font-bold text-white"> {followers?.res.length.toString()} </span></div>
+                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Following </span><span className="font-bold text-white">{followers?.res.length.toString()}  </span></div>
+                  </div>
                 </div>
               </div>
 
