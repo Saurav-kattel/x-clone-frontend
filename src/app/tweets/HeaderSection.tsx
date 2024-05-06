@@ -25,8 +25,8 @@ const HeaderSection = ({ update, setShowModal, data, userId, token, setClicked, 
 
   }, [clicked])
   return (
-    <div className='flex w-[58vw] justify-start items-center'>
-      <div className='flex w-[58vw] justify-start items-center'>
+    <div className='flex w-[38vw] justify-start items-center'>
+      <div className='flex w-[40vw] justify-start items-center'>
         <AuthorImage userId={data.userId} author={data.author} />
         <div className='text-white font-bold text-md px-2 py-1'>
           {data.author}

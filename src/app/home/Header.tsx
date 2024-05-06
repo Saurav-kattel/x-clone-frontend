@@ -66,7 +66,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   return (
     <div>
       {profileImgRes?.status !== 200 && profileImgRes?.status !== 404 ? (
-        <div className="flex h-[90vh] w-[58vw] justify-center font-bold items-center text-red-600">Error: {profileImgRes?.res.message}</div>
+        <div className="flex h-[90vh] w-[40vw] justify-center font-bold items-center text-red-600">Error: {profileImgRes?.res.message}</div>
       ) : profileImgLoading ? (
         "Loading..."
       ) : (
@@ -90,7 +90,7 @@ const Header = ({ cookie }: { cookie: string }) => {
 
           {isOpen ? (
             <div
-              className={`flex justify-center 15vh p-2 items-start gap-1 flex-col`}
+              className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
             >
               <textarea
                 ref={inputRef}
@@ -98,7 +98,7 @@ const Header = ({ cookie }: { cookie: string }) => {
                 onChange={(e) => {
                   setContent(e.target.value);
                 }}
-                className="bg-transparent outline-none border-none p-2 min-h-[60px] w-[50vw] resize-none"
+                className="bg-transparent outline-none border-none p-2 min-h-[60px] w-[30vw] resize-none"
                 placeholder="What's on your mind"
               />
 
@@ -109,7 +109,7 @@ const Header = ({ cookie }: { cookie: string }) => {
                 hidden
               />
 
-              <div className="flex w-[50vw] border-t-[0.3px]  justify-between py-2">
+              <div className="flex  border-t-[0.3px] w-[30vw] justify-between py-2">
                 <div>
                   <FontAwesomeIcon
                     onClick={() => fileRef.current?.click()}

@@ -1,7 +1,7 @@
 import Home from "./home/page";
 export default function page() {
   return (
-    <main>
+    <main className="no-scroll-bar">
       <Home />
     </main>
   );

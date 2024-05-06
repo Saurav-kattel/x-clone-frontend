@@ -42,10 +42,10 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
   }, [likeState, clicked]);
 
   return (
-    <div className='flex flex-col justify-center m-2 w-[58vw] relative rounded-md border-[0.2px] p-2 items-center '>
+    <div className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
 
       <HeaderSection update={update} clicked={clicked} setClicked={setClicked} token={token} data={data} setShowModal={setShowModal} userId={userData?.res.id} />
-      <div className='flex w-[58vw] justify-end items-center p-2 '>
+      <div className='flex w-[40vw] justify-end items-center p-1'>
         <MoreInfoModal
           token={token}
           tweetId={data.id}
@@ -54,8 +54,8 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
           showModal={showModal}
           setShowModal={setShowModal} />
       </div>
-      < div className='p-4 flex w-[58vw]  flex-col justify-center 1items-start text-wrap' >
-        <p className='text-md text-start p-2'>
+      < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
+        <p className='text-md p-2 flex items-start w-[35vw]'>
           {data.content}
         </p>
         <TweetImage imageId={data.imageId} />

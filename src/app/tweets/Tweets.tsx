@@ -16,7 +16,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
   return (
     <>
       {
-        loading ? <span>Loading...</span> : <div className='box-border  flex flex-col  gap-2 p-2 overflow-hidden'>
+        loading ? <span>Loading...</span> : <div className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
           {tweets?.status === 200 && tweets.res.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
         </div>
       }

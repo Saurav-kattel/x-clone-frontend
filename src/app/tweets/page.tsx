@@ -5,8 +5,10 @@ import { cookies } from 'next/headers'
 const page = () => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
   return (
-    <Suspense fallback={"Loading..."}>
-      <Tweets cookie={cookie} />
+    <Suspense fallback={"Loading..."} >
+      <div className='no-scroll-bar'>
+        <Tweets cookie={cookie} />
+      </div>
     </Suspense>
   )
 }
