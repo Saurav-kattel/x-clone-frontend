@@ -1,4 +1,4 @@
-import { backendUrl } from "@/lib/exportEnvs";
+/* import { backendUrl } from "@/lib/exportEnvs";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
@@ -55,3 +55,5 @@ const authorImageSlice = createSlice({
 
 export default authorImageSlice.reducer
 export { getAuthorImage }
+
+*/

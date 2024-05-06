@@ -19,17 +19,17 @@ function SideBarWrapper({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex flex-row">
         <SideBar />
-        <div className="w-[60vw] box-border overflow-scroll h-[100vh]">
+        <div className="w-[40vw] box-border overflow-scroll h-[100vh]">
           {children}
         </div>
-        <div className="w-[20vw] sticky top-0 right-0 border-l-[1px] border-l-slate-700"></div>
+        <div className="w-[30vw] sticky top-0 right-0 border-l-[1px] border-l-slate-700"></div>
       </div>
     );
   }
   return children;
 }
 
-export default function RootLayout({
+export default function RelationLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

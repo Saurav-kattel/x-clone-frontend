@@ -3,8 +3,10 @@ import userSlice from "../features/userSlice";
 import profileImageSlice from "../features/profileImageSlice";
 import tweetsSlice from "../features/tweetsSlice";
 import tweetImageSlice from "../features/tweetImageSlice";
-import autorImageSlice from "../features/autorImageSlice";
+//import autorImageSlice from "../features/autorImageSlice";
 import likeCountSlice from "../features/likeCountSlice";
+import followerSlice from "../features/followerSlice";
+import followeeSlice from "../features/followeeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,8 +14,9 @@ export const store = configureStore({
     profileImg: profileImageSlice,
     tweets: tweetsSlice,
     tweetImg: tweetImageSlice,
-    authorImg: autorImageSlice,
     likes: likeCountSlice,
+    follower: followerSlice,
+    following: followeeSlice,
   },
 });
 

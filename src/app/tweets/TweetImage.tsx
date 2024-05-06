@@ -19,10 +19,10 @@ const TweetImage = ({ imageId }: { imageId: string }) => {
   return (
     <div>
       {loading ? "Loading" : image && <img
-        height={200}
-        width={200}
+        height={60}
+        width={60}
         alt="tweet image"
-        className="w-[55vw] h-[300px] rounded-sm bg-contain object-fit"
+        className="w-[35vw] h-[300px] rounded-sm bg-contain object-fit"
         src={`data:image/jpeg;base64,${image?.res.image}`}
       />
       }

@@ -58,7 +58,7 @@ const EditModal = ({
   }
 
   return (
-    <div className="absolute w-[50vw] flex-col h-[80vh] flex justify-center items-center border border-slate-700 rounded-lg p-4 bg-[#000009]">
+    <div className="absolute w-[50vw] flex-col z-10 h-[80vh] flex justify-center items-center border border-slate-700 rounded-lg p-4 bg-[#000009]">
       <div className="font-semibold text-xl absolute top-2 flex items-center w-[50vw] justify-between">
         <span
           className="text-3xl hover:cursor-pointer hover:scale-110 mx-2 p-2 font-bold"

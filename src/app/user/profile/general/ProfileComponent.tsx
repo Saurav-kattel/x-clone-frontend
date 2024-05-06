@@ -5,8 +5,9 @@ import EditModal from "./EditModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/app/store";
 import { getUserData } from "@/app/redux/features/userSlice";
-import { getFollowers } from "./getFollowers";
-import { getFollowing } from "./getFollowing";
+import Link from "next/link";
+import { getFolloweeData } from "@/app/redux/features/followeeSlice";
+import { getFollowerData } from "@/app/redux/features/followerSlice";
 const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
 export type UserDataRes = { status: number; res: UserData } | undefined;
@@ -15,26 +16,19 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.user.res);
   const loading = useSelector((state: RootState) => state.user.loading);
-  const [followers, setFollowers] = useState<any>()
-  const [following, setFollowing] = useState<any>()
+  const { res: followers } = useSelector((state: RootState) => state.follower);
+  const { res: following } = useSelector((state: RootState) => state.following);
 
   useEffect(() => {
     if (!data) {
       dispatch(getUserData({ cookie: cookies }));
     }
-    getFollowers({ token: cookies }).then((data) => {
-      setFollowers(data)
-    }).catch((err) => {
-      console.error(err)
-    })
-    getFollowing({ token: cookies }).then((data) => {
-      setFollowing(data)
-    }).catch((err) => {
-      console.error(err)
-    })
+
+    dispatch(getFolloweeData({ cookie: cookies }))
+    dispatch(getFollowerData({ cookie: cookies }))
 
 
-  }, [data, cookies]);
+  }, [data]);
   return (
     <>
       {!loading ? (
@@ -60,8 +54,15 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
                     Edit profile
                   </div>
                   <div className="flex justify-between items-center">
-                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Followers </span><span className="font-bold text-white"> {followers?.res ? followers?.res.length.toString() : 0} </span></div>
-                    <div className="flex justify-center flex-col items-center"><span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Following </span><span className="font-bold text-white">{following?.res ? following?.res.length.toString() : 0}  </span></div>
+                    <Link href={'/user/profile/relation/followers'} className="flex justify-center flex-col hover:cursor-pointer items-center">
+                      <span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Followers </span>
+                      <span className="font-bold text-white"> {followers?.res ? followers?.res.length.toString() : 0} </span>
+                    </Link>
+
+                    <Link href={'/user/profile/relation/following'} className="flex justify-center hover:cursor-pointer flex-col items-center" >
+                      <span className="p-2 text-center flex gap-2 text-blue-600 font-semibold">Following </span>
+                      <span className="font-bold text-white">{following?.res ? following?.res.length.toString() : 0}  </span>
+                    </Link>
                   </div>
                 </div>
               </div>

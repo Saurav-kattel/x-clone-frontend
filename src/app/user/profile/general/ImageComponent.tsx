@@ -40,11 +40,11 @@ const ImageComponent = ({
   return (
     <div className="flex items-center justify-start ">
       <Image
-        height={100}
+        height={50}
         alt="tweet"
         fetchPriority="low"
-        width={100}
-        className="w-[100px] h-[100px] rounded-full bg-contain object-fit"
+        width={50}
+        className="w-[50px] h-[50px] rounded-full bg-contain object-fit"
         src={`data:image/jpeg;base64,${imageData.res.image}`}
       />
     </div>

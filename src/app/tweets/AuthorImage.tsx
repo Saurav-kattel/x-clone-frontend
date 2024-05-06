@@ -1,16 +1,22 @@
 "use client"
 
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, RootState } from "../redux/app/store"
-import { useEffect } from "react"
-import { getAuthorImage } from "../redux/features/autorImageSlice"
+import { useEffect, useState } from "react"
+import { AuthorImageType, getAuthorImage } from "./getAuthorImage"
 
 const AuthorImage = ({ userId, author }: { userId: string, author: string }) => {
-  const { image, loading } = useSelector((state: RootState) => state.authorImg)
-  const dispatch = useDispatch<AppDispatch>()
+  const [image, setImage] = useState<undefined | AuthorImageType>(undefined)
+  const [loading, setLoading] = useState<boolean>()
   useEffect(() => {
+    setLoading(true)
     setTimeout(() => {
-      dispatch(getAuthorImage({ userId }))
+      getAuthorImage({ authorId: userId }).then((data) => {
+        setImage(data)
+        setLoading(false)
+      }).catch((err) => {
+        setImage(undefined)
+        setLoading(false)
+        console.log(err)
+      })
     }, 200)
   }, [])
   return (

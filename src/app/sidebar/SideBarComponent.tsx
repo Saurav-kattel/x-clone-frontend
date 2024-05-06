@@ -4,7 +4,7 @@ import SideItems from "./SideItems";
 
 const SideBarComponent = () => {
   return (
-    <div className=" flex flex-col w-[20vw] h-[100vh] items-center p-2 text-white justify-start gap-1">
+    <div className=" flex flex-col w-[30vw] h-[100vh] items-center p-2 text-white justify-start gap-1">
       <span className="py-2 text-4xl font-bold text-center">X clone</span>
       {items.map((item) => (
         <SideItems key={item.path} item={item} />
