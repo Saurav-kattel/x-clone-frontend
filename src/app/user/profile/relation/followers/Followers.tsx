@@ -13,7 +13,7 @@ const Followers = ({ token }: { token: string }) => {
   }, [])
   if (!res?.res) {
     return <div className=' flex items-center justify-center p-2 m-2 h-[60vh]'>
-      <span className='font-semibold text-wrap'>You are not following any one</span>
+      <span className='font-semibold text-wrap'>You are no followers</span>
     </div>
   }
   return (
