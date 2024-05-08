@@ -10,6 +10,8 @@ import { RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'
 import HeaderSection from './HeaderSection'
 import FooterSection from './FooterSection'
+import { comment } from 'postcss'
+import CommentBox from './CommentBox'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
@@ -55,6 +57,8 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
           setShowModal={setShowModal} />
       </div>
       < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
+
+
         <p className='text-md p-2 flex items-start w-[35vw]'>
           {data.content}
         </p>
