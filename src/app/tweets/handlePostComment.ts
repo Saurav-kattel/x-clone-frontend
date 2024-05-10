@@ -4,6 +4,7 @@ type CommentPayload = {
   tweetId: string;
   parentCommentId?: string
   cookie: string
+  authorId: string
 }
 export type Comment = {
   id: string;
@@ -13,7 +14,8 @@ export type Comment = {
   tweet_id: string;
   parent_comment_id: string;
 }
-export async function handlePostComment({ comment, tweetId, parentCommentId = '', cookie }: CommentPayload) {
+
+export async function handlePostComment({ comment, tweetId, authorId, parentCommentId, cookie }: CommentPayload) {
 
   const response = await fetch(backendUrl + '/api/v1/tweet/comment', {
     method: "POST",
@@ -23,8 +25,8 @@ export async function handlePostComment({ comment, tweetId, parentCommentId = ''
     body: JSON.stringify({
       comment: comment,
       tweet_id: tweetId,
-      parent_comment_id: parentCommentId
-
+      parent_comment_id: parentCommentId ?? null,
+      replied_to: authorId
     })
   })
 

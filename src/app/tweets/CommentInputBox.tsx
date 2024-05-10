@@ -2,8 +2,8 @@
 import React, { SetStateAction, useState } from 'react'
 import { handlePostComment } from './handlePostComment';
 
-const CommentInputBox = ({ tweetId, cookie, parentCommentId = '', setRefresh }: { setRefresh: React.Dispatch<SetStateAction<boolean>>; tweetId: string; cookie: string; parentCommentId?: string }) => {
-  const [comment, setComment] = useState < string > ('')
+const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh }: { authorId?: string; setRefresh: React.Dispatch<SetStateAction<boolean>>; tweetId: string; cookie: string; parentCommentId?: string }) => {
+  const [comment, setComment] = useState<string>('')
   return (
     <div className='p-2'>
       <textarea
@@ -17,7 +17,8 @@ const CommentInputBox = ({ tweetId, cookie, parentCommentId = '', setRefresh }: 
             comment,
             tweetId,
             cookie,
-            parentCommentId
+            parentCommentId,
+            authorId
           })
           setComment("")
           setRefresh((st) => !st)
