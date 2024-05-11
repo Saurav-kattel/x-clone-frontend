@@ -26,14 +26,14 @@ const AuthorImage = ({ userId, author }: { userId: string, author: string }) => 
 
           <div className='flex justify-start items-center p-2'>
             {!image && < div className="rounded-[50%] flex justify-center items-center text-center w-[30px] bg-gray-200 h-[30px]">
-              <span className="text-4xl text-slate-600 font-bold ">
+              <span className="text-2xl text-slate-600 font-bold ">
                 {author.slice(0, 1).toUpperCase()}
               </span>
             </div>
             }
 
             {image?.status != 200 && <div className="rounded-[50%] flex justify-center items-center text-center w-[30px] bg-gray-200 h-[30px]">
-              <span className="text-4xl text-slate-600 font-bold ">
+              <span className="text-xl text-slate-600 font-bold ">
                 {author.slice(0, 1).toUpperCase()}
               </span>
             </div>

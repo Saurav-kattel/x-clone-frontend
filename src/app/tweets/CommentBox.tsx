@@ -31,7 +31,7 @@ const CommentBox = ({ cookie, setShowComment, tweetId }: { cookie: string; tweet
       </div>
       <div className='flex gap-2 flex-col'>
         {data && data.res?.map((comment) => <CommentItems setRefresh={setRefresh} showInputModal={showInputModal} setShowInputModal={setShowInputModal} token={cookie} key={comment.id} data={comment} />)}
-        {showInputModal && <CommentInputBox setRefresh={setRefresh} tweetId={tweetId} cookie={cookie} />}
+        {showInputModal && <CommentInputBox setRefresh={setRefresh} commentId={null} tweetId={tweetId} cookie={cookie} />}
       </div>
     </div>
   )

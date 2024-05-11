@@ -11,6 +11,7 @@ export type CommentData = {
   createdAt: Date;
   userId: string;
   tweet_id: string; parentTweetId?: string;
+  username: string;
 }
 
 

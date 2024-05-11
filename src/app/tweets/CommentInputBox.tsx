@@ -2,7 +2,12 @@
 import React, { SetStateAction, useState } from 'react'
 import { handlePostComment } from './handlePostComment';
 
-const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh }: { authorId?: string; setRefresh: React.Dispatch<SetStateAction<boolean>>; tweetId: string; cookie: string; parentCommentId?: string }) => {
+const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh, commentId }: {
+  authorId?: string;
+  setRefresh: React.Dispatch<SetStateAction<boolean>>;
+  tweetId: string; cookie: string; parentCommentId?: string | null
+  commentId: string | null
+}) => {
   const [comment, setComment] = useState<string>('')
   return (
     <div className='p-2'>
@@ -18,6 +23,7 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setR
             tweetId,
             cookie,
             parentCommentId,
+            commentId,
             authorId
           })
           setComment("")
