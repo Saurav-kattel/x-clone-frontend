@@ -62,12 +62,7 @@ function Footer({ tweetId, token, authorId, commentId, parentCommentId, showInpu
         }}
         className='text-sm text-blue-600 hover:underline'>view replies</button>
     </div>
-    {showReplyData && <ReplyBox
-      tweetId={tweetId}
-      cookie={token}
-      parentCommentId={parentCommentId}
-      commentId={commentId}
-    />}
+
     {showReplyBox && <CommentInputBox
       authorId={authorId}
       setRefresh={setRefresh}
@@ -75,6 +70,14 @@ function Footer({ tweetId, token, authorId, commentId, parentCommentId, showInpu
       commentId={commentId}
       cookie={token}
       parentCommentId={parentCommentId} />}
+
+    {showReplyData && <ReplyBox
+      tweetId={tweetId}
+      cookie={token}
+      setRefresh={setRefresh}
+      parentCommentId={null}
+      commentId={commentId}
+    />}
   </div>
 }
 

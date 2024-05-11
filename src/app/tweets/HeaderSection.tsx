@@ -22,8 +22,8 @@ const HeaderSection = ({ update, setShowModal, data, userId, token, setClicked, 
         console.log(err)
       })
     }, 200)
-
   }, [clicked])
+
   return (
     <div className='flex w-[38vw] justify-start items-center'>
       <div className='flex w-[40vw] justify-start items-center'>
