@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { Tweets } from '../redux/features/tweetsSlice'
 import { getLikeCount } from './getLikeCount'
 import { getLikedUsers } from './getLikedUser'
 import { hasUserLiked } from './hasUserLiked'
@@ -10,9 +9,11 @@ import { RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'
 import HeaderSection from './HeaderSection'
 import FooterSection from './FooterSection'
+import dynamic from 'next/dynamic'
+import { Tweets } from '../actions/getTweetsData'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
-const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
+const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
   const [likeState, setLikeState] = useState<boolean | undefined>(false);
   const [response, setResponse] = useState<{ status: number; res: number; }>()
   const { res: userData } = useSelector((state: RootState) => state.user)
@@ -86,7 +87,7 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
 
 
   return (
-    <div className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
+    <section className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
 
       <HeaderSection update={update} clicked={clicked} setClicked={setClicked} token={token} data={data} setShowModal={setShowModal} userId={userData?.res.id} />
       <div className='flex w-[40vw] justify-end items-center p-1'>
@@ -110,8 +111,8 @@ const TweetComponent = ({ data, token }: { data: Tweets, token: string }) => {
         <TweetImage imageId={data.imageId} />
       </div >
       <FooterSection response={response} tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
-    </div >
+    </section >
   )
 }
 
-export default TweetComponent
+export default dynamic(() => Promise.resolve(TweetComponent), { ssr: false })

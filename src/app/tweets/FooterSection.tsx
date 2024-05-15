@@ -3,7 +3,7 @@ import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { SetStateAction, useState } from 'react'
 import { handleLike } from './handleLike';
-import CommentBox from './CommentBox';
+import CommentBox from './(comments)/CommentBox';
 
 const FooterSection = ({ likeState, setLikeState, token, tweetId, response }: { response: { status: number; res: number; } | undefined; tweetId: string; token: string; likeState: boolean | undefined; setLikeState: React.Dispatch<SetStateAction<typeof likeState>> }) => {
 
@@ -27,13 +27,10 @@ const FooterSection = ({ likeState, setLikeState, token, tweetId, response }: { 
             <FontAwesomeIcon icon={faHeart} />
           </div>
         </div>
-
-      </div >
-
+      </div>
       <div className='flex p-2 justify-center w-[40vw] items-center '>
         {showComment && <CommentBox cookie={token} tweetId={tweetId} setShowComment={setShowComment} />}
       </div>
-
     </div>
   )
 }

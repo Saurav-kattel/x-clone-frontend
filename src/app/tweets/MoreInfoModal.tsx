@@ -2,32 +2,13 @@
 import { backendUrl } from '@/lib/exportEnvs';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { revalidateTag } from 'next/cache';
 import React, { SetStateAction } from 'react'
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../redux/app/store';
-import { getTweets } from '../redux/features/tweetsSlice';
+import { deleteTweet } from './deleteTweet';
+
 
 const MoreInfoModal = ({ showModal, setShowModal, authorId, tweetId, userId, token }: { tweetId: string; token: string; authorId: string | undefined; userId: string | undefined; showModal: boolean, setShowModal: React.Dispatch<SetStateAction<typeof showModal>> }) => {
   const showDeleteOption = authorId === userId;
-
-  const dispatch = useDispatch<AppDispatch>()
-
-  function deleteTweet({ pId }: { pId: string }) {
-    fetch(backendUrl + "/api/v1/tweet/delete", {
-      method: "DELETE",
-      headers: {
-        auth_token_x_clone: token
-      },
-      body: JSON.stringify({
-        tweetId: pId
-      })
-    }).then((res) => {
-      if (res.ok) {
-        dispatch(getTweets({ pageNum: 1, pageSize: 8 }))
-      }
-
-    }).then((err) => console.error(err))
-  }
 
   return (
     <>

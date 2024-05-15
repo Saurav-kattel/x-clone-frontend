@@ -1,6 +1,6 @@
 "use client"
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { ReplyResponse, getReplyData } from './getReplyData'
+import { ReplyResponse, getReplyData } from '../getReplyData'
 import ReplyBoxItems from './ReplyBoxItems'
 
 
@@ -12,7 +12,7 @@ const ReplyBox = ({ cookie, parentCommentId, tweetId, commentId, setRefresh }: {
   commentId: string;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [data, setData] = useState < ReplyResponse > ()
+  const [data, setData] = useState<ReplyResponse>()
   useEffect(() => {
     getReplyData({ token: cookie, parentCommentId: parentCommentId, tweetId, commentId })
       .then((info) => setData(info))

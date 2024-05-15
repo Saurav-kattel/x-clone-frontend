@@ -1,8 +1,8 @@
-import React, { SetStateAction, useState } from 'react'
-import { CommentData } from './getUserComments'
-import AuthorImage from './AuthorImage'
+import React, { SetStateAction, useEffect, useState } from 'react'
+import { CommentData } from '../getUserComments'
+import AuthorImage from '../AuthorImage'
 import CommentInputBox from './CommentInputBox';
-import ReplyBox from './ReplyBox';
+import ReplyBox from '../(reply)/ReplyBox';
 
 type Params = {
   token: string;
@@ -87,13 +87,54 @@ const CommentItems = ({ data, token, showInputModal, setShowInputModal, setRefre
   setRefresh: React.Dispatch<SetStateAction<boolean>>
 
 }) => {
+  const [refreshTime, setRefreshTime] = useState(false)
+  const [spentTime, setSpentTime] = useState("")
+  useEffect(() => {
+    let intervalId = setInterval(() => {
+      setRefreshTime((res) => !res)
+    }, 1000)
+    function convertPgTimestampToMs(pgTimestamp: string): number {
+      const dateString = pgTimestamp.slice(0, pgTimestamp.indexOf("."));
+      const dateObject = new Date(dateString);
+      return dateObject.getTime();
+    }
 
+
+
+    function calculateTimeSpent(createdAtMs: number): string {
+      const now = new Date().getTime();
+      const timeDifference = now - createdAtMs;
+
+      // Logic similar to your original `calculateTimeSpent` function
+      if (timeDifference < 0) {
+        return "Record is from the future"; // Handle potential future timestamps
+      } else {
+        const seconds = Math.floor(timeDifference / 1000);
+        if (seconds < 60) {
+          return `${seconds} seconds`;
+        } else if (seconds < 3600) {
+          return `${Math.floor(seconds / 60)} minutes`;
+        } else if (seconds < 86400) {
+          return `${Math.floor(seconds / 3600)} hours`;
+        } else {
+          return `${Math.floor(seconds / 86400)} days`;
+        }
+      }
+    }
+    let convertedTimeStamp = convertPgTimestampToMs(data.createdAt)
+    let time = calculateTimeSpent(convertedTimeStamp)
+    setSpentTime(time)
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [refreshTime])
   return (
 
-    <div className='ml-6 flex flex-col shadow shadow-slate-800 p-2 rounded-md w-[30vw] items-start justify-center'>
-      <div className='py-4 px-2 flex items-start justify-center'>
+    <div className='ml-6 flex flex-col p-2 rounded-md w-[30vw] items-start justify-center'>
+      <div className='py-4 px-2 flex items-center justify-center'>
         <AuthorImage userId={data.userId} author='' />
         <p className='text-slate-400 font-bold text-xl p-2'>{data.username}</p>
+        <p className='text-sm text-slate-500'>{spentTime} ago</p>
       </div>
 
       <CommentBody data={data} />

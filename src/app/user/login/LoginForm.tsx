@@ -28,9 +28,7 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
     password: z.string().min(5),
   });
 
-  const { pending } = useFormStatus()
-
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -39,8 +37,8 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
   });
 
   // using state to store api response
-  const [response, setResponse] = useState<ResponseType>();
-
+  const [response, setResponse] = useState < ResponseType > ();
+  const [pending, setPending] = useState < boolean > (false);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setResponse(undefined);
@@ -68,12 +66,13 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
             <span className="text-9xl font-bold">X</span>
             <span className="text-4xl">Clone</span>
           </div>
-
           <form
             className="flex lg:w-[35vw] outline-[1px] outline-green-200 flex-col justify-center items-center gap-1 text-white"
             onSubmit={form.handleSubmit(async (data) => {
+              setPending(true)
               let responseData = await handleSubmit(data);
               setResponse(responseData)
+              setPending(false)
             })}
           >
             <span className="lg:hidden p-2 text-2xl">welcome to x clone</span>

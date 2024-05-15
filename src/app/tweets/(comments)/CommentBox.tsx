@@ -1,8 +1,8 @@
 
 import CommentInputBox from './CommentInputBox'
 import React, { SetStateAction, useEffect, useState } from 'react'
-import ExitButton from './ExitButton'
-import { getUserComment, ResponseData } from './getUserComments';
+import ExitButton from '../ExitButton'
+import { getUserComment, ResponseData } from '../getUserComments';
 import CommentItems from './CommentItems';
 
 const CommentBox = ({ cookie, setShowComment, tweetId }: { cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>> }) => {

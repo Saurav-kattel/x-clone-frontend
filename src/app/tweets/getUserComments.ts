@@ -8,7 +8,7 @@ export type ResponseData = {
 export type CommentData = {
   id: string;
   comment: string;
-  createdAt: Date;
+  createdAt: string;
   userId: string;
   tweet_id: string; parentTweetId?: string;
   username: string;

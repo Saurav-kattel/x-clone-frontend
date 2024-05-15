@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect, useState, useMemo } from 'react'
-import { ReplyData } from './getReplyData'
-import AuthorImage from './AuthorImage'
-import CommnetInputBox from "./CommentInputBox"
+import { ReplyData } from '../getReplyData'
+import AuthorImage from '../AuthorImage'
+import CommnetInputBox from "../(comments)/CommentInputBox"
 import ReplyBox from './ReplyBox'
 
 const ReplyBoxItems = ({ data, cookie, setRefresh }: {
@@ -55,13 +55,13 @@ const ReplyBoxItems = ({ data, cookie, setRefresh }: {
 
 
   return (
-    <div className='  p-4 border-[1px] border-slate-800 rounded-md'>
+    <div className='  p-4 rounded-md'>
       <div className='flex gap-2 items-center'>
         <AuthorImage author={data.replied_from_username} userId={data.replied_from} />
         <h3 className='text-xl text-slate-400 font-bold'>{data.replied_from_username}</h3>
       </div>
       <div>
-        <div className='text-[10px] font-thin flex flex-wrap gap-1 text-slate-400'>
+        <div className='text-[10px] ml-2 font-thin flex flex-wrap gap-1 text-slate-400'>
           <span className='font-semibold text-blue-400 hover:underline hover:cursor-pointer underline-offset-2'>
             {data.replied_from_username}
           </span>

@@ -1,4 +1,6 @@
+"use server"
 import { backendUrl } from "@/lib/exportEnvs";
+import { revalidateTag } from "next/cache";
 export async function handleCreateTweet({ form, token, content }: { form: FormData | undefined; token: string, content: string | undefined }) {
   try {
 
@@ -14,6 +16,7 @@ export async function handleCreateTweet({ form, token, content }: { form: FormDa
       body: form
     })
     const json = await res.json();
+    revalidateTag("tweets")
     return json;
   } catch (err) {
     console.log(err)

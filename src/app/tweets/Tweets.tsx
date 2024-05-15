@@ -1,24 +1,43 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TweetComponent from './TweetComponent'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../redux/app/store'
-import { getTweets } from '../redux/features/tweetsSlice'
+import type { Tweets as TweetType } from '../actions/getTweetsData'
+import { useInView } from 'react-intersection-observer'
+import { getTweetsData } from '../actions/getTweetsData'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { tweets, loading } = useSelector((state: RootState) => state.tweets)
-  useEffect(() => {
-    if (tweets === undefined || tweets === null) {
-      dispatch(getTweets({ pageNum: 1, pageSize: 8 }))
+
+  const [tweetsData, setTweetsData] = useState<TweetType[]>([])
+  const [loadedPage] = useState(1)
+
+  const { ref, inView } = useInView()
+
+  const loadMoreTweets = async () => {
+    const nextPage = loadedPage + 1;
+    const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage });
+
+    console.log(newTweets?.res.length)
+    if (newTweets?.res) {
+      setTweetsData((currentData) => [...currentData, ...newTweets?.res])
     }
-  }, [])
+
+  }
+
+
+
+  useEffect(() => {
+    if (inView && tweetsData.length % 8 === 0) {
+      loadMoreTweets();
+    }
+  }, [inView, tweetsData]);
+
+
   return (
     <>
       {
-        loading ? <span>Loading...</span> : <div className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
-          {tweets?.status === 200 && tweets.res.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
-        </div>
+        <section ref={ref} className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
+          {tweetsData && tweetsData.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
+        </section>
       }
     </>
   )
