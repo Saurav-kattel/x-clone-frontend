@@ -14,13 +14,14 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
 import { handleSubmit } from "./handleSubmit";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const router = useRouter();
   const formSchema = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
     username: z.string().min(3),
     email: z.string().email().max(100),
     password: z.string().min(6).max(100),
@@ -31,6 +32,8 @@ const RegisterForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      firstName: "",
+      lastName: "",
       confirmPassword: "",
       username: "",
     },
@@ -75,6 +78,36 @@ const RegisterForm = () => {
               <h1 className="text-white text-3xl p-2 text-center">
                 Join Today!
               </h1>
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => {
+                  return (
+                    <FormItem className="flex flex-col p-2 justify-center items-start flex-wrap">
+                      <FormLabel>FirstName</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => {
+                  return (
+                    <FormItem className="flex flex-col p-2 justify-center items-start flex-wrap">
+                      <FormLabel>LastName</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
               <FormField
                 control={form.control}
                 name="username"

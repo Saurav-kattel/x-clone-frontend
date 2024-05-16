@@ -9,6 +9,7 @@ export type Tweets = {
   createdAt: Date;
   author: string;
   updatedAt: Date;
+  author_username: string;
 }
 
 export type TweetRes = {

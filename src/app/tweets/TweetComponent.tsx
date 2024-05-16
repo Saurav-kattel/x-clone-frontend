@@ -84,8 +84,6 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
       clearInterval(intervalId)
     }
   }, [refresh])
-
-
   return (
     <section className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
 
@@ -100,6 +98,7 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
           showModal={showModal}
           setShowModal={setShowModal} />
       </div>
+
       <div className='text-sm flex justify-start w-[32vw] text-slate-500'>
         {spentTime} ago
       </div>
@@ -110,7 +109,7 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
         </p>
         <TweetImage imageId={data.imageId} />
       </div >
-      <FooterSection response={response} tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
+      <FooterSection refresh={refresh} response={response} tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
     </section >
   )
 }

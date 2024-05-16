@@ -40,7 +40,7 @@ const HeaderSection = ({
   return (
     <section className='flex w-[38vw] justify-start items-center'>
       <div className='flex w-[40vw] justify-start items-center'>
-        <AuthorImage userId={data.userId} author={data.author} />
+        <AuthorImage userId={data.userId} author={data.author_username} />
         <div className='text-white font-bold text-md px-2 py-1'>
           {data.author}
         </div>

@@ -5,6 +5,8 @@ export async function handleSubmit(data: {
   password: string;
   confirmPassword: string;
   username: string;
+  firstName: string;
+  lastName: string;
 }) {
   try {
     const response = await fetch(backendUrl + "/api/v1/user/register", {
@@ -18,6 +20,8 @@ export async function handleSubmit(data: {
         password: data.password,
         username: data.username,
         confirm_password: data.confirmPassword,
+        firstName: data.firstName,
+        lastName: data.lastName,
       }),
     });
     const json = await response.json();

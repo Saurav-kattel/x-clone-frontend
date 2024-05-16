@@ -1,7 +1,6 @@
 'use client'
 import React, { SetStateAction, useState } from 'react'
 import { handlePostComment } from '../handlePostComment';
-
 const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh, commentId }: {
   authorId?: string;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;

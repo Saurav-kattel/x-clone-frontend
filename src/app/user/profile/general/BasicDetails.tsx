@@ -1,6 +1,7 @@
 "use client";
 import { backendUrl } from "@/lib/exportEnvs";
 import {
+  faAt,
   faCalendar,
   faMessage,
   faSignOut,
@@ -17,6 +18,8 @@ export interface UserData {
   imageId: string;
   createdAt: string;
   role: string;
+  firstName: string;
+  lastName: string;
 }
 
 async function handleLogout() {
@@ -33,8 +36,13 @@ const BasicDetails = ({ data }: { data: UserData }) => {
       <div className="text-white flex font-semibold text-md flex-col p-4">
         <span className="flex gap-1 items-center justify-start">
           <FontAwesomeIcon icon={faUserAlt} />
+          {data.firstName.concat(" ").concat(data.lastName)}
+        </span>
+        <span className="flex gap-1 items-center justify-start">
+          <FontAwesomeIcon icon={faAt} />
           {data.username}
         </span>
+
         <span className="flex gap-1 items-center justify-start">
           <FontAwesomeIcon icon={faMessage} /> {data.email}
         </span>

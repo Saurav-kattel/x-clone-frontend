@@ -6,6 +6,7 @@ import tweetImageSlice from "../features/tweetImageSlice";
 import likeCountSlice from "../features/likeCountSlice";
 import followerSlice from "../features/followerSlice";
 import followeeSlice from "../features/followeeSlice";
+import commentSlice from "../features/commentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     likes: likeCountSlice,
     follower: followerSlice,
     following: followeeSlice,
+    comment: commentSlice,
   },
 });
 

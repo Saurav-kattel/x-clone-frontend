@@ -8,6 +8,7 @@ import TweetComponent from './TweetComponent'
 const page = async () => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
   const data = await getTweetsData({ pageSize: 8, pageNum: 1 })
+
   return (
     <Suspense fallback={"Loading..."} >
       <section className='no-scroll-bar'>

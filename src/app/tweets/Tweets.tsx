@@ -16,7 +16,6 @@ const Tweets = ({ cookie }: { cookie: string }) => {
     const nextPage = loadedPage + 1;
     const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage });
 
-    console.log(newTweets?.res.length)
     if (newTweets?.res) {
       setTweetsData((currentData) => [...currentData, ...newTweets?.res])
     }
@@ -24,13 +23,11 @@ const Tweets = ({ cookie }: { cookie: string }) => {
   }
 
 
-
   useEffect(() => {
     if (inView && tweetsData.length % 8 === 0) {
       loadMoreTweets();
     }
-  }, [inView, tweetsData]);
-
+  }, [inView]);
 
   return (
     <>

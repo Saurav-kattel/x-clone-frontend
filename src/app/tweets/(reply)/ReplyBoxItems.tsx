@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReplyData } from '../getReplyData'
 import AuthorImage from '../AuthorImage'
 import CommnetInputBox from "../(comments)/CommentInputBox"
