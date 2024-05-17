@@ -1,7 +1,12 @@
 import React from 'react'
-const page = ({ params }: { params: { slug: string } }) => {
+import { getUserInfo } from './getUserInfo'
+import Header from './Header'
+const page = async ({ params }: { params: { slug: string } }) => {
+  const data = await getUserInfo({ username: params.slug })
   return (
-    <div>{params.slug}</div>
+    <div>
+      <Header data={data} />
+    </div>
   )
 }
 
