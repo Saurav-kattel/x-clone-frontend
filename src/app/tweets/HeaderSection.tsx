@@ -4,38 +4,17 @@ import React, { SetStateAction, useEffect, useState } from 'react'
 const AuthorImage = React.lazy(() => import('./AuthorImage'))
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
-import { handleFollow } from './handleFollow'
-import { checkIsFollowing } from './checkIsFollowing'
 import { Tweets } from '../actions/getTweetsData'
 
 const HeaderSection = ({
-  update,
   setShowModal,
   data,
-  userId,
-  token,
-  setClicked, clicked }: {
-    update: VoidFunction;
-    clicked: boolean;
-    setClicked: React.Dispatch<SetStateAction<boolean>>;
-    token: string; userId: string | undefined;
-    data: Tweets;
-    setShowModal: React.Dispatch<SetStateAction<boolean>>;
-  }) => {
-  const [followState, setFollowState] = useState<string>("");
-  const [pending, setPending] = useState<boolean>(false)
-  useEffect(() => {
-    setPending(true)
-    setTimeout(() => {
-      checkIsFollowing({ token, followeeId: data.userId }).then((res) => {
-        setFollowState(res.res)
-        setPending(false)
-      }).catch(err => {
-        setPending(false)
-        console.log(err)
-      })
-    }, 200)
-  }, [clicked])
+}: {
+  setClicked: React.Dispatch<SetStateAction<boolean>>;
+  data: Tweets;
+  setShowModal: React.Dispatch<SetStateAction<boolean>>;
+}) => {
+
 
   return (
     <section className='flex w-[38vw] justify-start items-center'>
@@ -44,15 +23,6 @@ const HeaderSection = ({
         <div className='text-white font-bold text-md px-2 py-1'>
           {data.author}
         </div>
-        {data.userId != userId && <div
-          onClick={() => {
-            handleFollow({ token, followeeId: data.userId }).then(() => {
-              update();
-            })
-          }}
-          className='text-white font-bold text-md px-2 py-1'>
-          <span className="bg-blue-600 px-2 py-1 hover:scale-110 hover:cursor-pointer font-semibold rounded-2xl">{pending ? "....." : followState ? "unfollow" : "follow"}</span>
-        </div>}
       </div>
       <FontAwesomeIcon
         onClick={() => { setShowModal(state => !state) }}

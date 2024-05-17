@@ -1,7 +1,7 @@
 "use client";
 
 import { redirect, useRouter } from "next/navigation";
-import Spinner from "../../../lib/Spinner.tsx"
+import Spinner from "../../../lib/Spinner"
 import { useState, useEffect } from "react";
 import { handleSubmit } from "./handleSubmit";
 import Link from "next/link"
@@ -77,7 +77,7 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
         onMouseEnter={() => setShowHiddenText(true)}
         className="w-[48vw] h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] hover:backdrop-blur-xl">
         <h2 className={`p-4 ${showHiddenText ? "text-slate-500" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
-        <form className={`flex flex-col items-center justify-center  gap-2 p-4 border ${highlightBorderOnError ? "border-red-600" : "border-slate-900"} rounded-lg`} >
+        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border ${highlightBorderOnError ? "border-red-600" : "border-slate-900"} rounded-lg`} >
           <h2 className="uppercase font-semibold text-slate-400 text-xl">Login</h2>
           <label htmlFor="Email" className="flex flex-col gap-1 font-semibold text-md text-slate-400 tracking-wide items-start justify-center">
             <span className="text-start">Email</span>

@@ -1,3 +1,4 @@
+"use server"
 import { backendUrl } from "@/lib/exportEnvs";
 
 export async function checkIsFollowing({ token, followeeId }: { token: string; followeeId: string, }) {
@@ -10,7 +11,6 @@ export async function checkIsFollowing({ token, followeeId }: { token: string; f
       }
     })
     const data = await res.json()
-
     return data;
   } catch (error) {
     console.log(error)

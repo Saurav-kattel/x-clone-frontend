@@ -1,18 +1,48 @@
 "use client"
-import { backendUrl } from '@/lib/exportEnvs';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { revalidateTag } from 'next/cache';
-import React, { SetStateAction } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { deleteTweet } from './deleteTweet';
+import { Tweets } from '../actions/getTweetsData';
+import { handleFollow } from './handleFollow';
+import { checkIsFollowing } from './checkIsFollowing';
 
 
-const MoreInfoModal = ({ showModal, setShowModal, authorId, tweetId, userId, token }: { tweetId: string; token: string; authorId: string | undefined; userId: string | undefined; showModal: boolean, setShowModal: React.Dispatch<SetStateAction<typeof showModal>> }) => {
+const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userId, token, data }: {
+  data: Tweets;
+  clicked: boolean;
+  update: VoidFunction;
+  tweetId: string; token: string;
+  authorId: string | undefined;
+  userId: string | undefined;
+  setShowModal: React.Dispatch<SetStateAction<boolean>>
+}) => {
   const showDeleteOption = authorId === userId;
+  const [followState, setFollowState] = useState<string>("");
+  const [pending, setPending] = useState<boolean>(false)
+
+  useEffect(() => {
+    console.log("pdasd")
+    setPending(true)
+    const timeOutId = setTimeout(() => {
+      checkIsFollowing({ token, followeeId: data?.userId }).then((res) => {
+        setFollowState(res.res)
+        setPending(false)
+      }).catch(err => {
+        setPending(false)
+        console.log(err)
+      })
+    }, 200)
+
+    return () => {
+      clearTimeout(timeOutId)
+    }
+
+  }, [clicked])
 
   return (
     <>
-      {showModal && <div className='flex flex-col w-[20vw] shadow shadow-green-300 bg-[#000]  absolute border-[0.4px] border-[#000010]  rounded-xl p-4 box-border'>
+      <div className='flex flex-col w-[20vw] shadow shadow-green-300 bg-[#000]  absolute border-[0.4px] border-[#000010]  rounded-xl p-4 box-border'>
         <div className='hover:cursor-pointer'>
           <span onClick={() => setShowModal(state => !state)}>X</span>
         </div>
@@ -21,9 +51,21 @@ const MoreInfoModal = ({ showModal, setShowModal, authorId, tweetId, userId, tok
             <FontAwesomeIcon icon={faTrash} /> <span className='px-2 py-1 text-md rounded-lg text-white'>delete</span>
           </div>}
 
+          {data?.userId != userId && <div
+            onClick={() => {
+              handleFollow({ token, followeeId: data?.userId }).then(() => {
+                update();
+              })
+            }}
+            className='text-white w-[10vw] p-2  hover:bg-[#000010] 
+            hover:cursor-pointer font-bold flex justify-center rounded-md  items-center gap-2 text-md '>
+            {followState ? <FontAwesomeIcon icon={faUserMinus} /> : <FontAwesomeIcon icon={faUserPlus} />}
+            <span className=" px-2 py-1 font-semibold rounded-2xl">{pending ? "....." : followState ? "unfollow" : "follow"}</span>
+          </div>}
+
         </div>
       </div>
-      }
+
     </>)
 }
 

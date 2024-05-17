@@ -87,16 +87,19 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
   return (
     <section className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
 
-      <HeaderSection update={update} clicked={clicked} setClicked={setClicked} token={token} data={data} setShowModal={setShowModal} userId={userData?.res.id} />
+      <HeaderSection setClicked={setClicked} data={data} setShowModal={setShowModal} />
       <div className='flex w-[40vw] justify-end items-center p-1'>
 
-        <MoreInfoModal
+        {showModal && <MoreInfoModal
+          update={update}
+          clicked={clicked}
+          data={data}
           token={token}
           tweetId={data.id}
           authorId={data.userId}
           userId={userData?.res.id}
-          showModal={showModal}
           setShowModal={setShowModal} />
+        }
       </div>
 
       <div className='text-sm flex justify-start w-[32vw] text-slate-500'>
