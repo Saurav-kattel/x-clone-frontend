@@ -10,8 +10,8 @@ const initialState: { loading: boolean; error: any; res: any } = {
 
 const getFollowerData = createAsyncThunk(
   "getFollowers",
-  async ({ cookie }: { cookie: string }) => {
-    const res = await fetch(backendUrl + "/api/v1/user/followers", {
+  async ({ cookie, userId }: { cookie: string; userId?: string }) => {
+    const res = await fetch(backendUrl + "/api/v1/user/followers?u_id=" + userId, {
       method: "GET",
       headers: {
         auth_token_x_clone: cookie

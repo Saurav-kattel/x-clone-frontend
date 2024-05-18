@@ -27,20 +27,37 @@ const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: {
         loading ? "Loading" :
 
           <div className='flex justify-start items-center p-2'>
-            {!image && < div className="rounded-[50%] flex justify-center items-center text-center w-[30px] bg-gray-200 h-[30px]">
+            {!image && <div className={`rounded-[50%] flex justify-center items-center text-center w-[${width}px] bg-gray-200 h-[${height}px]`}>
               <span className="text-2xl text-slate-600 font-bold ">
                 {author.slice(0, 1).toUpperCase()}
               </span>
             </div>
             }
 
-            {image?.status != 200 && <Link href={'/user/' + author} className="rounded-[50%] flex justify-center items-center text-center w-[30px] bg-gray-200 h-[30px]">
-              <span className="text-xl text-slate-600 font-bold ">
-                {author.slice(0, 1).toUpperCase()}
-              </span>
-            </Link>
-            }
 
+            {link ? <>
+              {image?.status != 200 && <Link href={'/user/' + author}
+                style={{ width: `${width}px`, height: `${height}px` }}
+                className={`rounded-full flex justify-center items-center text-center bg-gray-200 `}>
+                <span className="text-xl text-slate-600 font-bold ">
+                  {author.slice(0, 1).toUpperCase()}
+                </span>
+              </Link>
+              }
+            </> : <>
+              {image?.status != 200 && <div
+                style={{ width: `${width}px`, height: `${height}px` }}
+                className={`rounded-full flex justify-center items-center text-center bg-gray-200 `}>
+                <span className="text-xl text-slate-600 font-bold ">
+                  {author.slice(0, 1).toUpperCase()}
+                </span>
+              </div>
+              }
+
+
+            </>
+
+            }
             {image && image.status == 200 &&
               <>
                 {link ?

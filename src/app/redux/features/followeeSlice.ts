@@ -18,8 +18,8 @@ const initialState: {
 
 const getFolloweeData = createAsyncThunk(
   "getFollowing",
-  async ({ cookie }: { cookie: string }) => {
-    const res = await fetch(backendUrl + "/api/v1/user/following", {
+  async ({ cookie, userId }: { cookie: string; userId?: string }) => {
+    const res = await fetch(backendUrl + "/api/v1/user/following?u_id=" + userId, {
       method: "GET",
       headers: {
         auth_token_x_clone: cookie
@@ -31,7 +31,7 @@ const getFolloweeData = createAsyncThunk(
 );
 
 const followeeSlice = createSlice({
-  name: " followeeSlice",
+  name: "followeeSlice",
   initialState,
   reducers: {
     clear: (state) => {

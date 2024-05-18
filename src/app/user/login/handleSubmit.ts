@@ -14,7 +14,7 @@ export async function handleSubmit({ email, password }: { email: string; passwor
       }),
     });
     const json = await response.json();
-
+    console.log("hitp")
     return json;
   } catch (err) {
     console.log(err);

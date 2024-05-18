@@ -5,17 +5,15 @@ import AuthorImage from '@/app/tweets/AuthorImage'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { getMonth } from './getMonth'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '@/app/redux/app/store'
-import { getFollowerData } from '@/app/redux/features/followerSlice'
+import Following from "./Following"
+import Follower from "./Followers"
 
-const Header = ({ data }: { data: UserDataRes }) => {
+const Header = ({ data, cookie }: { data: UserDataRes, cookie: string }) => {
   const fullName = data?.res.firstName.concat(" ").concat(data?.res.lastName) ?? ""
   const joinedOnYear = new Date(data?.res.createdAt ?? "").getFullYear()
   const joinedOnMonth = new Date(data?.res.createdAt ?? "").getMonth()
 
-  const following = useSelector((state: RootState) => state.following)
-  const dispatch = useDispatch<AppDispatch>();
+
 
   return (
     <section>
@@ -24,7 +22,7 @@ const Header = ({ data }: { data: UserDataRes }) => {
         <h2 className='flex font-bold text-2xl'>{fullName}</h2>
       </div>
       <div className='p-2 '>
-        <AuthorImage link={false} width={80} height={70} userId={data?.res.id ?? ""} author={fullName} />
+        <AuthorImage link={false} width={80} height={80} userId={data?.res.id ?? ""} author={fullName} />
         <h2 className='flex font-bold text-xl'>{fullName}</h2>
         <p className='text-[10px]  text-slate-300'>@{data?.res.username}</p>
         <div className='flex py-2  gap-2 justify-start items-center'>
@@ -32,7 +30,8 @@ const Header = ({ data }: { data: UserDataRes }) => {
           <span className='text-slate-400 text-center text-sm'>Joined on {getMonth({ month: joinedOnMonth })} {joinedOnYear}</span>
         </div>
         <div>
-
+          <Follower userId={data.res.id} cookies={cookie} />
+          <Following userId={data.res.id} cookies={cookie} />
         </div>
       </div>
     </section>

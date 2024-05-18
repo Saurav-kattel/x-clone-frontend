@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Card from './Card'
 
 const Followers = ({ token }: { token: string }) => {
-  const dispatch = useDispatch < AppDispatch > ()
+  const dispatch = useDispatch<AppDispatch>()
   const { res } = useSelector((state: RootState) => state.follower)
   useEffect(() => {
     dispatch(getFollowerData({ cookie: token }))
   }, [])
   if (!res?.res) {
     return <div className=' flex items-center justify-center p-2 m-2 h-[60vh]'>
-      <span className='font-semibold text-wrap'>You are no followers</span>
+      <span className='font-semibold text-wrap'>You have no followers</span>
     </div>
   }
   return (
