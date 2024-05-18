@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react'
 import { getLikeCount } from './getLikeCount'
 import { getLikedUsers } from './getLikedUser'
 import { hasUserLiked } from './hasUserLiked'
-import { useSelector } from 'react-redux'
-import { RootState } from '../redux/app/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'
 import HeaderSection from './HeaderSection'
 import FooterSection from './FooterSection'
 import dynamic from 'next/dynamic'
 import { Tweets } from '../actions/getTweetsData'
+import { getUserData } from '../redux/features/userSlice'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
@@ -21,13 +22,14 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
   const [clicked, setClicked] = useState(false)
   const [refresh, setRefresh] = useState<boolean>(false)
   const [spentTime, setSpentTime] = useState("")
+  const dispatch = useDispatch<AppDispatch>()
+
 
   function convertPgTimestampToMs(pgTimestamp: string): number {
     const dateString = pgTimestamp.slice(0, pgTimestamp.indexOf("."));
     const dateObject = new Date(dateString);
     return dateObject.getTime();
   }
-
 
   function calculateTimeSpent(createdAtMs: number): string {
     const now = new Date().getTime();
@@ -55,27 +57,32 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    dispatch(getUserData({ cookie: token }))
+    const fetchData = async ({ userId }: { userId: string | undefined }) => {
       try {
         const count = await getLikeCount(data.id);
         const users = await getLikedUsers({ tweetId: data.id, token });
-
+        const hasLiked = hasUserLiked({ data: users?.res, userId });
         setResponse(count);
-        setLikeState(hasUserLiked({ data: users?.res, userId: userData?.res.id }));
+        setLikeState(hasLiked);
       }
       catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data: ", error);
       }
     };
+
     setTimeout(() => {
-      fetchData();
+      fetchData({ userId: userData?.res.id });
     }, 200)
+
   }, [likeState, clicked]);
+
   useEffect(() => {
 
     const intervalId = setInterval(() => {
       setRefresh((st) => !st)
     }, 10000)
+
     let convertedTimeStamp = convertPgTimestampToMs(data.createdAt.toString())
     let time = calculateTimeSpent(convertedTimeStamp)
     setSpentTime(time)
@@ -84,6 +91,8 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
       clearInterval(intervalId)
     }
   }, [refresh])
+
+
   return (
     <section className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
 
@@ -112,7 +121,9 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
         </p>
         <TweetImage imageId={data.imageId} />
       </div >
-      <FooterSection refresh={refresh} response={response} tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
+      {data && <FooterSection refresh={refresh} response={response}
+        tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
+      }
     </section >
   )
 }

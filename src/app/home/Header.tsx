@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileImage } from "../redux/features/profileImageSlice";
 import { getUserData } from "../redux/features/userSlice";
@@ -10,6 +10,8 @@ import {
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { handleCreateTweet } from "./handleCreateTweet";
+import ProfileImage from "./ProfileImage";
+import Spinner from "@/lib/Spinner";
 
 const Header = ({ cookie }: { cookie: string }) => {
   const [formFile, setFormFile] = useState<FormData>();
@@ -22,23 +24,14 @@ const Header = ({ cookie }: { cookie: string }) => {
 
 
 
-  const { loading: profileImgLoading, res: profileImgRes } = useSelector(
-    (state: RootState) => state.profileImg
-  );
-
   const { res: userData } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (!profileImgRes) {
-      setTimeout(() => {
-        dispatch(getProfileImage({ cookie }));
-      }, 600)
-    }
     if (!userData) {
       dispatch(getUserData({ cookie }));
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (isOpen) {
@@ -49,6 +42,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   const toggleIsOpen = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
   };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target.files && event.target.files[0];
     if (file) {
@@ -65,29 +59,11 @@ const Header = ({ cookie }: { cookie: string }) => {
   }
   return (
     <div>
-      {profileImgRes?.status !== 200 && profileImgRes?.status !== 404 ? (
-        <div className="flex h-[90vh] w-[40vw] justify-center font-bold items-center text-red-600">Error: {profileImgRes?.res.message}</div>
-      ) : profileImgLoading ? (
-        "Loading..."
-      ) : (
+      {
         <div className="border-b-[0.5px]  border-t-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
-          {profileImgRes.res.image ? (
-            <div className="flex items-center p-2 justify-start ">
-              <img
-                height={100}
-                width={100}
-                className="w-[70px] h-[70px] rounded-full bg-contain object-fit"
-                src={`data:image/jpeg;base64,${profileImgRes.res.image}`}
-              />
-            </div>
-          ) : (
-            <div className="rounded-[50%] flex justify-center items-center text-center w-[70px] bg-gray-200 h-[70px]">
-              <span className="text-4xl text-slate-600 font-bold">
-                {userData?.res.username.slice(0, 1).toUpperCase()}
-              </span>
-            </div>
-          )}
-
+          <Suspense fallback={<Spinner />} >
+            <ProfileImage cookie={cookie} username={userData?.res.username} />
+          </Suspense>
           {isOpen ? (
             <div
               className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
@@ -166,7 +142,7 @@ const Header = ({ cookie }: { cookie: string }) => {
             </>
           )}
         </div>
-      )}
+      }
     </div>
   );
 };

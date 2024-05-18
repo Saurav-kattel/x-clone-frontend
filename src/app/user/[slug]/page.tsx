@@ -7,7 +7,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
   return (
     <div>
-      <Header cookie={cookie} data={data} />
+      <Header username={params.slug} cookie={cookie} data={data} />
     </div>
   )
 }

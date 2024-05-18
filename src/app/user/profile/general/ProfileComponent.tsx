@@ -32,11 +32,8 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
     <>
       {!loading ? (
         data ? (
-          <div className="flex flex-col w-[40vw] justify-center items-center p-4">P
-            Prabhat Ghimire
-            @prabhatGhimire
+          <div className="flex flex-col w-[40vw] justify-center items-center p-4">
 
-            Joined on MAY 2024
             <div className=" border border-slate-800 p-4 rounded-md shadow-sm shadow-slate-400">
               <div className="font-bold text-2xl  text-white py-2 px-4 text-center">
                 {data.res.username}

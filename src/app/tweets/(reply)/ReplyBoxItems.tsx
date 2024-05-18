@@ -4,6 +4,7 @@ import { ReplyData } from '../getReplyData'
 import AuthorImage from '../AuthorImage'
 import CommnetInputBox from "../(comments)/CommentInputBox"
 import ReplyBox from './ReplyBox'
+import Link from 'next/link'
 
 const ReplyBoxItems = ({ data, cookie, setRefresh }: {
   data: ReplyData; cookie: string; setRefresh: React.Dispatch<React.SetStateAction<boolean>>
@@ -57,7 +58,7 @@ const ReplyBoxItems = ({ data, cookie, setRefresh }: {
   return (
     <div className='  p-4 rounded-md'>
       <div className='flex gap-2 items-center'>
-        <AuthorImage author={data.replied_from_username} userId={data.replied_from} />
+        <Link href={data.replied_from_username}><AuthorImage author={data.replied_from_username} userId={data.replied_from} /></Link>
         <h3 className='text-xl text-slate-400 font-bold'>{data.replied_from_username}</h3>
       </div>
       <div>

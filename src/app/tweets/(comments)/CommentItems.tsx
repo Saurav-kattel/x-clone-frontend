@@ -3,6 +3,7 @@ import { CommentData } from '../getUserComments'
 import AuthorImage from '../AuthorImage'
 import CommentInputBox from './CommentInputBox';
 import ReplyBox from '../(reply)/ReplyBox';
+import Link from 'next/link';
 
 type Params = {
   token: string;
@@ -132,7 +133,7 @@ const CommentItems = ({ data, token, showInputModal, setShowInputModal, setRefre
 
     <div className='ml-6 flex flex-col p-2 rounded-md w-[30vw] items-start justify-center'>
       <div className='py-4 px-2 flex items-center justify-center'>
-        <AuthorImage userId={data.userId} author='' />
+        <Link href={"/user/" + data.username}> <AuthorImage userId={data.userId} author='' /></Link>
         <p className='text-slate-400 font-bold text-xl p-2'>{data.username}</p>
         <p className='text-sm text-slate-500'>{spentTime} ago</p>
       </div>

@@ -62,11 +62,12 @@ const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: {
               <>
                 {link ?
                   <Link href={'/user/' + author} className="flex items-center justify-start ">
+
                     <Image
                       height={height}
                       width={width}
                       alt="profile image"
-                      className={`w-[${width}px] h-[${height}px] rounded-full bg-center bg-contain object-fit`}
+                      className={`w-[${width}px] h-[${height}px] rounded-[50%] object-fill`}
                       src={`data:image/jpeg;base64,${image.res.image}`}
                     />
                   </Link>
@@ -75,7 +76,7 @@ const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: {
                       height={height}
                       width={width}
                       alt="profile image"
-                      className={`w-[${width}px] h-[${height}px] rounded-full bg-center bg-contain object-fit`}
+                      className={`w-[${width}px] h-[${height}px] rounded-[50%]  object-fill`}
                       src={`data:image/jpeg;base64,${image.res.image}`}
                     />
                   </div>
