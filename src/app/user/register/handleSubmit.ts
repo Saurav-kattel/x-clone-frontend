@@ -1,6 +1,6 @@
 import { backendUrl } from "@/lib/exportEnvs";
 
-export async function handleSubmit(data: {
+export async function handleSubmit({ email, password, confirmPassword, username, firstName, lastName }: {
   email: string;
   password: string;
   confirmPassword: string;
@@ -16,12 +16,12 @@ export async function handleSubmit(data: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: data.email,
-        password: data.password,
-        username: data.username,
-        confirm_password: data.confirmPassword,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        email: email,
+        password: password,
+        username: username,
+        confirm_password: confirmPassword,
+        firstName: firstName,
+        lastName: lastName,
       }),
     });
     const json = await response.json();

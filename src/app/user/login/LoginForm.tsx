@@ -27,17 +27,15 @@ function Error({ res }: { res: any }) {
 const LoginForm = ({ cookie }: { cookie: string }) => {
 
   const router = useRouter();
-  const [response, setResponse] = useState<ResponseType>();
-  const [pending, setPending] = useState<boolean>(false);
+  const [response, setResponse] = useState < ResponseType > ();
+  const [pending, setPending] = useState < boolean > (false);
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showHiddenText, setShowHiddenText] = useState(false);
-  const [highlightBorderOnError, setHightlightBorderOnError] = useState(false)
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setResponse(undefined);
-      setHightlightBorderOnError(false)
     }, 2000);
 
     const redirectTimeoutId = setTimeout(() => {
@@ -47,9 +45,7 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
       }
     }, 500);
 
-    if (response && response.status != 200) {
-      setHightlightBorderOnError(true)
-    }
+
     return () => {
       clearTimeout(timeoutId);
       clearTimeout(redirectTimeoutId);
@@ -61,13 +57,13 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
     <div className="flex justify-evenly items-center w-[100vw] h-[100vh]">
       <div
         className="w-[48vw] hover:bg-[#00000e] transition-all ease-linear h-[70dvh] flex justify-center items-center gap-2 rounded-md">
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center cursor-pointer">
           <h2 className="text-6xl font-bold transition-all hover:text-slate-400 p-2 text-slate-600">HI</h2>
           <p className="text-2xl  hover:text-slate-500 text-slate-600 font-semibold ">Welcome</p>
           <p className="text-xl  hover:text-slate-600 font-semibold text-slate-500">to</p>
           <p className="text-8xl  hover:text-slate-800 font-bold text-slate-600">X</p>
           <p className="text-xl  hover:text-slate-400 font-semibold text-slate-500">clone</p>
-          <Link className="text-md text-slate-500 cursor-pointer hover:underline hover:text-blue-100 underline-offset-1" href={"/user/register"}>New here, Register</Link>
+          <Link className="text-md text-slate-500 cursor-pointer hover:underline hover:text-blue-100 underline-offset-1" href={"/user/register"}>New here? <strong>Register</strong></Link>
         </div>
       </div>
 
@@ -77,7 +73,7 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
         onMouseEnter={() => setShowHiddenText(true)}
         className="w-[48vw] h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] hover:backdrop-blur-xl">
         <h2 className={`p-4 ${showHiddenText ? "text-slate-500" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
-        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border ${highlightBorderOnError ? "border-red-600" : "border-slate-900"} rounded-lg`} >
+        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border border-transparent hover:border-slate-900 rounded-lg`} >
           <h2 className="uppercase font-semibold text-slate-400 text-xl">Login</h2>
           <label htmlFor="Email" className="flex flex-col gap-1 font-semibold text-md text-slate-400 tracking-wide items-start justify-center">
             <span className="text-start">Email</span>
