@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { getTweetsData } from '../actions/getTweetsData'
 import TweetComponent from './TweetComponent'
 import Spinner from '@/lib/Spinner'
+import FirstTweetPage from './FirstTweetPage'
 
 
 const page = async () => {
@@ -12,9 +13,7 @@ const page = async () => {
   return (
     <Suspense fallback={<Spinner />} >
       <section className='no-scroll-bar'>
-        <section className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
-          {data && data.res.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
-        </section>
+        <FirstTweetPage cookie={cookie} data={data} />
         <Tweets
           cookie={cookie} />
 

@@ -3,9 +3,9 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-const Spinner = () => {
+const Spinner = ({ ref }: { ref?: any }) => {
   return (
-    <FontAwesomeIcon icon={faSpinner} className='animate-spin w-6 h-6' />
+    <FontAwesomeIcon ref={ref} icon={faSpinner} className='animate-spin w-6 h-6' />
   )
 }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { getLikeCount } from './getLikeCount'
 import { getLikedUsers } from './getLikedUser'
 import { hasUserLiked } from './hasUserLiked'
@@ -12,17 +12,18 @@ import FooterSection from './FooterSection'
 import dynamic from 'next/dynamic'
 import { Tweets } from '../actions/getTweetsData'
 import { getUserData } from '../redux/features/userSlice'
+import { useInView } from 'react-intersection-observer'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
-  const [likeState, setLikeState] = useState<boolean | undefined>(false);
-  const [response, setResponse] = useState<{ status: number; res: number; }>()
+  const [likeState, setLikeState] = useState < boolean | undefined > (false);
+  const [response, setResponse] = useState < { status: number; res: number; } > ()
   const { res: userData } = useSelector((state: RootState) => state.user)
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState < boolean > (false);
   const [clicked, setClicked] = useState(false)
-  const [refresh, setRefresh] = useState<boolean>(false)
+  const [refresh, setRefresh] = useState < boolean > (false)
   const [spentTime, setSpentTime] = useState("")
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch < AppDispatch > ()
 
 
   function convertPgTimestampToMs(pgTimestamp: string): number {
@@ -51,10 +52,11 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
     }
   }
 
-
   const update = () => {
     setClicked(state => !state)
   }
+
+
 
   useEffect(() => {
     dispatch(getUserData({ cookie: token }))
@@ -70,15 +72,15 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
         console.error("Error fetching data: ", error);
       }
     };
-
     setTimeout(() => {
       fetchData({ userId: userData?.res.id });
     }, 200)
 
   }, [likeState, clicked]);
 
-  useEffect(() => {
 
+  const { ref, inView } = useInView()
+  useEffect(() => {
     const intervalId = setInterval(() => {
       setRefresh((st) => !st)
     }, 10000)
@@ -92,13 +94,20 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
     }
   }, [refresh])
 
+  const [animation, setAnimation] = useState("")
+
+  useEffect(() => {
+    if (inView) {
+      setAnimation("animate-load")
+    }
+  }, [inView])
+
+
 
   return (
-    <section className='flex flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center '>
-
+    <div ref={ref} className={`flex transition flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center ${animation}`}>
       <HeaderSection setClicked={setClicked} data={data} setShowModal={setShowModal} />
       <div className='flex w-[40vw] justify-end items-center p-1'>
-
         {showModal && <MoreInfoModal
           update={update}
           clicked={clicked}
@@ -124,7 +133,7 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
       {data && <FooterSection refresh={refresh} response={response}
         tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
       }
-    </section >
+    </div >
   )
 }
 

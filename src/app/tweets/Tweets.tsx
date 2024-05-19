@@ -1,41 +1,61 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import TweetComponent from './TweetComponent'
 import type { Tweets as TweetType } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import { getTweetsData } from '../actions/getTweetsData'
+import Spinner from '@/lib/Spinner'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
 
-  const [tweetsData, setTweetsData] = useState<TweetType[]>([])
-  const [loadedPage] = useState(1)
+  const [tweetsData, setTweetsData] = useState < TweetType[] > ([])
+  const [loadedPage, setLoadedPage] = useState(1)
+  const [shouldFetchTweets, setShouldFetchTweets] = useState < boolean > (true)
+  const [loading, setLoading] = useState(false)
 
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView({ threshold: 0 })
 
   const loadMoreTweets = async () => {
+    if (loading || !shouldFetchTweets) return;
+    setLoading(true)
     const nextPage = loadedPage + 1;
     const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage });
 
+
     if (newTweets?.res) {
-      setTweetsData((currentData) => [...currentData, ...newTweets?.res])
+      setTweetsData((currentData) => [...currentData, ...newTweets.res])
+      setLoadedPage(nextPage);
     }
 
+
+    if (newTweets?.res && newTweets.res.length % 8 === 0) {
+      setShouldFetchTweets(true)
+    } else {
+      setShouldFetchTweets(false)
+    }
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
   }
 
 
   useEffect(() => {
-    if (inView && tweetsData.length % 8 === 0) {
+    if (inView && shouldFetchTweets) {
       loadMoreTweets();
     }
-  }, [inView]);
+  }, [inView, shouldFetchTweets]);
 
   return (
     <>
-      {
-        <section ref={ref} className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
-          {tweetsData && tweetsData.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
-        </section>
-      }
+      <section className='flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
+        {tweetsData && tweetsData.map((tweet) => <Suspense fallback={<Spinner />}>
+          <TweetComponent key={tweet.id} token={cookie} data={tweet} />
+        </Suspense>)}
+        <div className='h-[6dvh] flex justify-center items-center' ref={ref}>
+          {shouldFetchTweets && <Spinner />}
+        </div>
+      </section>
     </>
   )
 }

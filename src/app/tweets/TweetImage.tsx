@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 import { getImage } from './getImages'
+import Spinner from '@/lib/Spinner';
 
 const TweetImage = ({ imageId }: { imageId: string }) => {
 
@@ -18,7 +19,10 @@ const TweetImage = ({ imageId }: { imageId: string }) => {
 
   return (
     <div>
-      {loading ? "Loading" : image && <img
+      {loading ? <div className="w-[35vw]  flex justify-center items-center h-[300px] rounded-sm bg-contain object-fit"
+      >
+        <Spinner />
+      </div> : image && <img
         height={60}
         width={60}
         alt="tweet image"
