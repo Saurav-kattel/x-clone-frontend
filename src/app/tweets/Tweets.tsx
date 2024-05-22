@@ -1,16 +1,16 @@
 "use client"
 import React, { Suspense, useEffect, useState } from 'react'
-import TweetComponent from './TweetComponent'
-import type { Tweets as TweetType } from '../actions/getTweetsData'
+const TweetComponent = React.lazy(() => import('./TweetComponent'))
+import type { Tweets as TweetType, Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import { getTweetsData } from '../actions/getTweetsData'
 import Spinner from '@/lib/Spinner'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
 
-  const [tweetsData, setTweetsData] = useState < TweetType[] > ([])
+  const [tweetsData, setTweetsData] = useState<TweetType[]>([])
   const [loadedPage, setLoadedPage] = useState(1)
-  const [shouldFetchTweets, setShouldFetchTweets] = useState < boolean > (true)
+  const [shouldFetchTweets, setShouldFetchTweets] = useState<boolean>(true)
   const [loading, setLoading] = useState(false)
 
   const { ref, inView } = useInView({ threshold: 0 })
@@ -49,8 +49,8 @@ const Tweets = ({ cookie }: { cookie: string }) => {
   return (
     <>
       <section className='flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
-        {tweetsData && tweetsData.map((tweet) => <Suspense fallback={<Spinner />}>
-          <TweetComponent key={tweet.id} token={cookie} data={tweet} />
+        {tweetsData && tweetsData.map((tweet) => <Suspense key={tweet.id} fallback={<Spinner />}>
+          <TweetComponent token={cookie} data={tweet} />
         </Suspense>)}
         <div className='h-[6dvh] flex justify-center items-center' ref={ref}>
           {shouldFetchTweets && <Spinner />}

@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import Tweets from './Tweets'
 import { cookies } from 'next/headers'
 import { getTweetsData } from '../actions/getTweetsData'
-import TweetComponent from './TweetComponent'
 import Spinner from '@/lib/Spinner'
 import FirstTweetPage from './FirstTweetPage'
 

@@ -16,9 +16,9 @@ export type TweetRes = {
   status: number;
   res: Tweets[];
 }
-export async function getTweetsData({ pageNum, pageSize }: { pageSize: number; pageNum: number }): Promise<TweetRes | undefined> {
+export async function getTweetsData({ pageNum, pageSize, tweetId }: { pageSize: number; pageNum: number; tweetId?: string }) {
   try {
-    const tweets = await fetch(`${backendUrl}/api/v1/tweet/get?n=${pageNum}&s=${pageSize}`, {
+    const tweets = await fetch(`${backendUrl}/api/v1/tweet/get?n=${pageNum}&s=${pageSize}&t_id=${tweetId}`, {
       method: "GET",
       credentials: "include",
       next: { tags: ["tweets"] }

@@ -12,7 +12,8 @@ export async function getLikedUsers({ tweetId, token }: { tweetId: string; token
       method: "GET",
       headers: {
         auth_token_x_clone: token
-      }
+      },
+      cache: "no-store"
     })
     let data = await res.json()
     return data
