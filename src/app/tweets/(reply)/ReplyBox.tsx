@@ -1,6 +1,6 @@
 "use client"
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { ReplyResponse, getReplyData } from '../getReplyData'
+import { ReplyResponse, getReplyData } from '../(ts)/getReplyData'
 import ReplyBoxItems from './ReplyBoxItems'
 
 

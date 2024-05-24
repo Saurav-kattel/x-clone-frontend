@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { getLikeCount } from './getLikeCount'
-import { getLikedUsers } from './getLikedUser'
-import { hasUserLiked } from './hasUserLiked'
+import { getLikeCount } from './(ts)/getLikeCount'
+import { getLikedUsers } from './(ts)/getLikedUser'
+import { hasUserLiked } from './(ts)/hasUserLiked'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'

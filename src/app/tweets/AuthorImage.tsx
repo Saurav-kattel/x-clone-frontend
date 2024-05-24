@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AuthorImageType, getAuthorImage } from "./getAuthorImage"
+import { getAuthorImage } from "./(ts)/getAuthorImage"
 import Link from "next/link"
 import Image from "next/image"
 

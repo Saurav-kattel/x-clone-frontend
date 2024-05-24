@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { getImage } from './getImages'
+import { getImage } from './(ts)/getImages'
 import Spinner from '@/lib/Spinner';
 
 const TweetImage = ({ imageId, height = 80, width = 80 }: { imageId: string; height?: number; width?: number }) => {

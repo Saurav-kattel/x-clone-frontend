@@ -2,9 +2,9 @@
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { handleLike } from './handleLike';
+import { handleLike } from './(ts)/handleLike';
 import CommentBox from './(comments)/CommentBox';
-import { getCommetCount } from './getCommentCount';
+import { getCommetCount } from './(ts)/getCommentCount';
 
 const FooterSection = ({ refresh, likeState, setLikeState, token, tweetId, response }: { refresh: boolean; response: { status: number; res: number; } | undefined; tweetId: string; token: string; likeState: boolean | undefined; setLikeState: React.Dispatch<SetStateAction<typeof likeState>> }) => {
 

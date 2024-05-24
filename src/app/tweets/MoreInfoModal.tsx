@@ -2,10 +2,10 @@
 import { faTrash, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { deleteTweet } from './deleteTweet';
+import { deleteTweet } from './(ts)/deleteTweet';
 import { Tweets } from '../actions/getTweetsData';
-import { handleFollow } from './handleFollow';
-import { checkIsFollowing } from './checkIsFollowing';
+import { handleFollow } from './(ts)/handleFollow';
+import { checkIsFollowing } from './(ts)/checkIsFollowing';
 
 
 const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userId, token, data }: {
