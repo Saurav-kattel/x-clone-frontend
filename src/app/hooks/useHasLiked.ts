@@ -1,5 +1,5 @@
-import { getLikedUsers } from "../tweets/getLikedUser";
-import { hasUserLiked } from "../tweets/hasUserLiked";
+import { getLikedUsers } from "../tweets/(ts)/getLikedUser";
+import { hasUserLiked } from "../tweets/(ts)/hasUserLiked";
 
 
 export async function useHasLiked({ tweetId, token, userId }: { userId: string; tweetId: string; token: string }): Promise<{ like: boolean, error?: string }> {

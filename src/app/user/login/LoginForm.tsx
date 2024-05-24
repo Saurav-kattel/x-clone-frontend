@@ -13,9 +13,9 @@ export type ResponseType =
 
 
 
-function Error({ res }: { res: any }) {
+function Error({ res, pending }: { res: any, pending: boolean }) {
   return <div className="h-[10vh] text-red-200">
-    {res && res.status != 200 ? <div>
+    {res && !pending && res.status != 200 ? <div>
       <h3 className="font-semibold text-red-400 text-xl">Sigh, Error Occured!</h3>
       <p className="text-center text-red-600 text-sm px-2">{res.res.message}</p>
     </div> : null}
@@ -24,11 +24,11 @@ function Error({ res }: { res: any }) {
 
 
 
-const LoginForm = ({ cookie }: { cookie: string }) => {
+const LoginForm = () => {
 
   const router = useRouter();
-  const [response, setResponse] = useState < ResponseType > ();
-  const [pending, setPending] = useState < boolean > (false);
+  const [response, setResponse] = useState<ResponseType>();
+  const [pending, setPending] = useState<boolean>(false);
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showHiddenText, setShowHiddenText] = useState(false);
@@ -41,8 +41,12 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
     const redirectTimeoutId = setTimeout(() => {
       if (response && response.status == 200) {
         router.refresh();
+        setEmail("")
+        setPassword("")
         redirect("/");
       }
+      setPending(false)
+
     }, 500);
 
 
@@ -96,9 +100,6 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
               setPending(true)
               let res = await handleSubmit({ email, password })
               setResponse(res)
-              setEmail("")
-              setPassword("")
-              setPending(false)
             }}
             disabled={pending}
             className="py-1 px-2 text-center flex items-center justify-center w-[8vw] outline-none bg-slate-900 rounded-lg ">
@@ -106,7 +107,7 @@ const LoginForm = ({ cookie }: { cookie: string }) => {
               "Login"}
           </button>
         </form>
-        <Error res={response} />
+        <Error pending={pending} res={response} />
       </div>
 
     </div>

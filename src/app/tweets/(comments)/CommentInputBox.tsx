@@ -1,6 +1,9 @@
 'use client'
 import React, { SetStateAction, useState } from 'react'
 import { handlePostComment } from '../(ts)/handlePostComment';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/redux/app/store';
+import { refreshFunc } from '@/app/redux/features/commentSlice';
 const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh, commentId }: {
   authorId?: string;
   setRefresh: React.Dispatch<SetStateAction<boolean>>;
@@ -8,6 +11,7 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setR
   commentId: string | null
 }) => {
   const [comment, setComment] = useState<string>('')
+  const dispatch = useDispatch<AppDispatch>()
   return (
     <div className='p-2'>
       <textarea
@@ -26,6 +30,7 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setR
             authorId
           })
           setComment("")
+          dispatch(refreshFunc())
           setRefresh((st) => !st)
         }}
         className='hover:border-slate-600 border border-transparent rounded-lg py-1 m-2 px-2 text-center'> post</button>

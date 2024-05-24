@@ -1,57 +1,29 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { getLikeCount } from './(ts)/getLikeCount'
-import { getLikedUsers } from './(ts)/getLikedUser'
-import { hasUserLiked } from './(ts)/hasUserLiked'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../redux/app/store'
+
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'
 import HeaderSection from './HeaderSection'
 import FooterSection from './FooterSection'
 import dynamic from 'next/dynamic'
 import { Tweets } from '../actions/getTweetsData'
-import { getUserData } from '../redux/features/userSlice'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import { calculateTimeSpent } from '@/lib/getTimeSpent'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
-  const [likeState, setLikeState] = useState<boolean | undefined>(false);
-  const [response, setResponse] = useState<{ status: number; res: number; }>()
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)
   const [refresh, setRefresh] = useState<boolean>(false)
   const [spentTime, setSpentTime] = useState("")
-  const dispatch = useDispatch<AppDispatch>()
 
   const update = useCallback(() => {
     setClicked(state => !state)
   }, [])
-
-
-  const fetchData = useCallback(async ({ userId }: { userId: string | undefined }) => {
-    try {
-      const count = await getLikeCount(data.id);
-      const users = await getLikedUsers({ tweetId: data.id, token });
-      const hasLiked = hasUserLiked({ data: users?.res, userId });
-      setResponse(count);
-      setLikeState(hasLiked);
-    }
-    catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  }, [likeState, clicked]);
-
-  useEffect(() => {
-    dispatch(getUserData({ cookie: token }))
-    setTimeout(() => {
-      fetchData({ userId: userData?.res.id });
-    }, 200)
-  }, [likeState, clicked]);
-
 
   const { ref, inView } = useInView()
 
@@ -111,8 +83,10 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
           <TweetImage imageId={data.imageId} />
         </div >
       </Link>
-      {data && <FooterSection refresh={refresh} response={response}
-        tweetId={data.id} token={token} likeState={likeState} setLikeState={setLikeState} />
+      {data && <FooterSection
+        userId={data.userId}
+        tweetId={data.id}
+        token={token} />
       }
     </div >
   )

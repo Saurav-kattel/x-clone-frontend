@@ -1,4 +1,4 @@
-import { getLikeCount } from "../tweets/getLikeCount"
+import { getLikeCount } from "../tweets/(ts)/getLikeCount"
 
 export async function useTweetLikeCount({ tweetId }: { tweetId: string }): Promise<{ count: number; err?: any }> {
   try {

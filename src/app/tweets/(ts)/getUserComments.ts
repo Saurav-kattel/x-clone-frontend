@@ -1,8 +1,8 @@
 import { backendUrl } from "@/lib/exportEnvs";
 
-export type ResponseData = {
+export type CommentResponseData = {
   status: number;
-  res: CommentData[] | null
+  res: CommentData[]
 }
 
 export type CommentData = {
@@ -15,7 +15,7 @@ export type CommentData = {
 }
 
 
-export async function getUserComment({ tweetId, token, pageNumber, pageSize }: { pageNumber: number; pageSize: number; tweetId: string; token: string }): Promise<ResponseData | undefined> {
+export async function getUserComment({ tweetId, token, pageNumber, pageSize }: { pageNumber: number; pageSize: number; tweetId: string; token: string }): Promise<CommentResponseData | undefined> {
   try {
     const res = await fetch(`${backendUrl}/api/v1/tweet/user/comments?t_id=${tweetId}&n=${pageNumber}&s=${pageSize}`, {
       method: "GET",

@@ -1,10 +1,10 @@
 "use client"
 import React, { Suspense, useEffect, useState } from 'react'
-const TweetComponent = React.lazy(() => import('./TweetComponent'))
 import type { Tweets as TweetType, Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import { getTweetsData } from '../actions/getTweetsData'
 import Spinner from '@/lib/Spinner'
+import TweetComponent from './TweetComponent'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
 
