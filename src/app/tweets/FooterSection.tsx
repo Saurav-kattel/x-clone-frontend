@@ -12,7 +12,7 @@ import { RootState } from '../redux/app/store';
 
 interface PropType {
   tweetId: string;
-  token: string; like: boolean | undefined;
+  token: string;
   userId: string;
 
 }
@@ -20,7 +20,7 @@ interface PropType {
 
 const LikeSection = ({ tweetId, click, token, userId }: {
   tweetId: string;
-  token: string; like: boolean | undefined;
+  token: string;
   userId: string;
   click: boolean;
 }

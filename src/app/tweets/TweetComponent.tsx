@@ -70,10 +70,6 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
       </div>
 
       <Link href={`/tweets/${data.id}`}>
-
-        <div className='text-sm flex justify-start w-[32vw] text-slate-500'>
-          {spentTime} ago
-        </div>
         < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
 
           <p className='text-md p-2 flex items-start w-[35vw]'>
