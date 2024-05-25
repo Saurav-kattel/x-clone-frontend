@@ -9,6 +9,7 @@ import FirstTweetPage from './FirstTweetPage'
 const page = async () => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
   const data = await getTweetsData({ pageSize: 8, pageNum: 1 })
+  console.log(data)
   return (
     <Suspense fallback={<Spinner />} >
       <section className='no-scroll-bar'>

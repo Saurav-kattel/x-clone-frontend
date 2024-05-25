@@ -1,6 +1,4 @@
 "use client";
-
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { handleSubmit } from "./handleSubmit";
 import { useRouter } from "next/navigation";
@@ -36,7 +34,6 @@ const RegisterForm = () => {
     { status: number; res: { message: string } } | undefined
   >();
 
-  const [focusedInput, setFocusedInput] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");

@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getAuthorImage } from "./(ts)/getAuthorImage"
+import { AuthorImageType, getAuthorImage } from "./(ts)/getAuthorImage"
 import Link from "next/link"
 import Image from "next/image"
 
 const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
-  const [image, setImage] = useState < undefined | AuthorImageType > (undefined)
+  const [image, setImage] = useState<undefined | AuthorImageType>(undefined)
   useEffect(() => {
     setTimeout(() => {
       getAuthorImage({ authorId: userId }).then((data) => {

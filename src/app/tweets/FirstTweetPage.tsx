@@ -14,13 +14,15 @@ const FirstTweetPage = ({ cookie, data }: { cookie: string; data: TweetRes | und
 
     return () => {
       clearTimeout(tmId)
-      setDelay(false)
     }
   }, [])
+
   return (
     <>
-      {!delay && <section className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar overflow-hidden'>
-        {data && data.res.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
+      {delay && <section className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar'>
+        {data && data.res.map((tweetData) =>
+          <TweetComponent key={tweetData.id}
+            token={cookie} data={tweetData} />)}
       </section>}
     </>
   )

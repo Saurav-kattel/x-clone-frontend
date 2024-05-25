@@ -7,19 +7,17 @@ import { RootState } from '../redux/app/store'
 import MoreInfoModal from './MoreInfoModal'
 import HeaderSection from './HeaderSection'
 import FooterSection from './FooterSection'
-import dynamic from 'next/dynamic'
 import { Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
-import { calculateTimeSpent } from '@/lib/getTimeSpent'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
+  console.log(data)
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)
   const [refresh, setRefresh] = useState<boolean>(false)
-  const [spentTime, setSpentTime] = useState("")
 
   const update = useCallback(() => {
     setClicked(state => !state)
@@ -32,8 +30,6 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
       setRefresh((st) => !st)
     }, 10000)
 
-    let time = calculateTimeSpent(data.createdAt.toString())
-    setSpentTime(time)
 
     return () => {
       clearInterval(intervalId)
@@ -88,4 +84,4 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
   )
 }
 
-export default dynamic(() => Promise.resolve(TweetComponent), { ssr: false })
+export default TweetComponent;
