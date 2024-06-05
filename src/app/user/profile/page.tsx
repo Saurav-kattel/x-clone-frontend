@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ProfileComponent from "./general/ProfileComponent";
 
 import { cookies } from "next/headers";
@@ -7,7 +7,7 @@ import DeleteAccountComponent from "./delete/DeleteAccountComponent";
 
 const page = async () => {
   return (
-    <div className="flex h-[100vh] items-center gap-2  flex-col ">
+    <div className="flex py-8  justify-center items-center gap-2  flex-col ">
       <ProfileComponent
         cookies={cookies().get("auth_token_x_clone")?.value ?? ""}
       />
@@ -17,4 +17,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default page; 

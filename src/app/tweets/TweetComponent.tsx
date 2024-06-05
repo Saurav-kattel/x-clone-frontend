@@ -13,7 +13,6 @@ import Link from 'next/link'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
 const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
-  console.log(data)
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)

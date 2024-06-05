@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { AuthorImageType, getAuthorImage } from "./(ts)/getAuthorImage"
 import Link from "next/link"
 import Image from "next/image"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser } from "@fortawesome/free-solid-svg-icons"
 
 const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
   const [image, setImage] = useState<undefined | AuthorImageType>(undefined)
@@ -20,15 +22,13 @@ const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: {
   return (
     <div>
       <div className='flex justify-start items-center p-2'>
-
-
         {link ? <>
           {image?.status != 200 && <Link href={'/user/' + author}
             style={{ width: `${width}px`, height: `${height}px` }}
             className="flex items-center justify-start ">
-            <span className={`w-[${width}px] h-[${height}px] rounded-[50%]font-bold text-slate-400 object-fill`}
+            <span className={`w-[${width}px] h-[${height}px] rounded-[50%] font-bold text-slate-400 object-fill`}
             >
-              {author.slice(0, 1).toUpperCase()}
+              <FontAwesomeIcon icon={faUser} />
             </span>
           </Link>
           }

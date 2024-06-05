@@ -18,7 +18,7 @@ const ReplyBox = ({ cookie, parentCommentId, tweetId, commentId, setRefresh }: {
       .then((info) => setData(info))
   }, [])
   if (data && !data.res) {
-    return <p>No replies</p>
+    return <p className='ml-8 text-[15px] text-slate-400'>No replies</p>
   }
   return (
     <div className='flex flex-col gap-2'>

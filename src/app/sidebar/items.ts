@@ -9,14 +9,14 @@ export const items: {
   path: string;
   icon: IconDefinition;
 }[] = [
-  {
-    name: "Home",
-    path: "/",
-    icon: faHome,
-  },
-  {
-    name: "Profile",
-    path: "/user/profile",
-    icon: faUser,
-  },
-];
+    {
+      name: "Home",
+      path: "/",
+      icon: faHome,
+    },
+    {
+      name: "Profile",
+      path: "/user/profile",
+      icon: faUser,
+    },
+  ];

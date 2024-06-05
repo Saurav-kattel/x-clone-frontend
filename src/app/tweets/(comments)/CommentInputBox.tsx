@@ -4,9 +4,8 @@ import { handlePostComment } from '../(ts)/handlePostComment';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/redux/app/store';
 import { refreshFunc } from '@/app/redux/features/commentSlice';
-const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setRefresh, commentId }: {
+const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, commentId }: {
   authorId?: string;
-  setRefresh: React.Dispatch<SetStateAction<boolean>>;
   tweetId: string; cookie: string; parentCommentId?: string | null
   commentId: string | null
 }) => {
@@ -21,6 +20,8 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setR
         className='bg-transparent border-b-slate-600 min-h-[8vh] border-b-[1px] w-[25vw] resize-none p-2 outline-none text-sm' />
       <button
         onClick={() => {
+          dispatch(refreshFunc())
+
           handlePostComment({
             comment,
             tweetId,
@@ -30,8 +31,6 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, setR
             authorId
           })
           setComment("")
-          dispatch(refreshFunc())
-          setRefresh((st) => !st)
         }}
         className='hover:border-slate-600 border border-transparent rounded-lg py-1 m-2 px-2 text-center'> post</button>
     </div>

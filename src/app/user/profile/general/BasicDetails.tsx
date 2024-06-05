@@ -31,6 +31,26 @@ async function handleLogout() {
 }
 const BasicDetails = ({ data }: { data: UserData }) => {
   const router = useRouter();
+
+  function getMonth(num: number): string {
+    switch (num) {
+      case 1: return "JAN";
+      case 2: return "FEB";
+      case 3: return "MAR";
+      case 4: return "APR";
+      case 5: return "MAY";
+      case 6: return "JUN";
+      case 7: return "JUL";
+      case 8: return "AUG";
+      case 9: return "SEP";
+      case 10: return "OCT";
+      case 11: return "NOV";
+      case 12: return "DEC";
+      default: return "Invalid month number";
+    }
+  }
+  let date = new Date(data.createdAt);
+  let parsedDate = date.getFullYear().toString().concat(" ").concat(getMonth(date.getMonth()))
   return (
     <div>
       <div className="text-white flex font-semibold text-md flex-col p-4">
@@ -47,8 +67,9 @@ const BasicDetails = ({ data }: { data: UserData }) => {
           <FontAwesomeIcon icon={faMessage} /> {data.email}
         </span>
         <span className="flex gap-1 items-center justify-start">
-          <FontAwesomeIcon icon={faCalendar} /> Joined on:
-          {new Date(data.createdAt).toUTCString()}
+          <FontAwesomeIcon icon={faCalendar} />
+          <div className="flex gap-2">
+            <span> Joined on:</span> {parsedDate} </div>
         </span>
         <span className="flex gap-1 items-center justify-start">
           <FontAwesomeIcon icon={faSignOut} />

@@ -7,12 +7,14 @@ import CommentItems from './CommentItems';
 import { getAllComments } from '../(ts)/getAllComments';
 import { useInView } from 'react-intersection-observer';
 import Spinner from '@/lib/Spinner';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/app/store';
 
 const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibility: "ALL" | "USER"; cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>> }) => {
 
   const [data, setData] = useState<CommentResponseData['res']>([])
   const [showInputModal, setShowInputModal] = useState<boolean>(true)
-  const [refresh, setRefresh] = useState(false)
+  const { refresh } = useSelector((state: RootState) => state.comment)
   const [ref, inView] = useInView();
   const [shouldFetch, setShouldFetch] = useState(true)
   const [pageNumber, setPageNumber] = useState(1)
@@ -61,8 +63,8 @@ const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibilit
         <h3 className='flex p-2 font-bold text-2xl text-slate-600'>Comments</h3>
       </div>
       <div className='flex gap-2 flex-col'>
-        {data && data.map((comment) => <CommentItems setRefresh={setRefresh} showInputModal={showInputModal} setShowInputModal={setShowInputModal} token={cookie} key={comment.id} data={comment} />)}
-        {showInputModal && <CommentInputBox setRefresh={setRefresh} commentId={null} tweetId={tweetId} cookie={cookie} />}
+        {data && data.map((comment) => <CommentItems showInputModal={showInputModal} setShowInputModal={setShowInputModal} token={cookie} key={comment.id} data={comment} />)}
+        {showInputModal && <CommentInputBox commentId={null} tweetId={tweetId} cookie={cookie} />}
       </div>
       <div className='flex items-center justify-center' ref={ref}>
         {shouldFetch && <Spinner />}

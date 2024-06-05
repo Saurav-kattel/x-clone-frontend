@@ -88,6 +88,7 @@ const RegisterForm = () => {
     }, 2000);
 
     if (response && response.status == 200) {
+      setPending(false)
       router.refresh();
     }
 
@@ -101,6 +102,18 @@ const RegisterForm = () => {
 
       <form
         method="POST"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setPending(true)
+          handleSubmit({ email, password, confirmPassword, firstName, lastName, username }).then((res) => {
+            setResponse(res)
+          }).then((err) => {
+
+            setPending(false)
+            console.error(err)
+          })
+
+        }}
         autoComplete="off" className="flex w-[80dvw] flex-col border-[1px] border-slate-800 rounded-md p-8 justify-center items-center gap-2">
 
         <div className="p-4 flex flex-col justify-center items-center gap-2">
@@ -122,18 +135,8 @@ const RegisterForm = () => {
         </div>
         <button
           type="submit"
-          onClick={() => {
-            setPending(true)
-            handleSubmit({ email, password, confirmPassword, firstName, lastName, username }).then((res) => {
-              setResponse(res)
-              setPending(false)
-            }).then((err) => {
-              setPending(false)
-              console.error(err)
-            })
-          }}
           disabled={pending}
-          className="px-4 py-2 text-center border-[1px] border-transparent text-slate-300 font-bold  rounded-md hover:border-slate-600">
+          className="px-4 py-2 h-[8dvh] text-center border-[1px] border-transparent text-slate-300 font-bold  rounded-md hover:border-slate-600">
           {pending ? <Spinner /> : "register"}
         </button>
         <div className="h-[2dvh]">

@@ -1,10 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { ReplyData } from '../getReplyData'
 import AuthorImage from '../AuthorImage'
 import CommnetInputBox from "../(comments)/CommentInputBox"
 import ReplyBox from './ReplyBox'
 import Link from 'next/link'
+import { ReplyData } from '../(ts)/getReplyData'
+import { calculateTimeSpent } from '@/lib/getTimeSpent'
 
 const ReplyBoxItems = ({ data, cookie, setRefresh }: {
   data: ReplyData; cookie: string; setRefresh: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,36 +19,9 @@ const ReplyBoxItems = ({ data, cookie, setRefresh }: {
     let intervalId = setInterval(() => {
       setRefreshTime((res) => !res)
     }, 1000)
-    function convertPgTimestampToMs(pgTimestamp: string): number {
-      const dateString = pgTimestamp.slice(0, pgTimestamp.indexOf("."));
-      const dateObject = new Date(dateString);
-      return dateObject.getTime();
-    }
 
 
-
-    function calculateTimeSpent(createdAtMs: number): string {
-      const now = new Date().getTime();
-      const timeDifference = now - createdAtMs;
-
-      // Logic similar to your original `calculateTimeSpent` function
-      if (timeDifference < 0) {
-        return "Record is from the future"; // Handle potential future timestamps
-      } else {
-        const seconds = Math.floor(timeDifference / 1000);
-        if (seconds < 60) {
-          return `${seconds} seconds`;
-        } else if (seconds < 3600) {
-          return `${Math.floor(seconds / 60)} minutes`;
-        } else if (seconds < 86400) {
-          return `${Math.floor(seconds / 3600)} hours`;
-        } else {
-          return `${Math.floor(seconds / 86400)} days`;
-        }
-      }
-    }
-    let convertedTimeStamp = convertPgTimestampToMs(data.created_at)
-    let time = calculateTimeSpent(convertedTimeStamp)
+    let time = calculateTimeSpent(data.created_at)
     setSpentTime(time)
     return () => {
       clearInterval(intervalId)
@@ -78,7 +52,7 @@ const ReplyBoxItems = ({ data, cookie, setRefresh }: {
         </div>
       </div>
       <div>
-        <p className='text-md text-slate-400 p-2'>{data.reply}</p>
+        <p className='text-sm py-1 ml-4'>{data.reply}</p>
       </div>
       <button
         onClick={() => setShowInputModal((st) => !st)}
