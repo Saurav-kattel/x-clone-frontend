@@ -27,8 +27,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
       setLoadedPage(nextPage);
     }
 
-
-    if (newTweets?.res && newTweets.res.length % 8 === 0) {
+    if (newTweets?.res.length != 0 && newTweets?.res && newTweets.res.length % 8 === 0) {
       setShouldFetchTweets(true)
     } else {
       setShouldFetchTweets(false)
@@ -52,7 +51,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
         {tweetsData && tweetsData.map((tweet) => <Suspense key={tweet.id} fallback={<Spinner />}>
           <TweetComponent token={cookie} data={tweet} />
         </Suspense>)}
-        <div className='flex justify-center items-center' ref={ref}>
+        <div className='flex justify-center items-center h-[3vh]' ref={ref}>
           {shouldFetchTweets && <Spinner />}
         </div>
       </section>

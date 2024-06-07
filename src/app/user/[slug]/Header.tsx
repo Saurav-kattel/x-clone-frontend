@@ -11,6 +11,7 @@ import ProfileNav from './ProfileNav'
 import Post from './(post)/Post'
 import Spinner from '@/lib/Spinner'
 import Link from 'next/link'
+import Reply from './(reply)/Reply'
 
 const Header = ({ data, cookie, username }: { username: string; data: UserDataRes, cookie: string }) => {
   const fullName = data?.res.firstName.concat(" ").concat(data?.res.lastName) ?? ""
@@ -37,8 +38,8 @@ const Header = ({ data, cookie, username }: { username: string; data: UserDataRe
         </div>
         <ProfileNav selectedPath={selectedPath} setSelectedPath={setSelectedPath} />
 
-        {selectedPath === "Post" && <Suspense fallback={<Spinner />}><Post cookie={cookie} username={username} />  </Suspense>
-        }
+        {selectedPath === "Post" && <Suspense fallback={<Spinner />}><Post cookie={cookie} username={username} />  </Suspense>}
+        {selectedPath === "Replies" && <Suspense fallback={<Spinner />}><Reply userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
       </div>
     </section>
   )

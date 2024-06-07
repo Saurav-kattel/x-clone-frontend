@@ -38,7 +38,7 @@ const Post = ({ username, cookie }: { cookie: string; username: string }) => {
   }, [inView, shouldFetchTweets])
   return (
     <div>
-      {data && data.map((item) => <TweetComponent token={cookie} data={item} />)}
+      {data && data.map((item) => <TweetComponent token={cookie} data={item} key={item.id} />)}
       <div ref={ref} className='flex items-center justify-center'>
         {shouldFetchTweets && <Spinner />}
       </div>
