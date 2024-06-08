@@ -33,7 +33,9 @@ const Reply = ({ userId, cookie }: { userId: string; cookie: string }) => {
 	}, [inView, shouldFetchTweets])
 	return (
 		<div>
-			{data && data.map((item) => <TweetComponent key={item.id} token={cookie} data={item} />)}
+			{data && data.map((item) => <TweetComponent
+				commentVis="ALL"
+				key={item.id} token={cookie} data={item} />)}
 			<div ref={ref} className='flex items-center justify-center'>
 				{shouldFetchTweets && <Spinner />}
 			</div>

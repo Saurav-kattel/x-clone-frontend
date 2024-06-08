@@ -14,6 +14,7 @@ interface PropType {
   tweetId: string;
   token: string;
   userId: string;
+  commentVis?: "USER" | "ALL";
 
 }
 
@@ -69,7 +70,7 @@ const CommentSectionWrapper = ({ tweetId, setShowComment }: {
   </div>
 }
 
-const FooterSection = ({ token, tweetId, userId }: PropType) => {
+const FooterSection = ({ token, tweetId, userId, commentVis = "USER" }: PropType) => {
   const [click, setClick] = useState(false)
 
   const [showComment, setShowComment] = useState(false)
@@ -97,7 +98,7 @@ const FooterSection = ({ token, tweetId, userId }: PropType) => {
         </div>
       </div>
       <div className='flex p-2 justify-center w-[40vw] items-center '>
-        {showComment && <CommentBox visibility='USER' cookie={token} tweetId={tweetId} setShowComment={setShowComment} />}
+        {showComment && <CommentBox visibility={commentVis} cookie={token} tweetId={tweetId} setShowComment={setShowComment} />}
       </div>
     </div>
   )

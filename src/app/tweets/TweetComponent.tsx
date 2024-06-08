@@ -12,7 +12,7 @@ import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 const TweetImage = React.lazy(() => import('./TweetImage'))
 
-const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
+const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; token: string; commentVis?: "ALL" | "USER" }) => {
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)
@@ -75,6 +75,7 @@ const TweetComponent = ({ data, token }: { data: Tweets; token: string }) => {
         </div >
       </Link>
       {data && <FooterSection
+        commentVis={commentVis}
         userId={data.userId}
         tweetId={data.id}
         token={token} />
