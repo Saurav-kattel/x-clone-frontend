@@ -12,6 +12,7 @@ import Post from './(post)/Post'
 import Spinner from '@/lib/Spinner'
 import Link from 'next/link'
 import Reply from './(reply)/Reply'
+import Like from './(like)/Like'
 
 const Header = ({ data, cookie, username }: { username: string; data: UserDataRes, cookie: string }) => {
   const fullName = data?.res.firstName.concat(" ").concat(data?.res.lastName) ?? ""
@@ -40,6 +41,8 @@ const Header = ({ data, cookie, username }: { username: string; data: UserDataRe
 
         {selectedPath === "Post" && <Suspense fallback={<Spinner />}><Post cookie={cookie} username={username} />  </Suspense>}
         {selectedPath === "Replies" && <Suspense fallback={<Spinner />}><Reply userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
+        {selectedPath === "Likes" && <Suspense fallback={<Spinner />}><Like userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
+
       </div>
     </section>
   )
