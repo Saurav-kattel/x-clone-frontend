@@ -148,11 +148,13 @@ const Header = ({ cookie }: { cookie: string }) => {
 
   async function handlePostButtonClick() {
     let res = await handleCreateTweet({ form: formFile, content: content, token: cookie })
+    console.log(res)
     if (res.status == 200) {
       setContent("")
       setImgSrc(undefined)
       setFormFile(undefined)
     }
+
     setResponse(res)
 
     setTimeout(() => {

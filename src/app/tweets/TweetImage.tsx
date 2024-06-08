@@ -5,6 +5,9 @@ import Spinner from '@/lib/Spinner';
 
 
 const TweetImage = ({ imageId, height = 80, width = 80 }: { imageId: string; height?: number; width?: number }) => {
+  if (!imageId) {
+    return <></>
+  }
   const [image, setImage] = useState<{ status: number; res: { image: string } } | undefined>();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -20,6 +23,7 @@ const TweetImage = ({ imageId, height = 80, width = 80 }: { imageId: string; hei
     }
 
   }, [])
+
 
   return (
     <div>
