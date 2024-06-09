@@ -5,12 +5,14 @@ import { getUserRepliedTweets } from "./getUserRepliedTweets";
 import { TweetRes, Tweets } from "@/app/actions/getTweetsData";
 import TweetComponent from "@/app/tweets/TweetComponent";
 import Spinner from "@/lib/Spinner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/app/store";
 const Reply = ({ userId, cookie }: { userId: string; cookie: string }) => {
 	const [data, setData] = useState<TweetRes["res"]>([]);
 	const [shouldFetchTweets, setShouldFetchTweets] = useState(true)
 	const [pageNumber, setPageNumber] = useState(1)
 	const { inView, ref } = useInView();
-
+	const { refresh } = useSelector((state: RootState) => state.tweets)
 	async function loadMore({ setData, pageNumber }: { pageNumber: number; setData: React.Dispatch<React.SetStateAction<Tweets[]>>; }) {
 		let data = await getUserRepliedTweets({ userId, pageNumber, pageSize: 8 })
 
@@ -26,11 +28,13 @@ const Reply = ({ userId, cookie }: { userId: string; cookie: string }) => {
 	}
 
 	useEffect(() => {
+
 		if (inView && shouldFetchTweets) {
 			loadMore({ setData, pageNumber })
 			setPageNumber((nu) => nu + 1)
 		}
-	}, [inView, shouldFetchTweets])
+
+	}, [inView, shouldFetchTweets, refresh])
 	return (
 		<div>
 			{data && data.map((item) => <TweetComponent

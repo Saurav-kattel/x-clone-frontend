@@ -21,7 +21,6 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, comm
       <button
         onClick={() => {
           dispatch(refreshFunc())
-
           handlePostComment({
             comment,
             tweetId,

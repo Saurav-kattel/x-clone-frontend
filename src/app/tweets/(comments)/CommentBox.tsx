@@ -1,76 +1,65 @@
-"use client"
-import CommentInputBox from './CommentInputBox'
-import React, { SetStateAction, useEffect, useState } from 'react'
-import ExitButton from '../ExitButton'
-import { getUserComment, CommentResponseData } from '../(ts)/getUserComments';
+"use client";
+import CommentInputBox from './CommentInputBox';
+import React, { SetStateAction, useEffect, useState, useRef, useMemo } from 'react';
+import ExitButton from '../ExitButton';
 import CommentItems from './CommentItems';
-import { getAllComments } from '../(ts)/getAllComments';
 import { useInView } from 'react-intersection-observer';
 import Spinner from '@/lib/Spinner';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/redux/app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/redux/app/store';
+import { refreshFunc } from '@/app/redux/features/commentSlice';
+import { fetchComments } from './fetchComments';
+import { CommentResponseData } from '../(ts)/getUserComments';
 
 const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibility: "ALL" | "USER"; cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>> }) => {
-
-  const [data, setData] = useState<CommentResponseData['res']>([])
-  const [showInputModal, setShowInputModal] = useState<boolean>(true)
-  const { refresh } = useSelector((state: RootState) => state.comment)
+  const [data, setData] = useState<CommentResponseData['res']>([]);
+  const [showInputModal, setShowInputModal] = useState<boolean>(true);
+  const { refresh } = useSelector((state: RootState) => state.comment);
   const [ref, inView] = useInView();
-  const [shouldFetch, setShouldFetch] = useState(true)
+  const [shouldFetch, setShouldFetch] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
   const [pageNumber, setPageNumber] = useState(1)
 
-  async function fetchComments({ pageNumber, setPageNumber, tweetId, token }: { tweetId: string; token: string; pageNumber: number, setPageNumber: React.Dispatch<SetStateAction<number>> }) {
-    try {
-      if (visibility === "USER") {
-        let res = await getUserComment({ tweetId, token: token, pageNumber: pageNumber, pageSize: 6 });
-        if (!res?.res) {
-          setShouldFetch(false);
-          return;
-        }
 
-        setPageNumber((pn) => pn + 1);
-        if (res.res && res.res.length < 6) {
-          setShouldFetch(false);
-        }
-        setData((prev) => [...prev, ...res.res]);
-      } else {
-        let res = await getAllComments({ tweetId, pageNumber: pageNumber, pageSize: 6 });
-        if (!res?.res) {
-          setShouldFetch(false);
-          return;
-        }
-
-        setData((prev) => [...prev, ...res.res]);
-        if (res.res && res.res.length < 6) {
-          setShouldFetch(false);
-        }
-        setPageNumber((pn) => pn + 1);
-      }
-    } catch (e: any) {
-      console.error(e.message);
-    }
-  }
   useEffect(() => {
     if (inView && shouldFetch) {
-      fetchComments({ pageNumber, setPageNumber, tweetId, token: cookie })
+      fetchComments({ pageNumber: pageNumber, setPageNumber, tweetId, token: cookie, refresh, setData, setShouldFetch, visibility });
     }
-  }, [refresh, inView])
+  }, [shouldFetch, inView]);
+
+  useEffect(() => {
+    if (refresh) {
+      setPageNumber(1)
+      setShouldFetch(true);
+      fetchComments({ pageNumber: 1, tweetId, setPageNumber, token: cookie, refresh, setData, setShouldFetch, visibility })
+        .then(() => dispatch(refreshFunc()));
+
+    }
+  }, [refresh, dispatch, tweetId, cookie]);
 
   return (
-    <div className='p-4 w-[38vw] shadow shadow-slate-800 flex flex-col items-start justify-center  rounded-md' >
+    <div className='p-4 w-[38vw] shadow shadow-slate-800 flex flex-col items-start justify-center rounded-md'>
       <div className='flex items-center gap-4'>
         <ExitButton setShowComment={setShowComment} />
         <h3 className='flex p-2 font-bold text-2xl text-slate-600'>Comments</h3>
       </div>
       <div className='flex gap-2 flex-col'>
-        {data && data.map((comment) => <CommentItems showInputModal={showInputModal} setShowInputModal={setShowInputModal} token={cookie} key={comment.id} data={comment} />)}
         {showInputModal && <CommentInputBox commentId={null} tweetId={tweetId} cookie={cookie} />}
+        {data && data.map((comment) => (
+          <CommentItems
+            showInputModal={showInputModal}
+            setShowInputModal={setShowInputModal}
+            token={cookie}
+            key={comment.id}
+            data={comment}
+          />
+        ))}
       </div>
       <div className='flex items-center justify-center' ref={ref}>
         {shouldFetch && <Spinner />}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommentBox
+export default CommentBox;

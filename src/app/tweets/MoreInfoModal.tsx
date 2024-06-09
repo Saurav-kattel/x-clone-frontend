@@ -6,6 +6,9 @@ import { deleteTweet } from './(ts)/deleteTweet';
 import { Tweets } from '../actions/getTweetsData';
 import { handleFollow } from './(ts)/handleFollow';
 import { checkIsFollowing } from './(ts)/checkIsFollowing';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/app/store';
+import { refreshTweets } from '../redux/features/tweetSlice';
 
 
 const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userId, token, data }: {
@@ -22,7 +25,6 @@ const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userI
   const [pending, setPending] = useState<boolean>(false)
 
   useEffect(() => {
-    console.log("pdasd")
     setPending(true)
     const timeOutId = setTimeout(() => {
       checkIsFollowing({ token, followeeId: data?.userId }).then((res) => {
@@ -40,6 +42,8 @@ const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userI
 
   }, [clicked])
 
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <>
       <div className='flex flex-col w-[20vw] shadow shadow-green-300 bg-[#000]  absolute border-[0.4px] border-[#000010]  rounded-xl p-4 box-border'>
@@ -47,7 +51,10 @@ const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userI
           <span onClick={() => setShowModal(state => !state)}>X</span>
         </div>
         <div className='shadow p-4 '>
-          {showDeleteOption && <div onClick={() => deleteTweet({ pId: tweetId })} className='flex gap-2 px-4 py-1 rounded-md items-center hover:bg-gray-800 hover:cursor-pointer hover:scale-110 transition-transform '>
+          {showDeleteOption && <div onClick={() => {
+            deleteTweet({ pId: tweetId })
+            dispatch(refreshTweets())
+          }} className='flex gap-2 px-4 py-1 rounded-md items-center hover:bg-gray-800 hover:cursor-pointer hover:scale-110 transition-transform '>
             <FontAwesomeIcon icon={faTrash} /> <span className='px-2 py-1 text-md rounded-lg text-white'>delete</span>
           </div>}
 

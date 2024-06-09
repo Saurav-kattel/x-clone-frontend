@@ -7,9 +7,11 @@ import likeCountSlice from "../features/likeCountSlice";
 import followerSlice from "../features/followerSlice";
 import followeeSlice from "../features/followeeSlice";
 import commentSlice from "../features/commentSlice";
+import tweetSlice from "../features/tweetSlice";
 
 export const store = configureStore({
   reducer: {
+    tweets: tweetSlice,
     user: userSlice,
     profileImg: profileImageSlice,
     tweetImg: tweetImageSlice,
