@@ -1,6 +1,6 @@
 "use client";
 import CommentInputBox from './CommentInputBox';
-import React, { SetStateAction, useEffect, useState, useRef, useMemo } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import ExitButton from '../ExitButton';
 import CommentItems from './CommentItems';
 import { useInView } from 'react-intersection-observer';

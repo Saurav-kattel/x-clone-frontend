@@ -1,7 +1,7 @@
 import { backendUrl } from "@/lib/exportEnvs";
 
 type args = {
-  parentCommentId: string | null;
+  parentCommentId: string | null | undefined;
   token: string;
   tweetId: string;
   commentId: string;
@@ -16,7 +16,7 @@ export type ReplyData = {
   replied_from_username: string;
   created_at: string;
   comment_id: string;
-  parent_id?: string | null;
+  parent_id?: string | null | undefined;
 }
 
 export type ReplyResponse = {

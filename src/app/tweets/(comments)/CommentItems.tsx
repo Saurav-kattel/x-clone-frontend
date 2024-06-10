@@ -3,6 +3,7 @@ import AuthorImage from '../AuthorImage'
 import CommentInputBox from './CommentInputBox';
 import { calculateTimeSpent } from '@/lib/getTimeSpent';
 import { CommentData } from '../(ts)/getUserComments';
+import ReplyBox from '../(reply)/ReplyBox';
 
 type Params = {
   token: string;
@@ -67,6 +68,13 @@ function Footer({ tweetId, token, authorId, commentId, parentCommentId, showInpu
       commentId={commentId}
       cookie={token}
       parentCommentId={parentCommentId} />}
+
+    {showReplyData && <ReplyBox
+      cookie={token}
+      tweetId={tweetId}
+      commentId={commentId}
+      parentCommentId={parentCommentId}
+    />}
   </div>
 }
 
@@ -93,7 +101,7 @@ const CommentItems = ({ data, token, showInputModal, setShowInputModal }: {
 
     <div className='ml-6 py-3 flex flex-col px-2 rounded-md w-[30vw] items-start justify-center'>
       <div className=' px-2 flex items-center justify-center'>
-        <AuthorImage userId={data.userId} author={data.username} />
+        <AuthorImage width={50} height={50} userId={data.userId} author={data.username} />
         <p className='text-slate-400 font-bold text-md p-2'>{data.username}</p>
         <p className='text-[14px] text-slate-500'>{spentTime} ago</p>
       </div>
@@ -105,7 +113,7 @@ const CommentItems = ({ data, token, showInputModal, setShowInputModal }: {
         showInputModal={showInputModal}
         token={token}
         setShowInputModal={setShowInputModal}
-        parentCommentId={data.id}
+        parentCommentId={null}
         commentId={data.id}
       />
     </div>
