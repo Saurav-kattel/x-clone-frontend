@@ -1,5 +1,5 @@
 'use client'
-import React, { SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { handlePostComment } from '../(ts)/handlePostComment';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/redux/app/store';
@@ -11,27 +11,29 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, comm
 }) => {
   const [comment, setComment] = useState<string>('')
   const dispatch = useDispatch<AppDispatch>()
+  console.log(parentCommentId)
   return (
-    <div className='p-2'>
-      <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        placeholder='write your comment here'
-        className='bg-transparent border-b-slate-600 min-h-[8vh] border-b-[1px] w-[25vw] resize-none p-2 outline-none text-sm' />
-      <button
-        onClick={() => {
-          dispatch(refreshFunc())
-          handlePostComment({
-            comment,
-            tweetId,
-            cookie,
-            parentCommentId,
-            commentId,
-            authorId
-          })
-          setComment("")
-        }}
-        className='hover:border-slate-600 border border-transparent rounded-lg py-1 m-2 px-2 text-center'> post</button>
+    <div className='flex justify-center items-center'>
+      <div className=' bg-slate-950 rounded-3xl flex justify-center items-center w-[30vw]'>
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className='bg-transparent min-h-[4vh] w-[inherit] flex-shrink resize-none px-2 py-3 outline-none text-sm' />
+        <button
+          onClick={() => {
+            dispatch(refreshFunc())
+            handlePostComment({
+              comment,
+              tweetId,
+              cookie,
+              parentCommentId,
+              commentId,
+              authorId
+            })
+            setComment("")
+          }}
+          className='hover:border-slate-600 border border-transparent rounded-lg py-1 m-2 px-2 text-center'> post</button>
+      </div>
     </div>
   )
 }

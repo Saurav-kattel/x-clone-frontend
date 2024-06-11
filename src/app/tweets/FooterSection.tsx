@@ -74,20 +74,20 @@ const FooterSection = ({ token, tweetId, userId, commentVis = "USER" }: PropType
   const [click, setClick] = useState(false)
 
   const [showComment, setShowComment] = useState(false)
-  const handleLikeClicked = ({ token, tweetId }: { token: string; tweetId: string }) => {
-    setTimeout(() => {
+  useEffect(() => {
+    const tmId = setTimeout(() => {
       handleLike({ token, tweetId })
-      setClick(!click)
     }, 100)
-  }
-
-
+    return () => {
+      clearTimeout(tmId)
+    }
+  }, [click])
   return (
     <div className='border-b-[1px] flex flex-col w-[40vw] items-center justify-center  border-t-slate-700'>
       < div className='w-[40vw] flex items-center justify-center '>
         <div className='flex gap-2 w-[35vw] justify-between items-center'>
           <div className='p-2 text-2xl' onClick={() => {
-            handleLikeClicked({ token, tweetId })
+            setClick(!click)
           }} >
             <LikeSection token={token} click={click} tweetId={tweetId} userId={userId} />
           </div>

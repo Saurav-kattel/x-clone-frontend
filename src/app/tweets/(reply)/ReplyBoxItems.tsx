@@ -1,35 +1,21 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AuthorImage from '../AuthorImage'
 import CommnetInputBox from "../(comments)/CommentInputBox"
 import Link from 'next/link'
 import { ReplyData } from '../(ts)/getReplyData'
-import { calculateTimeSpent } from '@/lib/getTimeSpent'
 import ReplyBox from './ReplyBox'
+import SpentTimeComponent from '../(comments)/SpentTimeComponent'
 
 const ReplyBoxItems = ({ data, cookie }: {
   data: ReplyData; cookie: string;
 }) => {
 
-  const [spentTime, setSpentTime] = useState("");
-  const [refreshTime, setRefreshTime] = useState(false)
   const [showInputModal, setShowInputModal] = useState<boolean>(false)
-
-  useEffect(() => {
-    let intervalId = setInterval(() => {
-      setRefreshTime((res) => !res)
-    }, 1000)
-
-
-    let time = calculateTimeSpent(data.created_at)
-    setSpentTime(time)
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [refreshTime])
+  const [showReply, setShowReply] = useState(false)
 
   return (
-    <div className='ml-8  p-4 rounded-md'>
+    <div className='ml-4 border-l-white border-l-[1px] p-4'>
 
       <div className='flex gap-2 items-center'>
         <Link href={data.replied_from_username}><AuthorImage
@@ -51,7 +37,7 @@ const ReplyBoxItems = ({ data, cookie }: {
           </span>
 
           <span>
-            {spentTime} ago
+            <SpentTimeComponent pgTime={data.created_at} />
           </span>
         </div>
       </div>
@@ -59,9 +45,13 @@ const ReplyBoxItems = ({ data, cookie }: {
       <div>
         <p className='text-sm py-1 ml-4'>{data.reply}</p>
       </div>
-      <button
-        onClick={() => setShowInputModal((st) => !st)}
-        className='text-[12px] border border-transparent text-slate-200 px-2 py-1 rounded-md hover:border-slate-300'>Reply</button>
+      <div className='flex gap-2 justify-between items-center'>
+        <button
+          onClick={() => setShowInputModal((st) => !st)}
+          className='text-sm border border-transparent text-slate-200 px-2 py-1 rounded-md hover:border-slate-300'>Reply</button>
+
+        <div className='text-sm text-blue-600 hover:underline cursor-pointer' onClick={() => setShowReply(!showReply)}>{showReply ? "hide reply" : "view reply"}</div>
+      </div>
 
       {showInputModal && <CommnetInputBox
         tweetId={data.tweet_id}
@@ -71,7 +61,7 @@ const ReplyBoxItems = ({ data, cookie }: {
         commentId={data.comment_id}
       />
       }
-      {showInputModal && <ReplyBox cookie={cookie} parentCommentId={data.id} commentId={data.comment_id} tweetId={data.tweet_id} />}
+      {showReply && <ReplyBox tweetId={data.tweet_id} commentId={data.comment_id} cookie={cookie} parentCommentId={data.id} />}
     </div>
   )
 }

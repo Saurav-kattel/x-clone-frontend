@@ -1,16 +1,14 @@
-import React, { SetStateAction, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AuthorImage from '../AuthorImage'
 import CommentInputBox from './CommentInputBox';
-import { calculateTimeSpent } from '@/lib/getTimeSpent';
 import { CommentData } from '../(ts)/getUserComments';
 import ReplyBox from '../(reply)/ReplyBox';
+import SpentTimeComponent from './SpentTimeComponent';
 
 type Params = {
   token: string;
   tweetId: string;
   parentCommentId: string | null
-  showInputModal: boolean;
-  setShowInputModal: React.Dispatch<SetStateAction<boolean>>
   authorId: string
   commentId: string
 }
@@ -44,75 +42,67 @@ function CommentBody({ data }: { data: CommentData }) {
   )
 }
 
-function Footer({ tweetId, token, authorId, commentId, parentCommentId, showInputModal, setShowInputModal }: Params) {
-  const [showReplyBox, setShowReplyBox] = useState(!showInputModal)
-  const [showReplyData, setShowReplyData] = useState(false)
+function Footer({ tweetId, token, authorId, commentId, parentCommentId, }: Params) {
+  const [showRelpies, setShowRelpies] = useState(false)
+  const [showInputModal, setShowInputModal] = useState(false)
   return <div>
     <div className='flex justify-between  w-[26dvw] items-center'>
       <button
         onClick={() => {
           setShowInputModal(st => !st)
-          setShowReplyBox((st) => !st)
         }}
-        className='flex ml-4 rounded-md px-2 py-1 text-sm  hover:border-slate-400 border border-transparent'>Reply</button>
+        className='flex ml-4 rounded-md px-2 py-1 text-sm  hover:border-slate-400 border border-transparent'>
+        Reply
+      </button>
+
       <button
         onClick={() => {
-          setShowReplyData(st => !st)
+          setShowRelpies(st => !st)
         }}
-        className='text-sm text-blue-600 hover:underline'>{!showReplyData ? "view replies" : "hide replies"}</button>
+        className='text-sm text-blue-600 hover:underline'>
+        {!showRelpies ? "view reply" : "hide reply"}
+      </button>
     </div>
 
-    {showReplyBox && <CommentInputBox
+    {showInputModal && <CommentInputBox
       authorId={authorId}
       tweetId={tweetId}
       commentId={commentId}
       cookie={token}
-      parentCommentId={parentCommentId} />}
+      parentCommentId={commentId} />
+    }
 
-    {showReplyData && <ReplyBox
-      cookie={token}
-      tweetId={tweetId}
-      commentId={commentId}
-      parentCommentId={parentCommentId}
-    />}
+
+    {
+      showRelpies && <ReplyBox
+        cookie={token}
+        tweetId={tweetId}
+        commentId={commentId}
+        parentCommentId={parentCommentId}
+      />
+
+    }
+
   </div>
 }
 
-const CommentItems = ({ data, token, showInputModal, setShowInputModal }: {
-  data: CommentData, token: string; showInputModal: boolean;
-  setShowInputModal: React.Dispatch<SetStateAction<boolean>>
-
+const CommentItems = ({ data, token }: {
+  data: CommentData, token: string;
 }) => {
-  const [refreshTime, setRefreshTime] = useState(false)
-  const [spentTime, setSpentTime] = useState("")
-
-  useEffect(() => {
-    let intervalId = setInterval(() => {
-      setRefreshTime((res) => !res)
-    }, 1000)
-
-    let time = calculateTimeSpent(data.createdAt)
-    setSpentTime(time)
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [refreshTime])
   return (
 
     <div className='ml-6 py-3 flex flex-col px-2 rounded-md w-[30vw] items-start justify-center'>
       <div className=' px-2 flex items-center justify-center'>
         <AuthorImage width={50} height={50} userId={data.userId} author={data.username} />
         <p className='text-slate-400 font-bold text-md p-2'>{data.username}</p>
-        <p className='text-[14px] text-slate-500'>{spentTime} ago</p>
+        <SpentTimeComponent pgTime={data.createdAt} />
       </div>
       <CommentBody data={data} />
 
       <Footer
         tweetId={data.tweet_id}
         authorId={data.userId}
-        showInputModal={showInputModal}
         token={token}
-        setShowInputModal={setShowInputModal}
         parentCommentId={null}
         commentId={data.id}
       />

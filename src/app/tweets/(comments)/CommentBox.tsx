@@ -44,7 +44,10 @@ const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibilit
         <h3 className='flex p-2 font-bold text-2xl text-slate-600'>Comments</h3>
       </div>
       <div className='flex gap-2 flex-col'>
+
         {showInputModal && <CommentInputBox commentId={null} tweetId={tweetId} cookie={cookie} />}
+
+
         {data && data.map((comment) => (
           <CommentItems
             showInputModal={showInputModal}
@@ -53,7 +56,8 @@ const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibilit
             key={comment.id}
             data={comment}
           />
-        ))}
+        ))
+        }
       </div>
       <div className='flex items-center justify-center' ref={ref}>
         {shouldFetch && <Spinner />}
