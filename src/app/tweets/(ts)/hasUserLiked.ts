@@ -9,7 +9,6 @@ export function hasUserLiked({ data, userId }: { data: TweetLikedUser[] | null |
   if (data === null || data === undefined) {
     return false;
   }
-  let result = data.some(elm => elm.userId === userId);
-  return result
+  return data.some(elm => elm.userId === userId);
 }
 

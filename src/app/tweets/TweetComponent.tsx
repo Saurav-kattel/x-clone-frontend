@@ -76,7 +76,7 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
       </Link>
       {data && <FooterSection
         commentVis={commentVis}
-        userId={data.userId}
+        userId={userData?.res.id ?? ""}
         tweetId={data.id}
         token={token} />
       }

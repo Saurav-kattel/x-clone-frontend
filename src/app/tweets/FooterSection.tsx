@@ -19,31 +19,41 @@ interface PropType {
 }
 
 
-const LikeSection = ({ tweetId, click, token, userId }: {
+const LikeSection = ({ tweetId, token, userId }: {
   tweetId: string;
   token: string;
   userId: string;
-  click: boolean;
 }
 ) => {
 
   const [count, setCount] = useState(0)
   const [like, setLike] = useState(false)
+  const [click, setClick] = useState(false)
 
+  function handleLikeClick() {
+    setClick(!click)
+    setTimeout(() => {
+      handleLike({ token, tweetId })
+    }, 100)
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { like: hasLiked } = await useHasLiked({ tweetId, token, userId })
-      const { count: likeCount } = await useTweetLikeCount({ tweetId })
-      setLike(hasLiked)
-      setCount(likeCount)
-
+    const fetchData = () => {
+      setTimeout(async () => {
+        const { like: hasLiked } = await useHasLiked({ tweetId, token, userId })
+        const { count: likeCount } = await useTweetLikeCount({ tweetId })
+        setLike(hasLiked)
+        setCount(likeCount)
+      }, 200)
     }
     fetchData()
   }, [click, userId])
+
   return <>
-    {like ? <FontAwesomeIcon className='text-red-500 hover:cursor-pointer' icon={faHeart} /> : <FontAwesomeIcon className='cursor-pointer' icon={faHeart} />}
-    <span className='text-xl p-2 text-white'>{count}</span>
+    <div onClick={handleLikeClick} className='text-2xl '>
+      {like ? <FontAwesomeIcon className='text-red-500 hover:cursor-pointer' icon={faHeart} /> : <FontAwesomeIcon className='cursor-pointer' icon={faHeart} />}
+      <span className='text-xl p-2 text-white'>{count}</span>
+    </div>
   </>
 }
 
@@ -71,26 +81,12 @@ const CommentSectionWrapper = ({ tweetId, setShowComment }: {
 }
 
 const FooterSection = ({ token, tweetId, userId, commentVis = "USER" }: PropType) => {
-  const [click, setClick] = useState(false)
-
   const [showComment, setShowComment] = useState(false)
-  useEffect(() => {
-    const tmId = setTimeout(() => {
-      handleLike({ token, tweetId })
-    }, 100)
-    return () => {
-      clearTimeout(tmId)
-    }
-  }, [click])
   return (
     <div className='border-b-[1px] flex flex-col w-[40vw] items-center justify-center  border-t-slate-700'>
       < div className='w-[40vw] flex items-center justify-center '>
         <div className='flex gap-2 w-[35vw] justify-between items-center'>
-          <div className='p-2 text-2xl' onClick={() => {
-            setClick(!click)
-          }} >
-            <LikeSection token={token} click={click} tweetId={tweetId} userId={userId} />
-          </div>
+          <LikeSection tweetId={tweetId} token={token} userId={userId} />
           <CommentSectionWrapper tweetId={tweetId} setShowComment={setShowComment} />
           <div className='p-2 text-2xl'>
             <FontAwesomeIcon icon={faHeart} />
