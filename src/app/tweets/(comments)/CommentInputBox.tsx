@@ -11,7 +11,6 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, comm
 }) => {
   const [comment, setComment] = useState<string>('')
   const dispatch = useDispatch<AppDispatch>()
-  console.log(parentCommentId)
   return (
     <div className='flex justify-center items-center'>
       <div className=' bg-slate-950 rounded-3xl flex justify-center items-center w-[30vw]'>

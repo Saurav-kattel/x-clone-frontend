@@ -16,25 +16,12 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)
-  const [refresh, setRefresh] = useState<boolean>(false)
 
   const update = useCallback(() => {
     setClicked(state => !state)
   }, [])
 
   const { ref, inView } = useInView()
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setRefresh((st) => !st)
-    }, 10000)
-
-
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [refresh])
-
   const [animation, setAnimation] = useState("")
 
   useEffect(() => {
@@ -77,6 +64,7 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
       {data && <FooterSection
         commentVis={commentVis}
         userId={userData?.res.id ?? ""}
+        commentOwnerId={data.userId}
         tweetId={data.id}
         token={token} />
       }

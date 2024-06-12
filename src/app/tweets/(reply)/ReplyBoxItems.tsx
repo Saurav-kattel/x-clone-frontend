@@ -6,13 +6,15 @@ import Link from 'next/link'
 import { ReplyData } from '../(ts)/getReplyData'
 import ReplyBox from './ReplyBox'
 import SpentTimeComponent from '../(comments)/SpentTimeComponent'
+import SideModal from '../(comments)/SideModal'
 
-const ReplyBoxItems = ({ data, cookie }: {
-  data: ReplyData; cookie: string;
+const ReplyBoxItems = ({ data, cookie, tweetOwnerId }: {
+  data: ReplyData; cookie: string; tweetOwnerId: string;
 }) => {
 
   const [showInputModal, setShowInputModal] = useState<boolean>(false)
   const [showReply, setShowReply] = useState(false)
+
 
   return (
     <div className='ml-4 border-l-white border-l-[1px] p-4'>
@@ -23,6 +25,7 @@ const ReplyBoxItems = ({ data, cookie }: {
           height={50}
           author={data.replied_from_username} userId={data.replied_from} /></Link>
         <h3 className='text-xl text-slate-400 font-bold'>{data.replied_from_username}</h3>
+        <SideModal replyId={data.id} token={cookie} commenterId={data.replied_from} tweetOwnerId={tweetOwnerId} />
       </div>
 
       <div>
@@ -61,7 +64,7 @@ const ReplyBoxItems = ({ data, cookie }: {
         commentId={data.comment_id}
       />
       }
-      {showReply && <ReplyBox tweetId={data.tweet_id} commentId={data.comment_id} cookie={cookie} parentCommentId={data.id} />}
+      {showReply && <ReplyBox tweetId={data.tweet_id} tweetOwnerId={tweetOwnerId} commentId={data.comment_id} cookie={cookie} parentCommentId={data.id} />}
     </div>
   )
 }

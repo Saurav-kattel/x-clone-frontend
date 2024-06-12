@@ -11,9 +11,8 @@ import { refreshFunc } from '@/app/redux/features/commentSlice';
 import { fetchComments } from './fetchComments';
 import { CommentResponseData } from '../(ts)/getUserComments';
 
-const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibility: "ALL" | "USER"; cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>> }) => {
+const CommentBox = ({ cookie, setShowComment, tweetOwnerId, tweetId, visibility }: { visibility: "ALL" | "USER"; cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>>; tweetOwnerId: string; }) => {
   const [data, setData] = useState<CommentResponseData['res']>([]);
-  const [showInputModal, setShowInputModal] = useState<boolean>(true);
   const { refresh } = useSelector((state: RootState) => state.comment);
   const [ref, inView] = useInView();
   const [shouldFetch, setShouldFetch] = useState(true);
@@ -31,9 +30,10 @@ const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibilit
     if (refresh) {
       setPageNumber(1)
       setShouldFetch(true);
-      fetchComments({ pageNumber: 1, tweetId, setPageNumber, token: cookie, refresh, setData, setShouldFetch, visibility })
-        .then(() => dispatch(refreshFunc()));
-
+      setTimeout(() => {
+        fetchComments({ pageNumber: 1, tweetId, setPageNumber, token: cookie, refresh, setData, setShouldFetch, visibility })
+          .then(() => dispatch(refreshFunc()));
+      }, 100)
     }
   }, [refresh, dispatch, tweetId, cookie]);
 
@@ -44,14 +44,10 @@ const CommentBox = ({ cookie, setShowComment, tweetId, visibility }: { visibilit
         <h3 className='flex p-2 font-bold text-2xl text-slate-600'>Comments</h3>
       </div>
       <div className='flex gap-2 flex-col'>
-
-        {showInputModal && <CommentInputBox commentId={null} tweetId={tweetId} cookie={cookie} />}
-
-
+        <CommentInputBox commentId={null} tweetId={tweetId} cookie={cookie} />
         {data && data.map((comment) => (
           <CommentItems
-            showInputModal={showInputModal}
-            setShowInputModal={setShowInputModal}
+            tweetOwnerId={tweetOwnerId}
             token={cookie}
             key={comment.id}
             data={comment}

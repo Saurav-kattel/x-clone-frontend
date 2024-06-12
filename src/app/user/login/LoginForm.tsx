@@ -14,10 +14,6 @@ export type ResponseType =
 
 
 function Error({ res, pending }: { res: any, pending: boolean; }) {
-
-
-
-
   return <div className="h-[10vh] text-red-200">
     {res && !pending && res.status != 200 ? <div>
       <h3 className="font-semibold text-red-400 text-xl">Sigh, Error Occured!</h3>
@@ -43,7 +39,8 @@ const LoginForm = () => {
 
     const redirectTimeoutId = setTimeout(() => {
       if (response && response.status == 200) {
-        router.refresh();
+        router.push("/")
+        router.refresh()
       }
       setPending(false)
     }, 500);

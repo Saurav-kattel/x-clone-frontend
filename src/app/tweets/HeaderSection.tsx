@@ -5,7 +5,7 @@ const AuthorImage = React.lazy(() => import('./AuthorImage'))
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import { Tweets } from '../actions/getTweetsData'
-import { calculateTimeSpent } from '@/lib/getTimeSpent'
+import SpentTimeComponent from './(comments)/SpentTimeComponent'
 
 const HeaderSection = ({
   setShowModal,
@@ -15,7 +15,6 @@ const HeaderSection = ({
   data: Tweets;
   setShowModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const time = calculateTimeSpent(data.createdAt.toString())
   return (
     <section className='flex w-[38vw] justify-start items-center'>
       <div className='flex w-[40vw] justify-start items-center'>
@@ -23,8 +22,7 @@ const HeaderSection = ({
         <div className='text-white font-bold text-md px-2 py-1'>
           {data.author}
         </div>
-        <span className='text-center font-light text-slate-600'>
-          {time} ago</span>
+        <SpentTimeComponent pgTime={data.createdAt.toString()} />
       </div>
       <FontAwesomeIcon
         onClick={() => { setShowModal(state => !state) }}

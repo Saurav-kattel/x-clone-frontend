@@ -15,25 +15,27 @@ type Props = {
 export const fetchComments = async ({ refresh, setShouldFetch, setPageNumber, pageNumber, setData, tweetId, token, visibility }: Props) => {
 	try {
 
+
 		let res;
 		if (visibility === "USER") {
 			res = await getUserComment({ tweetId, token, pageNumber, pageSize: 6 });
 		} else {
 			res = await getAllComments({ tweetId, pageNumber, pageSize: 6 });
 		}
-
+		if (refresh && !res?.res) {
+			setShouldFetch(false)
+			setData([])
+		}
 		if (!res?.res || res.res.length === 0) {
 			setShouldFetch(false);
 			return;
 		}
-
 
 		if (refresh) {
 			setData(res.res)
 		} else {
 			setData((prev) => [...prev, ...res.res]);
 		}
-		// Avoid duplicates
 		if (res.res.length < 6) {
 			setShouldFetch(false);
 		} else {

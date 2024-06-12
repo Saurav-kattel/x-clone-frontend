@@ -137,9 +137,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (!userData) {
-      dispatch(getUserData({ cookie }));
-    }
+    dispatch(getUserData({ cookie }));
   }, [])
 
   const toggleIsOpen = () => {
