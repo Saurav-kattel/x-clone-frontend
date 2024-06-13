@@ -1,7 +1,6 @@
 "use client";
-import React, { RefAttributes, Suspense, forwardRef, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileImage } from "../redux/features/profileImageSlice";
 import { getUserData } from "../redux/features/userSlice";
 import { AppDispatch, RootState } from "../redux/app/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,8 +39,6 @@ function TextArea({ content, setContent, isOpen }: TextAreaProp) {
       className="bg-transparent outline-none border-none p-2 min-h-[60px] w-[30vw] resize-none"
       placeholder="What's on your mind"
     />
-
-
   </>
 }
 
@@ -50,14 +47,9 @@ interface ImageViewComponentProps {
   imgSrc: string;
   setImgSrc: React.Dispatch<React.SetStateAction<string | undefined>>
   setFormFile: React.Dispatch<React.SetStateAction<FormData | undefined>>
-
-
 }
 
 function ImageViewComponent({ imgSrc, setImgSrc, setFormFile }: ImageViewComponentProps) {
-
-
-
   return <div className="flex flex-col p-2  ">
     {imgSrc && (
       <div>
@@ -90,7 +82,6 @@ interface FileInputComponentProps {
 }
 
 function FileInuptComponent({ setFormFile, setImgSrc }: FileInputComponentProps) {
-
   const fileRef = useRef<HTMLInputElement>(null);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target.files && event.target.files[0];
@@ -123,7 +114,6 @@ function FileInuptComponent({ setFormFile, setImgSrc }: FileInputComponentProps)
       />
     </div>
   </>
-
 }
 
 const Header = ({ cookie }: { cookie: string }) => {
@@ -146,7 +136,6 @@ const Header = ({ cookie }: { cookie: string }) => {
 
   async function handlePostButtonClick() {
     let res = await handleCreateTweet({ form: formFile, content: content, token: cookie })
-    console.log(res)
     if (res.status == 200) {
       setContent("")
       setImgSrc(undefined)
@@ -161,35 +150,33 @@ const Header = ({ cookie }: { cookie: string }) => {
   }
   return (
     <div>
-      {
-        <div className="border-b-[0.5px]  border-t-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
-          <Suspense fallback={<Spinner />} >
-            <ProfileImage cookie={cookie} username={userData?.res.username} />
-          </Suspense>
-          {isOpen ? (
-            <div
-              className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
-            >
-              <TextArea isOpen={isOpen} content={content} setContent={setContent} />
-              <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
-              <button
-                onClick={handlePostButtonClick}
-                className="bg-blue-700 px-4 py-1 rounded-lg hover:scale-110">
-                Post
-              </button>
+      <div className="border-b-[0.5px]  border-t-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
+        <Suspense fallback={<Spinner />} >
+          <ProfileImage cookie={cookie} username={userData?.res.username} />
+        </Suspense>
+        {isOpen ? (
+          <div
+            className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
+          >
+            <TextArea isOpen={isOpen} content={content} setContent={setContent} />
+            <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
+            <button
+              onClick={handlePostButtonClick}
+              className="bg-blue-700 px-4 py-1 rounded-lg hover:scale-110">
+              Post
+            </button>
 
-              <ImageViewComponent setFormFile={setFormFile} setImgSrc={setImgSrc} imgSrc={imgSrc} />
-              {(response && response.stauts != 200) ? <div className="text-red-600">{response.res.message}</div> : null}
-              {(response && response.stauts === 200) ? <div className="text-green-600">success</div> : null}
-            </div>
-          ) : (
-            <>
-              <div onClick={toggleIsOpen}>What's on your mind?</div>
-            </>
-          )
-          }
-        </div >
-      }
+            <ImageViewComponent setFormFile={setFormFile} setImgSrc={setImgSrc} imgSrc={imgSrc} />
+            {(response && response.stauts != 200) ? <div className="text-red-600">{response.res.message}</div> : null}
+            {(response && response.stauts === 200) ? <div className="text-green-600">success</div> : null}
+          </div>
+        ) : (
+          <>
+            <div onClick={toggleIsOpen}>What's on your mind?</div>
+          </>
+        )
+        }
+      </div >
     </div >
   );
 };

@@ -7,8 +7,8 @@ import { useTweetLikeCount } from '@/app/hooks/useTweetLike'
 import { handleLike } from '../(ts)/handleLike'
 import CommentBox from '../(comments)/CommentBox'
 import { getCommetCount } from '../(ts)/getCommentCount'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '@/app/redux/app/store'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/app/redux/app/store'
 
 const TweetFooter = ({ tweetId, token, userId }: { tweetId: string; token: string; userId: string }) => {
   const [count, setCount] = useState(0)
@@ -61,7 +61,7 @@ const TweetFooter = ({ tweetId, token, userId }: { tweetId: string; token: strin
           <FontAwesomeIcon icon={faRetweet} className='cursor-pointer' />
         </div>
 
-        {showComments && <CommentBox setShowComment={setShowComments} tweetId={tweetId} cookie={token} visibility='ALL' />}
+        <CommentBox tweetOwnerId={userId} setShowComment={setShowComments} tweetId={tweetId} cookie={token} visibility='ALL' />
       </div>
     </>
   )

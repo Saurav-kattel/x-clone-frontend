@@ -1,5 +1,6 @@
 import {
   IconDefinition,
+  faBell,
   faHome,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +14,11 @@ export const items: {
       name: "Home",
       path: "/",
       icon: faHome,
+    },
+    {
+      name: "Notification",
+      path: "/notification",
+      icon: faBell,
     },
     {
       name: "Profile",

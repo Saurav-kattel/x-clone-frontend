@@ -30,7 +30,7 @@ export const fetchComments = async ({ refresh, setShouldFetch, setPageNumber, pa
 			setShouldFetch(false);
 			return;
 		}
-
+		console.log(res)
 		if (refresh) {
 			setData(res.res)
 		} else {

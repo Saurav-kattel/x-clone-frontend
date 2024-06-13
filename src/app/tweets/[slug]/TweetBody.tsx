@@ -1,8 +1,14 @@
-import { TweetRes } from '@/app/actions/getTweetsData'
+import { Tweets } from '@/app/actions/getTweetsData'
 import React from 'react'
 import TweetImage from '../TweetImage'
 
-const TweetBody = ({ data }: { data: TweetRes }) => {
+interface ArgDataType {
+  status: number;
+  res: Tweets
+}
+
+
+const TweetBody = ({ data }: { data: ArgDataType }) => {
   return (
     <div className='flex flex-col justify-center items-center'>
 

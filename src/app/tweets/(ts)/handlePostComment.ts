@@ -17,20 +17,23 @@ export type Comment = {
 }
 
 export async function handlePostComment({ comment, tweetId, authorId, parentCommentId, commentId, cookie }: CommentPayload) {
-
-  const response = await fetch(backendUrl + '/api/v1/tweet/comment', {
-    method: "POST",
-    headers: {
-      auth_token_x_clone: cookie
-    },
-    body: JSON.stringify({
-      comment: comment,
-      tweet_id: tweetId,
-      parent_comment_id: parentCommentId ?? null,
-      replied_to: authorId,
-      comment_id: commentId
+  try {
+    const response = await fetch(backendUrl + '/api/v1/tweet/comment', {
+      method: "POST",
+      headers: {
+        auth_token_x_clone: cookie
+      },
+      body: JSON.stringify({
+        comment: comment,
+        tweet_id: tweetId,
+        parent_comment_id: parentCommentId ?? null,
+        replied_to: authorId,
+        comment_id: commentId
+      })
     })
-  })
-  const data = await response.json();
-  console.log(data)
+    return await response.json();
+
+  } catch (err) {
+    console.error(err)
+  }
 }
