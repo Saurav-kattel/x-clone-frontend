@@ -17,7 +17,7 @@ const TweetBody = ({ data }: { data: ArgDataType }) => {
       </div>
 
       <div className='flex justify-center items-center w-[35dvw]'>
-        <TweetImage imageId={data.res.imageId} />
+        <TweetImage showFullImage={true} imageId={data.res.imageId} />
       </div>
 
     </div>

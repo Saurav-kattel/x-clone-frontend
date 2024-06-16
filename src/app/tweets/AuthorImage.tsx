@@ -7,68 +7,51 @@ import Image from "next/image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 
-const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
+const AuthorImage = ({ userId, author, link = true, width = 50, height = 50 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
   const [image, setImage] = useState<undefined | AuthorImageType>(undefined)
+
   useEffect(() => {
-    setTimeout(() => {
-      getAuthorImage({ authorId: userId }).then((data) => {
-        setImage(data)
-      }).catch((err) => {
+    getAuthorImage({ authorId: userId })
+      .then((data) => setImage(data))
+      .catch((err) => {
         setImage(undefined)
         console.log(err)
       })
-    }, 200)
-  }, [])
-  return (
-    <div>
-      <div className='flex justify-start items-center p-2'>
-        {link ? <>
-          {image?.status != 200 && <Link href={'/user/' + author}
-            style={{ width: `${width}px`, height: `${height}px` }}
-            className="flex items-center justify-start ">
-            <span className={`w-[${width}px] h-[${height}px] rounded-[50%] font-bold text-slate-400 object-fill`}
-            >
-              <FontAwesomeIcon icon={faUser} />
-            </span>
-          </Link>
-          }
+  }, [userId])
 
-        </> : <>
-          {image?.status != 200 && <div
-            style={{ width: `${width}px`, height: `${height}px` }}
-            className={`rounded-full flex justify-center items-center text-center`}>
-            <FontAwesomeIcon icon={faUser} />
-          </div>
-          }  </>}
+  const imageComponent = (
+    <Image
+      fetchPriority="low"
+      height={height}
+      width={width}
 
-        {image && image.status == 200 &&
-          <>
-            {link ?
-              <Link href={'/user/' + author} className="flex items-center justify-start ">
-                <Image
-                  height={height}
-                  width={width}
-                  alt="profile image"
-                  className={`w-[${width}px] h-[${height}px] rounded-[50%] object-fill`}
-                  src={`data:image/jpeg;base64,${image.res.image}`}
-                />
-              </Link>
+      alt="profile image"
+      className="bg-center rounded-[50px] w-[80px] h-[80px]"
+      src={`data:image/jpeg;base64,${image?.res.image}`}
+    />
+  )
 
-              : <div className="flex items-center justify-start ">
-                <Image
-                  height={height}
-                  width={width}
-                  alt="profile image"
-                  className={`w-[${width}px] h-[${height}px] rounded-[50%]  object-fill`}
-                  src={`data:image/jpeg;base64,${image.res.image}`}
-                />
-              </div>
-            }
-
-          </>}
-      </div>
+  const placeholderComponent = (
+    <div
+      style={{ width: `${width}px`, height: `${height}px` }}
+      className="rounded-full flex z-40 justify-center items-center text-center text-slate-400"
+    >
+      <FontAwesomeIcon icon={faUser} />
     </div>
+  )
 
+  return (
+    <div className="flex justify-start items-center p-2">
+      {link ? (
+        <Link href={`/user/${author}`} className="flex items-center justify-start">
+          {image?.status === 200 ? imageComponent : placeholderComponent}
+        </Link>
+      ) : (
+        <div className="flex items-center justify-start">
+          {image?.status === 200 ? imageComponent : placeholderComponent}
+        </div>
+      )}
+    </div>
   )
 }
 

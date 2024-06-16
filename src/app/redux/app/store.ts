@@ -8,6 +8,7 @@ import followerSlice from "../features/followerSlice";
 import followeeSlice from "../features/followeeSlice";
 import commentSlice from "../features/commentSlice";
 import tweetSlice from "../features/tweetSlice";
+import coverImageSlice from "../features/coverImageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     follower: followerSlice,
     following: followeeSlice,
     comment: commentSlice,
+    cover: coverImageSlice,
   },
 });
 

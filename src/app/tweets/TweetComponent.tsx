@@ -10,7 +10,7 @@ import FooterSection from './FooterSection'
 import { Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
-const TweetImage = React.lazy(() => import('./TweetImage'))
+import TweetImage from './TweetImage'
 
 const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; token: string; commentVis?: "ALL" | "USER" }) => {
   const { res: userData } = useSelector((state: RootState) => state.user)

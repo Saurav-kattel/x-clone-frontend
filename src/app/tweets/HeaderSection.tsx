@@ -1,11 +1,12 @@
 "use client"
-import React, { SetStateAction } from 'react'
+import React, { SetStateAction, Suspense } from 'react'
 
 const AuthorImage = React.lazy(() => import('./AuthorImage'))
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import { Tweets } from '../actions/getTweetsData'
 import SpentTimeComponent from './(comments)/SpentTimeComponent'
+import Spinner from '@/lib/Spinner'
 
 const HeaderSection = ({
   setShowModal,
@@ -18,7 +19,9 @@ const HeaderSection = ({
   return (
     <section className='flex w-[38vw] justify-start items-center'>
       <div className='flex w-[40vw] justify-start items-center'>
-        <AuthorImage width={50} height={50} userId={data.userId} author={data.author_username} />
+        <Suspense fallback={<Spinner />}>
+          <AuthorImage width={50} height={50} userId={data.userId} author={data.author_username} />
+        </Suspense>
         <div className='text-white font-bold text-md px-2 py-1'>
           {data.author}
         </div>

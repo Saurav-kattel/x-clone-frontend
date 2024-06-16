@@ -10,7 +10,7 @@ const FirstTweetPage = ({ cookie, data }: { cookie: string; data: TweetRes | und
 
     const tmId = setTimeout(() => {
       setDelay(true)
-    }, 300)
+    })
 
     return () => {
       clearTimeout(tmId)

@@ -20,8 +20,7 @@ export async function getTweetsData({ pageNum, pageSize, tweetId }: { pageSize: 
   try {
     const tweets = await fetch(`${backendUrl}/api/v1/tweet/get?n=${pageNum}&s=${pageSize}&t_id=${tweetId}`, {
       method: "GET",
-      credentials: "include",
-      next: { tags: ["tweets"] }
+      next: { tags: ["tweets"] },
     })
     return tweets.json();
   } catch (e) {

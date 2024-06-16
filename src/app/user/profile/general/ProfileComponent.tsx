@@ -8,6 +8,7 @@ import { getUserData } from "@/app/redux/features/userSlice";
 import Link from "next/link";
 import { getFolloweeData } from "@/app/redux/features/followeeSlice";
 import { getFollowerData } from "@/app/redux/features/followerSlice";
+import { getCoverImage } from "@/app/redux/features/coverImageSlice";
 const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
 export type UserDataRes = { status: number; res: UserData } | undefined;
@@ -18,28 +19,47 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
   const loading = useSelector((state: RootState) => state.user.loading);
   const { res: followers } = useSelector((state: RootState) => state.follower);
   const { res: following } = useSelector((state: RootState) => state.following);
+  const { res: coverImage } = useSelector((state: RootState) => state.cover)
 
   useEffect(() => {
     if (!data) {
       dispatch(getUserData({ cookie: cookies }));
     }
-
+    dispatch(getCoverImage({ username: data?.res.username ?? '' }))
     dispatch(getFolloweeData({ cookie: cookies }))
     dispatch(getFollowerData({ cookie: cookies }))
 
   }, [data]);
+
+  useEffect(() => {
+    if (!coverImage) {
+      dispatch(getCoverImage({ username: data?.res.username ?? '' }))
+    }
+  }, [coverImage])
+
+
   return (
     <>
       {!loading ? (
         data ? (
           <div className="flex flex-col w-[40vw] justify-center items-center p-4">
 
-            <div className=" border border-slate-800 p-4 rounded-md shadow-sm shadow-slate-400">
+            <div
+              className="border w-[35vw] border-slate-800 p-4 rounded-md shadow-sm shadow-slate-400"
+            >
+
               <div className="font-bold text-2xl capitalize text-white py-2 px-4 text-left">
                 {data.res.firstName.concat(" ").concat(data.res.lastName)}
               </div>
 
-              <div className="m-2 flex gap-4 justify-around items-center">
+              <div style={{
+                backgroundImage: `url(data:image/jpeg;base64,${coverImage?.res.image ?? ""})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backdropFilter: 'blur(5px)'
+              }}
+                className="m-2 flex gap-4 justify-around items-center py-4 px-2">
                 <Suspense fallback="loading...">
                   <ImageComponent
                     username={data.res.username}

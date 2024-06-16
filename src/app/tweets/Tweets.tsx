@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import type { Tweets as TweetType, Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import { getTweetsData } from '../actions/getTweetsData'
@@ -15,7 +15,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
 
   const { ref, inView } = useInView({ threshold: 0 })
 
-  const loadMoreTweets = async () => {
+  const loadMoreTweets = useCallback(async () => {
     if (loading || !shouldFetchTweets) return;
     setLoading(true)
     const nextPage = loadedPage + 1;
@@ -33,10 +33,8 @@ const Tweets = ({ cookie }: { cookie: string }) => {
       setShouldFetchTweets(false)
     }
 
-    setTimeout(() => {
-      setLoading(false)
-    }, 300)
-  }
+    setLoading(false)
+  }, [loadedPage, loading, shouldFetchTweets])
 
 
   useEffect(() => {
@@ -48,9 +46,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
   return (
     <>
       <section className='flex flex-col  gap-2 p-2 no-scroll-bar'>
-        {tweetsData && tweetsData.map((tweet) => <Suspense key={tweet.id} fallback={<Spinner />}>
-          <TweetComponent token={cookie} data={tweet} />
-        </Suspense>)}
+        {tweetsData && tweetsData.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
         <div className='flex justify-center items-center h-[3vh]' ref={ref}>
           {shouldFetchTweets && <Spinner />}
         </div>

@@ -13,12 +13,23 @@ import Spinner from '@/lib/Spinner'
 import Link from 'next/link'
 import Reply from './(reply)/Reply'
 import Like from './(like)/Like'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/app/redux/app/store'
+import { getCoverImage } from '@/app/redux/features/coverImageSlice'
 
 const Header = ({ data, cookie, username }: { username: string; data: UserDataRes, cookie: string }) => {
   const fullName = data?.res.firstName.concat(" ").concat(data?.res.lastName) ?? ""
   const joinedOnYear = new Date(data?.res.createdAt ?? "").getFullYear()
   const joinedOnMonth = new Date(data?.res.createdAt ?? "").getMonth()
+  const { res: coverImage } = useSelector((store: RootState) => store.cover)
   const [selectedPath, setSelectedPath] = useState("Post")
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    if (!coverImage) {
+      dispatch(getCoverImage({ username: username }))
+    }
+  }, [coverImage])
   return (
     <section>
       <div className='p-2 flex gap-4 bg-[#000013] items-center justify-start'>
@@ -26,23 +37,35 @@ const Header = ({ data, cookie, username }: { username: string; data: UserDataRe
         <h2 className='flex font-bold text-2xl'>{fullName}</h2>
       </div>
       <div className='p-2 '>
-        <AuthorImage link={false} width={100} height={100} userId={data?.res.id ?? ""} author={fullName} />
-        <h2 className='flex font-bold text-xl'>{fullName}</h2>
-        <p className='text-[10px]  text-slate-300'>@{data?.res.username}</p>
-        <div className='flex py-2  gap-2 justify-start items-center'>
-          <FontAwesomeIcon icon={faCalendarAlt} className='text-slate-400 text-sm' />
-          <span className='text-slate-400 text-center text-sm'>Joined on {getMonth({ month: joinedOnMonth })} {joinedOnYear}</span>
-        </div>
-        <div className='flex justify-start items-center gap-4'>
-          <Follower userId={data?.res.id} cookies={cookie} />
-          <Following userId={data?.res.id} cookies={cookie} />
-        </div>
-        <ProfileNav selectedPath={selectedPath} setSelectedPath={setSelectedPath} />
 
-        {selectedPath === "Post" && <Suspense fallback={<Spinner />}><Post cookie={cookie} username={username} />  </Suspense>}
-        {selectedPath === "Replies" && <Suspense fallback={<Spinner />}><Reply userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
-        {selectedPath === "Likes" && <Suspense fallback={<Spinner />}><Like userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
 
+        <div style={{
+          backgroundImage: `url(data:image/jpeg;base64,${coverImage?.res.image ?? ""})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+
+        }} className='py-6  h-[30vh]'>
+
+          <AuthorImage link={false} width={100} height={100} userId={data?.res.id ?? ""} author={fullName} />
+        </div>
+        <div className=' mt-5'>
+          <h2 className='flex font-bold text-xl'>{fullName}</h2>
+          <p className='text-[10px]  text-slate-300'>@{data?.res.username}</p>
+          <div className='flex py-2  gap-2 justify-start items-center'>
+            <FontAwesomeIcon icon={faCalendarAlt} className='text-slate-400 text-sm' />
+            <span className='text-slate-400 text-center text-sm'>Joined on {getMonth({ month: joinedOnMonth })} {joinedOnYear}</span>
+          </div>
+          <div className='flex justify-start items-center gap-4'>
+            <Follower userId={data?.res.id} cookies={cookie} />
+            <Following userId={data?.res.id} cookies={cookie} />
+          </div>
+          <ProfileNav selectedPath={selectedPath} setSelectedPath={setSelectedPath} />
+
+          {selectedPath === "Post" && <Suspense fallback={<Spinner />}><Post cookie={cookie} username={username} />  </Suspense>}
+          {selectedPath === "Replies" && <Suspense fallback={<Spinner />}><Reply userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
+          {selectedPath === "Likes" && <Suspense fallback={<Spinner />}><Like userId={data?.res.id ?? ""} cookie={cookie} />  </Suspense>}
+        </div>
       </div>
     </section>
   )

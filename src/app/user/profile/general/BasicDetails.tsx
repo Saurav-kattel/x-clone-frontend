@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { clear } from '@/app/redux/features/userSlice'
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/app/store";
+import { url } from "inspector";
 export interface UserData {
   id: string;
   username: string;
@@ -51,6 +54,7 @@ const BasicDetails = ({ data }: { data: UserData }) => {
   }
   let date = new Date(data.createdAt);
   let parsedDate = date.getFullYear().toString().concat(" ").concat(getMonth(date.getMonth()))
+
   return (
     <div>
       <div className="text-white flex font-semibold text-md flex-col p-4">
