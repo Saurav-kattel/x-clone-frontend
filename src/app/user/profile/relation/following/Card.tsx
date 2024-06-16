@@ -1,8 +1,8 @@
 'use client'
 import { AppDispatch } from '@/app/redux/app/store';
 import { getFolloweeData } from '@/app/redux/features/followeeSlice';
+import { handleFollow } from '@/app/tweets/(ts)/handleFollow';
 import AuthorImage from '@/app/tweets/AuthorImage'
-import { handleFollow } from '@/app/tweets/handleFollow';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 

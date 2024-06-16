@@ -10,7 +10,7 @@ interface ArgDataType {
 
 const TweetBody = ({ data }: { data: ArgDataType }) => {
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='flex flex-col p-4 justify-center items-center'>
 
       <div className='flex items-center  p-2 w-[35dvw]    justify-start'>
         <p className='text-md'> {data.res.content} </p>

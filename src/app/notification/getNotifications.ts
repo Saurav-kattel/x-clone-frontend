@@ -21,6 +21,8 @@ export interface NotificationData {
 	status: string;
 	created_at: Date;
 	updated_at: Date;
+	type: string;
+	tweet_id: string;
 }
 export async function getNotification({ token }: { token: string }): Promise<{ status: number; res: NotificationData[] }> {
 
@@ -29,9 +31,10 @@ export async function getNotification({ token }: { token: string }): Promise<{ s
 			auth_token_x_clone: token
 		},
 		next: {
+
 			tags: ["notification"],
 		},
-		cache: "no-store"
+		cache: "no-cache"
 	})
 
 	const data = await res.json();

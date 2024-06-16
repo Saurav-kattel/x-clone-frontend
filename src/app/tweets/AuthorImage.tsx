@@ -36,10 +36,8 @@ const AuthorImage = ({ userId, author, link = true, width = 30, height = 30 }: {
         </> : <>
           {image?.status != 200 && <div
             style={{ width: `${width}px`, height: `${height}px` }}
-            className={`rounded-full flex justify-center items-center text-center bg-gray-200 `}>
-            <span className="text-xl text-slate-600 font-bold ">
-              {author.slice(0, 1).toUpperCase()}
-            </span>
+            className={`rounded-full flex justify-center items-center text-center`}>
+            <FontAwesomeIcon icon={faUser} />
           </div>
           }  </>}
 

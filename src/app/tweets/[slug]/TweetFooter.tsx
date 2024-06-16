@@ -61,7 +61,7 @@ const TweetFooter = ({ tweetId, token, userId }: { tweetId: string; token: strin
           <FontAwesomeIcon icon={faRetweet} className='cursor-pointer' />
         </div>
 
-        <CommentBox tweetOwnerId={userId} setShowComment={setShowComments} tweetId={tweetId} cookie={token} visibility='ALL' />
+        <CommentBox showExit={false} tweetOwnerId={userId} setShowComment={setShowComments} tweetId={tweetId} cookie={token} visibility='ALL' />
       </div>
     </>
   )
