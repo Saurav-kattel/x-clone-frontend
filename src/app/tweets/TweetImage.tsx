@@ -15,6 +15,8 @@ const TweetImage = ({ imageId, height = 80, width = 80, showFullImage = false }:
   useEffect(() => {
     const fetchImage = async (id: string) => {
       try {
+
+
         const data = await getImage(id);
         if (data?.status === 200) {
           const imageData = `data:image/jpeg;base64,${data.res.image}`;
@@ -32,8 +34,20 @@ const TweetImage = ({ imageId, height = 80, width = 80, showFullImage = false }:
       }
     };
 
+
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const imageCache = JSON.parse(localStorage.getItem("image") || "{}");
+      if (imageCache[imageId]) {
+        setImage(imageCache[imageId])
+        setLoading(false)
+        return
+      }
+    }
+
+
     setLoading(true);
     fetchImage(imageId);
+
   }, [imageId]);
 
   return (
@@ -47,7 +61,7 @@ const TweetImage = ({ imageId, height = 80, width = 80, showFullImage = false }:
             height={height}
             width={width}
             loading="lazy"
-            className="w-[38vw] h-[50dvh] rounded-md bg-contain object-contain max-h-[60vh]"
+            className="w-[38vw]  p-3  rounded-lg bg-contain object-contain max-h-[50vh]"
             src={image || 'https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'}
             placeholder='blur'
             blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
@@ -58,7 +72,7 @@ const TweetImage = ({ imageId, height = 80, width = 80, showFullImage = false }:
             height={height}
             width={width}
             loading="lazy"
-            className="w-[38vw] h-[50dvh] rounded-md bg-contain object-cover"
+            className="w-[38vw] h-[50dvh]  p-3 rounded-md bg-contain object-cover"
             src={image || 'https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'}
             placeholder='blur'
             blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
