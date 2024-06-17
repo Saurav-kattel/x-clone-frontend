@@ -64,16 +64,22 @@ const MoreInfoModal = ({ update, setShowModal, clicked, authorId, tweetId, userI
             <FontAwesomeIcon icon={faTrash} /> <span className='px-2 py-1 text-md rounded-lg text-white'>delete</span>
           </div>}
 
-          {data?.userId != userId && <div
-            onClick={() => {
-              handleFollow({ token, followeeId: data?.userId }).then(() => {
-                update();
-              })
-            }}
-            className='text-white w-[10vw] p-2  hover:bg-[#000010] 
+          {data?.userId != userId && <div>
+            <div
+              onClick={() => {
+                handleFollow({ token, followeeId: data?.userId }).then(() => {
+                  update();
+                })
+              }}
+              className='text-white w-[10vw] p-2  hover:bg-[#000010] 
             hover:cursor-pointer font-bold flex justify-center rounded-md  items-center gap-2 text-md '>
-            {followState ? <FontAwesomeIcon icon={faUserMinus} /> : <FontAwesomeIcon icon={faUserPlus} />}
-            <span className=" px-2 py-1 font-semibold rounded-2xl">{pending ? "....." : followState ? "unfollow" : "follow"}</span>
+              {followState ? <FontAwesomeIcon icon={faUserMinus} /> : <FontAwesomeIcon icon={faUserPlus} />}
+              <span className=" px-2 py-1 font-semibold rounded-2xl">{pending ? "....." : followState ? "unfollow" : "follow"}</span>
+            </div>
+
+            <div >
+
+            </div>
           </div>}
 
         </div>
