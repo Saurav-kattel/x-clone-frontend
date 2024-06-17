@@ -10,7 +10,7 @@ const page = async () => {
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
   const data = await getTweetsData({ pageSize: 8, pageNum: 1 })
   return (
-    <section className='no-scroll-bar flex flex-col m-0 p-0 items-center justify-center'>
+    <section className='no-scroll-bar flex flex-col items-center justify-center'>
       <Suspense fallback={<Spinner />} >
         <FirstTweetPage cookie={cookie} data={data} />
       </Suspense>

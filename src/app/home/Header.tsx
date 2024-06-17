@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../redux/features/userSlice";
 import { AppDispatch, RootState } from "../redux/app/store";
@@ -75,6 +75,56 @@ function ImageViewComponent({ imgSrc, setImgSrc, setFormFile }: ImageViewCompone
 
 }
 
+export type VisType = "private" | "public" | "followers"
+function SelectVisibilityComponent({ visibility, setVisibility }: { visibility: VisType, setVisibility: React.Dispatch<React.SetStateAction<VisType>> }) {
+
+  function RadioItems({ value, handleChange, visibility }: {
+    value: string; handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void; visibility: VisType
+  }) {
+    return <label className="flex flex-wrap items-center justify-center gap-2 ">
+      <input
+        type="radio"
+        name="vis"
+        value={value}
+        checked={visibility === value}
+        onChange={handleChange}
+      />
+      <span className={`text-md capitalize p-2 ${visibility === value ? "text-blue-600" : "text-slate-600"}`}>{value}</span>
+    </label>
+
+
+  }
+
+
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setVisibility(event.target.value as VisType)
+  }, [visibility])
+
+  const radioList = [
+    { value: "public", visibility, handleChange },
+    { value: "private", visibility, handleChange },
+    { value: "follower", visibility, handleChange }
+  ]
+  const [showModal, setShowModal] = useState(false)
+  return <div>
+    <h2 className="text-md text-blue-600 p-1 font-extrabold cursor-pointer "
+      onClick={() => setShowModal(!showModal)}>
+      {showModal ?
+        <FontAwesomeIcon className="text-xl font-extrabold p-2 cursor-pointer" icon={faX} />
+        :
+        <span>Choose who can see this tweet</span>}
+    </h2>
+
+    {showModal && <div className="flex flex-wrap gap-2 justify-center items-center p-2 ">
+      {radioList.map((item) => <RadioItems
+        key={item.value} value={item.value}
+        visibility={item.visibility}
+        handleChange={item.handleChange}
+      />)}
+    </div>}
+
+  </div>
+}
 
 interface FileInputComponentProps {
   setImgSrc: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
@@ -122,6 +172,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   const [content, setContent] = useState<string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [response, setResponse] = useState<any>();
+  const [visibility, setVisibility] = useState<VisType>("public");
 
   const { res: userData } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
@@ -135,7 +186,7 @@ const Header = ({ cookie }: { cookie: string }) => {
   };
 
   async function handlePostButtonClick() {
-    let res = await handleCreateTweet({ form: formFile, content: content, token: cookie })
+    let res = await handleCreateTweet({ form: formFile, content: content, token: cookie, vis: visibility })
     if (res.status == 200) {
       setContent("")
       setImgSrc(undefined)
@@ -160,6 +211,7 @@ const Header = ({ cookie }: { cookie: string }) => {
           >
             <TextArea isOpen={isOpen} content={content} setContent={setContent} />
             <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
+            <SelectVisibilityComponent visibility={visibility} setVisibility={setVisibility} />
             <button
               onClick={handlePostButtonClick}
               className="bg-blue-700 px-4 py-1 rounded-lg hover:scale-110">
