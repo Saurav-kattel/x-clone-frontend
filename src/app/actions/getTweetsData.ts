@@ -1,5 +1,6 @@
 'use server'
 import { backendUrl } from "@/lib/exportEnvs";
+import { VisType } from "../home/Header";
 
 export type Tweets = {
   id: string;
@@ -9,6 +10,7 @@ export type Tweets = {
   createdAt: Date;
   author: string;
   updatedAt: Date;
+  visibility: VisType;
   author_username: string;
 }
 

@@ -5,13 +5,15 @@ import { useInView } from 'react-intersection-observer'
 import { getTweetsData } from '../actions/getTweetsData'
 import Spinner from '@/lib/Spinner'
 import TweetComponent from './TweetComponent'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/app/store'
 
 const Tweets = ({ cookie }: { cookie: string }) => {
-
   const [tweetsData, setTweetsData] = useState<TweetType[]>([])
   const [loadedPage, setLoadedPage] = useState(1)
   const [shouldFetchTweets, setShouldFetchTweets] = useState<boolean>(true)
   const [loading, setLoading] = useState(false)
+  const { refresh } = useSelector((state: RootState) => state.tweets)
 
   const { ref, inView } = useInView({ threshold: 0 })
 
@@ -36,12 +38,22 @@ const Tweets = ({ cookie }: { cookie: string }) => {
     setLoading(false)
   }, [loadedPage, loading, shouldFetchTweets])
 
-
   useEffect(() => {
     if (inView && shouldFetchTweets) {
       loadMoreTweets();
     }
   }, [inView, shouldFetchTweets]);
+
+
+  // to refetch data for the clinet component because revalidateTag isn't helping
+  useEffect(() => {
+    if (refresh) {
+      setLoadedPage(1)
+      setTweetsData([])
+      setShouldFetchTweets(true)
+      loadMoreTweets()
+    }
+  }, [refresh])
 
   return (
     <>

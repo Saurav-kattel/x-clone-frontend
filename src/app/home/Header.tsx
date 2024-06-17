@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../redux/features/userSlice";
 import { AppDispatch, RootState } from "../redux/app/store";
@@ -153,6 +153,9 @@ const Header = ({ cookie }: { cookie: string }) => {
   }
   return (
     <div>
+      <div className="flex gap-2 justify-around items-end">
+
+      </div>
       <div className="border-b-[0.5px]  border-t-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
         <Suspense fallback={<Spinner />} >
           <ProfileImage cookie={cookie} username={userData?.res.username} />
