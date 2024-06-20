@@ -57,7 +57,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
 
   return (
     <>
-      <section className='flex flex-col  gap-2 p-2 no-scroll-bar'>
+      <section className='flex flex-col no-scroll-bar'>
         {tweetsData && tweetsData.map((tweet) => <TweetComponent key={tweet.id} token={cookie} data={tweet} />)}
         <div className='flex justify-center items-center h-[3vh]' ref={ref}>
           {shouldFetchTweets && <Spinner />}

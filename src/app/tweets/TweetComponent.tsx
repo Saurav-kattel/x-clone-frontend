@@ -11,11 +11,14 @@ import { Tweets } from '../actions/getTweetsData'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import TweetImage from './TweetImage'
-
+import DeleteConfirmationModal from './DeleteConfirmationModal'
+import ChangeVisComponent from './ChangeVisComponent'
 const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; token: string; commentVis?: "ALL" | "USER" }) => {
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)
+  const [showVisModal, setShowVisModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const update = useCallback(() => {
     setClicked(state => !state)
@@ -31,44 +34,56 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
   }, [inView])
 
 
-
   return (
+    <div className='flex justify-center  items-center flex-col'>
+      {showDeleteModal && <div className='w-[90dvw]  h-[100vh]  top-0 z-30 absolute flex-col backdrop-blur flex justify-center items-center'>
+        <DeleteConfirmationModal setShowDeleteModal={setShowDeleteModal} tweetId={data.id} imageId={data.imageId} />
+      </div>}
 
-    <div ref={ref} className={`flex transition flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center ${animation}`}>
+      {showVisModal && <div className='w-[90dvw]  h-[100vh]  top-0 z-30 absolute flex-col backdrop-blur flex justify-center items-center'>
+        <ChangeVisComponent tweetId={data.id} token={token} dataVis={data.visibility} setShowVisModal={setShowVisModal} />
+      </div>}
 
-      <HeaderSection setClicked={setClicked} data={data} setShowModal={setShowModal} />
 
-      <div className='flex w-[40vw] justify-end items-center p-1'>
-        {showModal && <MoreInfoModal
-          update={update}
-          clicked={clicked}
-          data={data}
-          token={token}
-          tweetId={data.id}
+
+      <div ref={ref} className={`flex transition flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center ${animation}`}>
+
+        <HeaderSection setClicked={setClicked} data={data} setShowModal={setShowModal} />
+
+
+        <div className='flex w-[40vw] justify-end items-center p-1'>
+          {showModal && <MoreInfoModal
+            setShowDeleteModal={setShowDeleteModal}
+            setShowVisModal={setShowVisModal}
+            update={update}
+            clicked={clicked}
+            data={data}
+            token={token}
+            authorId={data.userId}
+            userId={userData?.res.id}
+            setShowModal={setShowModal} />
+          }
+        </div>
+
+        <Link href={`/tweets/${data.id}`}>
+          < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
+
+            <p className='text-md p-2 flex items-start w-[35vw]'>
+              {data.content}
+            </p>
+
+            <TweetImage imageId={data.imageId} />
+          </div >
+        </Link>
+        {data && <FooterSection
+          commentVis={commentVis}
+          userId={userData?.res.id ?? ""}
           authorId={data.userId}
-          userId={userData?.res.id}
-          setShowModal={setShowModal} />
+          tweetOwnerId={data.userId}
+          tweetId={data.id}
+          token={token} />
         }
       </div>
-
-      <Link href={`/tweets/${data.id}`}>
-        < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
-
-          <p className='text-md p-2 flex items-start w-[35vw]'>
-            {data.content}
-          </p>
-
-          <TweetImage imageId={data.imageId} />
-        </div >
-      </Link>
-      {data && <FooterSection
-        commentVis={commentVis}
-        userId={userData?.res.id ?? ""}
-        authorId={data.userId}
-        tweetOwnerId={data.userId}
-        tweetId={data.id}
-        token={token} />
-      }
     </div >
   )
 }

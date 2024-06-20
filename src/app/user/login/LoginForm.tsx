@@ -5,6 +5,8 @@ import Spinner from "../../../lib/Spinner"
 import React, { useState, useEffect } from "react";
 import { handleSubmit } from "./handleSubmit";
 import Link from "next/link"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export type ResponseType =
   | { status: number; res: { message: string } }
@@ -32,6 +34,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showHiddenText, setShowHiddenText] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setResponse(undefined);
@@ -39,8 +42,8 @@ const LoginForm = () => {
 
     const redirectTimeoutId = setTimeout(() => {
       if (response && response.status == 200) {
-        router.push("/")
         router.refresh()
+        redirect("/")
       }
       setPending(false)
     }, 500);
@@ -71,7 +74,7 @@ const LoginForm = () => {
       <div
         onMouseLeave={() => setShowHiddenText(false)}
         onMouseEnter={() => setShowHiddenText(true)}
-        className={`w-[48vw] h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] hover:backdrop-blur-xl`}>
+        className={`w-[50vw] h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] hover:backdrop-blur-xl`}>
         <h2 className={`p-4 ${showHiddenText ? "text-slate-500" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
         <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border border-transparent hover:border-slate-900 rounded-lg`} >
           <h2 className="uppercase font-semibold text-slate-400 text-xl">Login</h2>
@@ -80,16 +83,20 @@ const LoginForm = () => {
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              type="text" name="email" placeholder="example@gmail.com" className="border-b-[1px] border-slate-500 outline-none p-1 bg-transparent" />
+              type="text" name="email" className="border-b-[1px] border-slate-500 outline-none p-1 bg-transparent" />
           </label>
           <label htmlFor="Password" className="flex flex-col gap-1 font-semibold text-md text-slate-400 tracking-wide items-start justify-center">
             <span className="text-start">Password</span>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="border-b-[1px] border-slate-500 outline-none p-1 bg-transparent" />
+            <div className="flex justify-end items-end gap-2   outline-none p-1 bg-transparent">
+
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className=" border-b-[1px]  border-slate-500 outline-none p-1 bg-transparent" />
+              <div onClick={() => setShowPassword(!showPassword)} className="w-[2vw] absolute "> {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />} </div>
+            </div>
           </label>
           <button
             onClick={async () => {

@@ -37,7 +37,7 @@ function TextArea({ content, setContent, isOpen }: TextAreaProp) {
       onChange={(e) => {
         setContent(e.target.value);
       }}
-      className="bg-transparent outline-none border-none p-2 min-h-[60px] w-[30vw] resize-none"
+      className="bg-transparent border-b-[0.5px] border-white outline-none p-2 min-h-[60px] w-[30vw] resize-none"
       placeholder="What's on your mind"
     />
   </>
@@ -108,10 +108,10 @@ function FileInuptComponent({ setFormFile, setImgSrc }: FileInputComponentProps)
       hidden
     />
 
-    <div className="flex  border-t-[0.3px] w-[30vw] justify-between py-2">
+    <div className="flex  justify-between py-2">
       <FontAwesomeIcon
         onClick={() => fileRef.current?.click()}
-        className="hover:cursor-pointer hover:scale-110 p-2"
+        className="hover:cursor-pointer text-xl hover:scale-110 p-2"
         icon={faImage}
       />
     </div>
@@ -165,8 +165,10 @@ const Header = ({ cookie }: { cookie: string }) => {
             className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
           >
             <TextArea isOpen={isOpen} content={content} setContent={setContent} />
-            <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
-            <SelectVisibilityComponent visibility={visibility} setVisibility={setVisibility} />
+            <div className="flex justify-center items-center ">
+              <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
+              <SelectVisibilityComponent visibility={visibility} setVisibility={setVisibility} />
+            </div>
             <button
               onClick={handlePostButtonClick}
               className="bg-blue-700 px-4 py-1 rounded-lg hover:scale-110">

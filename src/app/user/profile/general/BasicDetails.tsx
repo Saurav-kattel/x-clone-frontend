@@ -11,9 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { clear } from '@/app/redux/features/userSlice'
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/app/store";
-import { url } from "inspector";
 export interface UserData {
   id: string;
   username: string;
