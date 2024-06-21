@@ -38,9 +38,12 @@ export default function RelationLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SideBarWrapper>
-          <ReudxWrapper>{children}</ReudxWrapper>
-        </SideBarWrapper>
+        <ReudxWrapper>
+          <SideBarWrapper>
+            {children}
+          </SideBarWrapper>
+        </ReudxWrapper>
+
       </body>
     </html>
   );

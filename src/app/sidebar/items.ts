@@ -22,7 +22,7 @@ export const items: {
     },
     {
       name: "Profile",
-      path: "/user/profile",
+      path: "/user/",
       icon: faUser,
     },
   ];

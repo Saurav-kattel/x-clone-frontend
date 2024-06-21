@@ -13,6 +13,8 @@ const Tweets = ({ cookie }: { cookie: string }) => {
   const [loadedPage, setLoadedPage] = useState(1)
   const [shouldFetchTweets, setShouldFetchTweets] = useState<boolean>(true)
   const [loading, setLoading] = useState(false)
+
+
   const { refresh } = useSelector((state: RootState) => state.tweets)
 
   const { ref, inView } = useInView({ threshold: 0 })
@@ -22,7 +24,6 @@ const Tweets = ({ cookie }: { cookie: string }) => {
     setLoading(true)
     const nextPage = loadedPage + 1;
     const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage });
-
 
     if (newTweets?.res) {
       setTweetsData((currentData) => [...currentData, ...newTweets.res])

@@ -1,47 +1,51 @@
 "use client"
 import { AppDispatch, RootState } from '@/app/redux/app/store'
-import { getFolloweeData } from '@/app/redux/features/followeeSlice'
+import { clear, getFolloweeData } from '@/app/redux/features/followeeSlice'
 import { handleFollow } from '@/app/tweets/(ts)/handleFollow'
-import React, { useEffect, useState } from 'react'
+import Spinner from '@/lib/Spinner'
+import React, { SetStateAction, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const FollowButton = ({ userId, cookie }: { userId: string; cookie: string }) => {
+function checkIsFollowing({ setIsFollowing, userId, data }: {
+  userId: string;
+  data: {
+    user_id: string;
+    username: string;
+  }[] | undefined;
+  setIsFollowing: React.Dispatch<SetStateAction<boolean>>
+}) {
+
+  if (!data) {
+    setIsFollowing(false)
+    return
+  }
+
+  const findUser = data.find(data => data.user_id === userId)
+  setIsFollowing(findUser?.user_id != undefined)
+}
+
+const FollowButton = ({ userId, cookie, username }: { username: string; userId: string; cookie: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { res, loading } = useSelector((state: RootState) => state.following)
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
-  useEffect(() => {
-    dispatch(getFolloweeData({ cookie: cookie }))
-  }, [])
-
-  function checkIsFollowing({ userId, data }: {
-    userId: string;
-    data: {
-      user_id: string; username: string
-    }[] | undefined
-  }) {
-    if (!data) {
-      setIsFollowing(false)
-      return
-    }
-    const findUser = data.find(data => data.user_id === userId)
-    setIsFollowing(findUser?.user_id != undefined)
-  }
 
   setTimeout(() => {
-    checkIsFollowing({ userId, data: res?.res })
+    checkIsFollowing({ setIsFollowing, userId, data: res?.res })
   }, 200)
 
 
   if (loading) {
-    return <button disabled >loading...</button >
+    return <Spinner />
   }
 
   return (
+
     <button
       onClick={() => {
         handleFollow({ token: cookie, followeeId: userId })
         setTimeout(() => {
-          dispatch(getFolloweeData({ cookie: cookie }))
+          dispatch(getFolloweeData({ username }))
+          dispatch(clear())
         }, 100)
       }}
 

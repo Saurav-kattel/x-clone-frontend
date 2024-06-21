@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === "/user/login" && cookie) {
-    return NextResponse.redirect(new URL("/", req.url), 307);
+    return NextResponse.redirect(new URL("/tweets", req.url), 307);
   }
 
   if (pathname === "/" && !cookie) {
@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (pathname === "/user/register" && cookie) {
-    return NextResponse.redirect(new URL("/", req.url), 307);
+    return NextResponse.redirect(new URL("/tweets", req.url), 307);
   }
   if (pathname === "/" && !cookie) {
     return NextResponse.redirect(new URL("/user/login", req.url), 307);

@@ -5,12 +5,14 @@ import { getFollowerData } from '@/app/redux/features/followerSlice'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Followers = ({ cookies, userId }: { cookies: string, userId?: string }) => {
+const Followers = ({ username }: { username: string; }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const follower = useSelector((state: RootState) => state.follower.res)
+
   useEffect(() => {
-    dispatch(getFollowerData({ cookie: cookies, userId }))
+    dispatch(getFollowerData({ username }))
   }, [])
+
+  const { res: follower } = useSelector((state: RootState) => state.follower)
   return (
     <>
       <div className='cursor-pointer font-thin text-slate-300 hover:underline underline-offset-2'>

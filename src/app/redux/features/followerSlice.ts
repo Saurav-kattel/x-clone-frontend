@@ -10,13 +10,8 @@ const initialState: { loading: boolean; error: any; res: any } = {
 
 const getFollowerData = createAsyncThunk(
   "getFollowers",
-  async ({ cookie, userId }: { cookie: string; userId?: string }) => {
-    const res = await fetch(backendUrl + "/api/v1/user/followers?u_id=" + userId, {
-      method: "GET",
-      headers: {
-        auth_token_x_clone: cookie
-      }
-    })
+  async ({ username }: { username: string; }) => {
+    const res = await fetch(backendUrl + "/api/v1/user/followers?u_name=" + username)
     const data = await res.json()
     return data;
   }
@@ -25,7 +20,12 @@ const getFollowerData = createAsyncThunk(
 const followerSlice = createSlice({
   name: "  followerSlice",
   initialState,
-  reducers: {},
+  reducers: {
+
+    resetFollowerData: (state) => {
+      state.res = undefined
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getFollowerData.fulfilled, (state, action) => {
@@ -46,5 +46,6 @@ const followerSlice = createSlice({
   },
 });
 
+export const { resetFollowerData } = followerSlice.actions
 export { getFollowerData };
 export default followerSlice.reducer;

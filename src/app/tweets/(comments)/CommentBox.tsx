@@ -12,6 +12,7 @@ import { fetchComments } from './fetchComments';
 import { CommentResponseData } from '../(ts)/getUserComments';
 
 const CommentBox = ({ cookie, authorId, setShowComment, tweetOwnerId, tweetId, showExit = true, visibility }: { showExit?: boolean; authorId?: string; visibility: "ALL" | "USER"; cookie: string; tweetId: string; setShowComment: React.Dispatch<SetStateAction<boolean>>; tweetOwnerId: string; }) => {
+
   const [data, setData] = useState<CommentResponseData['res']>([]);
   const { refresh } = useSelector((state: RootState) => state.comment);
   const [ref, inView] = useInView();

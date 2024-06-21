@@ -24,7 +24,8 @@ const AuthorImage = ({ userId, author, link = true, width = 50, height = 50 }: {
       fetchPriority="low"
       height={height}
       width={width}
-
+      placeholder='blur'
+      blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
       alt="profile image"
       className="bg-center rounded-[50px] w-[80px] h-[80px]"
       src={`data:image/jpeg;base64,${image?.res.image}`}

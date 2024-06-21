@@ -3,7 +3,7 @@ import AuthorImage from '../AuthorImage';
 import { calculateTimeSpent } from '@/lib/getTimeSpent';
 
 const TweetCard = ({ data }: { data: { status: number; res: any } }) => {
-
+  console.log(data)
   const time = calculateTimeSpent(data.res.createdAt.toString())
 
   return (

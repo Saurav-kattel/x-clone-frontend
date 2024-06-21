@@ -12,6 +12,7 @@ import { handleCreateTweet } from "./handleCreateTweet";
 import ProfileImage from "./ProfileImage";
 import Spinner from "@/lib/Spinner";
 import SelectVisibilityComponent from "./SelectVisComponent";
+import Image from "next/image";
 
 
 
@@ -64,7 +65,11 @@ function ImageViewComponent({ imgSrc, setImgSrc, setFormFile }: ImageViewCompone
           <FontAwesomeIcon icon={faX} />
         </span>
 
-        <img
+        <Image
+          width={100}
+          height={100}
+          placeholder='blur'
+          blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
           src={imgSrc}
           alt="Selected Image"
           className="w-[100px] h-[100px] my-2 "
@@ -130,7 +135,9 @@ const Header = ({ cookie }: { cookie: string }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getUserData({ cookie }));
+    if (!userData?.res) {
+      dispatch(getUserData({ cookie }));
+    }
   }, [])
 
   const toggleIsOpen = () => {

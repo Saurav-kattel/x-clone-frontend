@@ -34,7 +34,11 @@ const getProfileImage = createAsyncThunk(
 const profileImageSlice = createSlice({
   name: "profileImageSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetProfileImage: (state) => {
+      state.res = undefined
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getProfileImage.fulfilled, (state, action) => {
@@ -56,4 +60,5 @@ const profileImageSlice = createSlice({
 });
 
 export { getProfileImage };
+export const { resetProfileImage } = profileImageSlice.actions
 export default profileImageSlice.reducer;

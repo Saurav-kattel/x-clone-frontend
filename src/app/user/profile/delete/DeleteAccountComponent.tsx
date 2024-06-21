@@ -6,7 +6,6 @@ const DeleteAccountComponent = () => {
   const cookie = cookies().get("auth_token_x_clone")?.value;
   return (
     <div className="flex w-[30vw]  p-8 justify-center items-center">
-      <DeleteAccountForm cookie={cookie ?? ""} />
     </div>
   );
 };

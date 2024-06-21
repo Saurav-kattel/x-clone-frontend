@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { clear } from '@/app/redux/features/userSlice'
+import { resetProfileImage } from "@/app/redux/features/profileImageSlice";
+import { useDispatch } from "react-redux";
+import { resetCoverImage } from "@/app/redux/features/coverImageSlice";
 export interface UserData {
   id: string;
   username: string;
@@ -31,6 +34,7 @@ async function handleLogout() {
 }
 const BasicDetails = ({ data }: { data: UserData }) => {
   const router = useRouter();
+  const dispatch = useDispatch()
 
   function getMonth(num: number): string {
     switch (num) {
@@ -49,6 +53,17 @@ const BasicDetails = ({ data }: { data: UserData }) => {
       default: return "Invalid month number";
     }
   }
+  async function handleLogoutClicked() {
+    const res = await handleLogout();
+    if (res.status == 200) {
+      dispatch(resetProfileImage())
+      dispatch(resetCoverImage())
+      router.refresh();
+      clear()
+    }
+
+  }
+
   let date = new Date(data.createdAt);
   let parsedDate = date.getFullYear().toString().concat(" ").concat(getMonth(date.getMonth()))
 
@@ -76,14 +91,7 @@ const BasicDetails = ({ data }: { data: UserData }) => {
           <FontAwesomeIcon icon={faSignOut} />
           <span
             className="hover:cursor-pointer"
-            onClick={async () => {
-              const res = await handleLogout();
-              if (res.status == 200) {
-                router.refresh();
-                clear()
-              }
-            }}
-          >
+            onClick={handleLogoutClicked}>
             Logout
           </span>
         </span>

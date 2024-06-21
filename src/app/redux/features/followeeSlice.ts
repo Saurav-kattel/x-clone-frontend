@@ -17,20 +17,15 @@ const initialState: {
 };
 
 const getFolloweeData = createAsyncThunk(
-  "getFollowing",
-  async ({ cookie, userId }: { cookie: string; userId?: string }) => {
-    const res = await fetch(backendUrl + "/api/v1/user/following?u_id=" + userId, {
-      method: "GET",
-      headers: {
-        auth_token_x_clone: cookie
-      }
-    })
+  "getFollowing", // wasted 2 hour just because this argument was getFollowers 
+
+  async ({ username }: { username: string; }) => {
+    console.log(username)
+    const res = await fetch(backendUrl + "/api/v1/user/following?u_name=" + username)
     const data = await res.json()
     return data;
   }
-);
-
-const followeeSlice = createSlice({
+); const followeeSlice = createSlice({
   name: "followeeSlice",
   initialState,
   reducers: {

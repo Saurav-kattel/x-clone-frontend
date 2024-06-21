@@ -14,6 +14,7 @@ import TweetImage from './TweetImage'
 import DeleteConfirmationModal from './DeleteConfirmationModal'
 import ChangeVisComponent from './ChangeVisComponent'
 const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; token: string; commentVis?: "ALL" | "USER" }) => {
+
   const { res: userData } = useSelector((state: RootState) => state.user)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState(false)

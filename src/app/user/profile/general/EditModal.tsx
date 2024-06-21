@@ -11,12 +11,12 @@ import ChangeCoverImage from "./ChangeCoverImage";
 
 const EditModal = ({
   data,
-  setVisibility,
+  setShowEditModal,
   cookies,
 }: {
   data: UserData;
   cookies: string;
-  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [response, setResponse] = useState<any>();
   const { loading } = useSelector(
@@ -30,7 +30,7 @@ const EditModal = ({
   return (
     <div className="absolute w-[50vw] flex-col z-10 h-[80vh] flex justify-center items-center border border-slate-700 rounded-lg p-4 bg-[#000009]">
 
-      <EditModalHeader setVisibility={setVisibility} />
+      <EditModalHeader setShowEditModal={setShowEditModal} />
       <EditUserName prevUserName={data.username} setResponse={setResponse} cookies={cookies} />
       <ChangeProfileImage cookie={cookies} setResponse={setResponse} username={data.username} />
       <ChangeCoverImage cookie={cookies} setResponse={setResponse} username={data.username} />

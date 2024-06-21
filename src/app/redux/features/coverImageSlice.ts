@@ -33,7 +33,11 @@ const getCoverImage = createAsyncThunk(
 const coverImageSlice = createSlice({
   name: "coverImageSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCoverImage: (state) => {
+      state.res = undefined
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getCoverImage.fulfilled, (state, action) => {
@@ -55,4 +59,5 @@ const coverImageSlice = createSlice({
 });
 
 export { getCoverImage };
+export const { resetCoverImage } = coverImageSlice.actions
 export default coverImageSlice.reducer;
