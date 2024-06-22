@@ -33,7 +33,9 @@ const ProfileComponent = ({ cookies }: { cookies: string }) => {
 
   useEffect(() => {
     if (!coverImage) {
-      dispatch(getCoverImage({ username: data?.res.username ?? '' }))
+      dispatch(getCoverImage({ username: data.res.username }))
+    } else {
+      console.log(coverImage)
     }
   }, [coverImage])
 

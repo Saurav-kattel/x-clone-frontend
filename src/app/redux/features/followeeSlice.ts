@@ -25,7 +25,8 @@ const getFolloweeData = createAsyncThunk(
     const data = await res.json()
     return data;
   }
-); const followeeSlice = createSlice({
+);
+const followeeSlice = createSlice({
   name: "followeeSlice",
   initialState,
   reducers: {
