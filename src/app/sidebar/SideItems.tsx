@@ -13,15 +13,26 @@ const SideItems = ({
 }) => {
 
   const pathname = usePathname();
+
   const [urlPath] = useState(() => {
     if (item.name === "Profile") {
       return `/user/${username}`
     }
     return item.path
   })
+
+  function active(pathname: string, itemName: string) {
+    if (pathname.includes(itemName)) {
+      return true
+    }
+
+
+    return false
+  }
+  let isActive = active(pathname, item.path.toLowerCase())
   return (
     <Link
-      className={`px-4 py-2 w-[20vw] flex justify-around hover:bg-[#000c14] ${pathname === item.path ? "bg-[#000c14]" : ""
+      className={`px-4 py-2 w-[20vw] flex justify-around hover:bg-[#000c14] ${isActive ? "bg-[#000c14]" : ""
         } rounded-2xl`}
       href={urlPath}
     >

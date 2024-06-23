@@ -26,10 +26,6 @@ export interface UserData {
 }
 
 async function handleLogout() {
-  let res = await fetch(backendUrl + "/api/v1/user/account/logout", {
-    method: "GET",
-    credentials: "include",
-  });
   return await res.json();
 }
 const BasicDetails = ({ data }: { data: UserData }) => {

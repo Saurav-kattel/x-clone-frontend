@@ -16,6 +16,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/user/login", req.url), 307);
   }
 
+  if (pathname === "/more") {
+    return NextResponse.redirect(new URL("/more/account", req.url), 307);
+
+  }
 
   if (pathname === "/" && cookie) {
     return NextResponse.redirect(new URL("/tweets", req.url), 307)

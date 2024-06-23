@@ -18,11 +18,13 @@ export type TweetRes = {
   status: number;
   res: Tweets[];
 }
-export async function getTweetsData({ pageNum, pageSize, tweetId, vis = 'public' }: { vis?: VisType; pageSize: number; pageNum: number; tweetId?: string }) {
+export async function getTweetsData({ pageNum, token, pageSize, tweetId, vis = 'public' }: { token: string; vis?: VisType; pageSize: number; pageNum: number; tweetId?: string }) {
   try {
-
     const tweets = await fetch(`${backendUrl}/api/v1/tweet/get?n=${pageNum}&s=${pageSize}&t_id=${tweetId}&vis=${vis}`, {
       method: "GET",
+      headers: {
+        auth_token_x_clone: token,
+      },
       next: { tags: ["tweets"] },
     })
     return tweets.json();

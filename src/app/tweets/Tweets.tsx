@@ -23,7 +23,7 @@ const Tweets = ({ cookie }: { cookie: string }) => {
     if (loading || !shouldFetchTweets) return;
     setLoading(true)
     const nextPage = loadedPage + 1;
-    const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage });
+    const newTweets = await getTweetsData({ pageSize: 8, pageNum: nextPage, token: cookie });
 
     if (newTweets?.res) {
       setTweetsData((currentData) => [...currentData, ...newTweets.res])

@@ -10,7 +10,7 @@ import Header from '../home/Header'
 const page = async () => {
   //TODO: implement internal navigation to fetch tweets followers and public differently
   const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
-  const data = await getTweetsData({ pageSize: 8, pageNum: 1 })
+  const data = await getTweetsData({ pageSize: 8, pageNum: 1, token: cookie })
   return (
     <>
       <Header cookie={cookie} />
@@ -20,7 +20,6 @@ const page = async () => {
         </Suspense>
         <Tweets
           cookie={cookie} />
-
       </section>
     </>
   )
