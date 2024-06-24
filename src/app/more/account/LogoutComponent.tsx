@@ -12,17 +12,21 @@ export default function LogoutComponent() {
   const router = useRouter()
   const dispatch = useDispatch()
   async function handleLogoutClick() {
-    let res = await fetch(backendUrl + "/api/v1/user/account/logout", {
-      method: "GET",
-      credentials: "include",
-    });
+    try {
+      let res = await fetch(backendUrl + "/api/v1/user/account/logout", {
+        method: "GET",
+        credentials: "include",
+      });
 
-    if (res.status == 200) {
-      dispatch(resetProfileImage())
-      dispatch(resetCoverImage())
-      clear()
-      router.push("/tweets")
-      router.refresh()
+      if (res.ok) {
+        dispatch(resetProfileImage())
+        dispatch(resetCoverImage())
+        clear()
+        router.push("/tweets")
+        router.refresh()
+      }
+    } catch (e) {
+      console.error(e)
     }
   }
   return <button onClick={handleLogoutClick} className="flex gap-2  border-y-[1px] border-slate-800 px-4 my-4 text-xl hover:bg-gray-800 w-[55dvw] py-2 items-center">

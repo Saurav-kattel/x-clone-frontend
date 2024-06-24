@@ -1,17 +1,17 @@
 import { getTweetsData } from '@/app/actions/getTweetsData'
 import React from 'react'
-import { cookies } from 'next/headers'
 import TweetHeader from "./TweetHeader"
 import TweetBody from './TweetBody'
 import TweetFooter from './TweetFooter'
+import getCookie from '@/app/actions/getCookies'
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  const data = await getTweetsData({ pageNum: 1, pageSize: 1, tweetId: params.slug })
-  console.log(data)
-  const cookie = cookies().get("auth_token_x_clone")?.value ?? ""
-  if (!data?.res) {
+  const cookie = getCookie()
+
+  const data = await getTweetsData({ pageNum: 1, pageSize: 1, tweetId: params.slug, token: cookie })
+  if (data?.res.message) {
     return <div>
-      Invalid Tweet
+      invalid tweet id provided
     </div>
   }
   return (

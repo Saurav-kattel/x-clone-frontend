@@ -1,5 +1,6 @@
 "use server"
 import { backendUrl } from "@/lib/exportEnvs"
+import { Console } from "console";
 
 export interface NotificationData {
 	id: string;
@@ -25,18 +26,23 @@ export interface NotificationData {
 	tweet_id: string;
 }
 export async function getNotification({ token }: { token: string }): Promise<{ status: number; res: NotificationData[] }> {
+	try {
+		const res = await fetch(`${backendUrl}/api/v1/notification/get`, {
+			headers: {
+				auth_token_x_clone: token
+			},
+			next: {
 
-	const res = await fetch(`${backendUrl}/api/v1/notification/get`, {
-		headers: {
-			auth_token_x_clone: token
-		},
-		next: {
+				tags: ["notification"],
+			},
+			cache: "no-cache"
+		})
 
-			tags: ["notification"],
-		},
-		cache: "no-cache"
-	})
+		const data = await res.json();
+		return data;
 
-	const data = await res.json();
-	return data;
+	} catch (e) {
+		console.error(e)
+		return undefined
+	}
 }
