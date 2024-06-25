@@ -3,6 +3,7 @@ import {
   faBell,
   faGear,
   faHome,
+  faSearch,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,6 +21,10 @@ export const items: {
       name: "Notification",
       path: "/notification",
       icon: faBell,
+    }, {
+      name: "Search",
+      path: "/search",
+      icon: faSearch,
     }, {
       name: "Profile",
       path: "/user/",

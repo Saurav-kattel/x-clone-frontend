@@ -1,5 +1,4 @@
 "use client";
-import { backendUrl } from "@/lib/exportEnvs";
 import {
   faAt,
   faCalendar,
@@ -14,6 +13,8 @@ import { clear } from '@/app/redux/features/userSlice'
 import { resetProfileImage } from "@/app/redux/features/profileImageSlice";
 import { useDispatch } from "react-redux";
 import { resetCoverImage } from "@/app/redux/features/coverImageSlice";
+
+
 export interface UserData {
   id: string;
   username: string;

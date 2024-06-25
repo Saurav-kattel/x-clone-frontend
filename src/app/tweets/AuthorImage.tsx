@@ -7,7 +7,7 @@ import Image from "next/image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 
-const AuthorImage = ({ userId, author, link = true, width = 50, height = 50 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
+const AuthorImage = ({ userId, author, link = true, width = 80, height = 80 }: { link?: boolean; width?: number; height?: number; userId: string, author: string }) => {
   const [image, setImage] = useState<undefined | AuthorImageType>(undefined)
 
   useEffect(() => {
@@ -21,13 +21,14 @@ const AuthorImage = ({ userId, author, link = true, width = 50, height = 50 }: {
 
   const imageComponent = (
     <Image
+      style={{ width: `${width}px`, height: `${height}px` }}
       fetchPriority="low"
       height={height}
       width={width}
       placeholder='blur'
       blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
       alt="profile image"
-      className="bg-center rounded-[50px] w-[80px] h-[80px]"
+      className={`bg-center rounded-[50px]`}
       src={`data:image/jpeg;base64,${image?.res.image}`}
     />
   )
