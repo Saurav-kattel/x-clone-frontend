@@ -27,7 +27,11 @@ export async function getTweetsData({ pageNum, token, pageSize, tweetId, vis = '
       },
       next: { tags: ["tweets"] },
     })
-    return tweets.json();
+    if (tweets.ok) {
+
+      return tweets.json();
+    }
+    return undefined
   } catch (e) {
     console.error(e)
     return undefined

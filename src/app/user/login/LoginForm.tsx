@@ -114,6 +114,8 @@ const LoginForm = () => {
             {pending ? <Spinner /> :
               "Login"}
           </button>
+          <span>Or</span>
+          <Link className="text-blue-400 font-light cursor-pointer hover:underline underline-offset-1 " href={"/forgot"}>forgot password?</Link>
         </form>
         <Error pending={pending} res={response} />
       </div>

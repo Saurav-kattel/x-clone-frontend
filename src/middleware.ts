@@ -25,6 +25,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/tweets", req.url), 307)
   }
 
+  if (pathname.includes("forgot") && cookie) {
+    return NextResponse.redirect(new URL("/tweets", req.url), 307);
+  }
+
   if (pathname === "/user/register" && cookie) {
     return NextResponse.redirect(new URL("/tweets", req.url), 307);
   }
