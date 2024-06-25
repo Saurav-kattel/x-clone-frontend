@@ -1,7 +1,7 @@
 "use client"
 import { resetCoverImage } from "@/app/redux/features/coverImageSlice";
-import { clear } from "@/app/redux/features/followeeSlice";
 import { resetProfileImage } from "@/app/redux/features/profileImageSlice";
+import { clear } from "@/app/redux/features/userSlice";
 import { backendUrl } from "@/lib/exportEnvs";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

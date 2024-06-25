@@ -39,7 +39,7 @@ function SelectVisibilityComponent({ visibility, setVisibility }: { visibility: 
   const radioList = [
     { value: "public", visibility, handleChange },
     { value: "private", visibility, handleChange },
-    { value: "follower", visibility, handleChange }
+    { value: "followers", visibility, handleChange }
   ]
   return <div>
     <h2 className="text-md text-blue-600 p-1 font-extrabold cursor-pointer "
