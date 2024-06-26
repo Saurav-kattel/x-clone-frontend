@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cookies } from "next/headers";
-import SideBar from "./sidebar/page";
 import ReudxWrapper from "@/lib/ReduxWrapper";
+import SideBarComponent from "./sidebar/SideBarComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +17,14 @@ function SideBarWrapper({ children }: { children: React.ReactNode }) {
   const hasCookies = cookie.get("auth_token_x_clone");
   if (hasCookies) {
     return (
-      <div className="flex flex-row">
-        <SideBar />
-        <div className="w-[40vw] box-border overflow-scroll h-[100vh]">
-          {children}
-
+      <div className="flex w-[99vw]  no-scroll-bar flex-col-reverse lg:flex-row md:flex-row ">
+        <div className="sticky  bottom-4 left-0">
+          <SideBarComponent cookie={hasCookies.value} />
         </div>
-        <div className="w-[30vw] sticky top-0 right-0 border-l-[1px] border-l-slate-700"></div>
+        <div className="lg:w-[40vw] no-scroll-bar w-[90vw]  border-l-[1px]  border-l-slate-500 box-border overflow-scroll ">
+          {children}
+        </div>
+        <div className="hidden lg:block w-[30vw] sticky top-0 right-0 border-l-[1px] border-l-slate-700"></div>
       </div>
     );
   }

@@ -39,7 +39,8 @@ const SideItems = ({
       <span>
         <FontAwesomeIcon className="px-2 text-xl " icon={item.icon} />
       </span>
-      <div className="w-[15vw] flex justify-center items-center">
+      <div className="w-[15vw] hidden lg:flex  lg:justify-center lg:items-center">
+
         <span className="font-bold text-center">{item.name}</span>
       </div>
     </Link>

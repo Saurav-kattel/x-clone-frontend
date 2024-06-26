@@ -2,78 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+
+
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 body {
-    background: radial-gradient(#000000,#000010);
-    color: white;
+  background: radial-gradient(#000000, #000010);
+  color: white;
 }
 
 
 .custom-file-upload {
-    display: inline-block;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .custom-file-upload img {
-    display: block;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-    object-fit: cover;
-  }
-  
-  #fileInput {
-    display: none;
-  }
-  
+  display: inline-block;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+}
+
+.custom-file-upload img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+#fileInput {
+  display: none;
+}
+
 /* Targeting scrollbar track */
 ::-webkit-scrollbar {
-  width: 12px; /* Set width of the scrollbar */
-  background-color: transparent; /* Background color of the scrollbar track */
+  width: 12px;
+  /* Set width of the scrollbar */
+  background-color: transparent;
+  /* Background color of the scrollbar track */
 }
 
 /* Targeting scrollbar thumb/handle */
 ::-webkit-scrollbar-thumb {
-  background-color: #002; /* Color of the scrollbar thumb */
-  border-radius: 6px; /* Border radius to make it round */
+  background-color: #002;
+  /* Color of the scrollbar thumb */
+  border-radius: 6px;
+  /* Border radius to make it round */
 }
 
 /* Targeting scrollbar track on hover */
 ::-webkit-scrollbar:hover {
-  background-color: transparent; /* Change background color on hover */
+  background-color: transparent;
+  /* Change background color on hover */
 }
 
 /* Targeting scrollbar thumb/handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #002; /* Change thumb color on hover */
+  background-color: #002;
+  /* Change thumb color on hover */
 }
 
 @layer utilities {
   .no-scroll-bar::-webkit-scrollbar {
-    display:none;
+    display: none;
   }
 
-    .no-scroll-bar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-    }
+  .no-scroll-bar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
 
 }
 
 
-div::-webkit-scrollbar{
+div::-webkit-scrollbar {
   display: none;
 }
-input:-webkit-autofill { 
-    -webkit-background-clip: text;
-  -webkit-text-fill-color: rgb(148 163 184);
-    -webkit-text-size-adjust: 1rem;
-;
-}
 
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgb(148 163 184);
+  -webkit-text-size-adjust: 1rem;
+  ;
+}
