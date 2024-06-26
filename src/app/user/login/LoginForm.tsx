@@ -57,7 +57,8 @@ const LoginForm = () => {
 
 
   return (
-    <div className="flex justify-evenly items-center w-[100vw] h-[100vh]">
+    <div className="flex flex-col md:flex-row lg:flex-row justify-evenly items-center w-[100vw] h-[100vh]">
+
       <div
         className="w-[48vw] hover:bg-[#00000e] transition-all ease-linear h-[70dvh] flex justify-center items-center gap-2 rounded-md">
         <div className="flex flex-col items-center justify-center cursor-pointer">
@@ -66,7 +67,7 @@ const LoginForm = () => {
           <p className="text-xl  hover:text-slate-600 font-semibold text-slate-500">to</p>
           <p className="text-8xl  hover:text-slate-800 font-bold text-slate-600">X</p>
           <p className="text-xl  hover:text-slate-400 font-semibold text-slate-500">clone</p>
-          <Link className="text-md text-slate-500 cursor-pointer hover:underline hover:text-blue-100 underline-offset-1" href={"/user/register"}>New here? <strong>Register</strong></Link>
+          <Link className="text-md hidden lg:block md:block text-wrap text-center text-slate-500 cursor-pointer hover:underline hover:text-blue-100 underline-offset-1" href={"/user/register"}>New here? <strong>Register</strong></Link>
         </div>
       </div>
 
@@ -74,10 +75,10 @@ const LoginForm = () => {
       <div
         onMouseLeave={() => setShowHiddenText(false)}
         onMouseEnter={() => setShowHiddenText(true)}
-        className={`w-[50vw] h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] hover:backdrop-blur-xl`}>
-        <h2 className={`p-4 ${showHiddenText ? "text-slate-500" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
+        className={`[50vw]  h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] md:backdrop-blur-xl xl:backdrop-blur-xl`}>
+        <h2 className={`p-4 ${showHiddenText ? "text-slate-50" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
 
-        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border border-transparent hover:border-slate-900 rounded-lg`} >
+        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border border-transparent md:hover:border-slate-900 lg:hover:border-slate-900 rounded-lg`} >
 
           <h2 className="uppercase font-semibold text-slate-400 text-xl">Login</h2>
 
@@ -110,12 +111,15 @@ const LoginForm = () => {
               setResponse(res)
             }}
             disabled={pending}
-            className="py-1 px-2 text-center flex items-center justify-center w-[8vw] outline-none bg-slate-900 rounded-lg ">
+            className="p-2 md:w-[8vw] lg:w-[8vw] text-center flex items-center justify-center outline-none bg-slate-900 rounded-lg ">
             {pending ? <Spinner /> :
               "Login"}
           </button>
           <span>Or</span>
           <Link className="text-blue-400 font-light cursor-pointer hover:underline underline-offset-1 " href={"/forgot"}>forgot password?</Link>
+
+          <Link className="text-md block md:hidden lg:hidden  text-wrap text-center text-slate-500 cursor-pointer hover:underline hover:text-blue-100 underline-offset-1" href={"/user/register"}>New here? <strong>Register</strong></Link>
+
         </form>
         <Error pending={pending} res={response} />
       </div>

@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { handleSubmit } from "./handleSubmit";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "@/lib/Spinner";
+import Link from "next/link";
 
 
 
@@ -99,7 +100,7 @@ const RegisterForm = () => {
 
   return (
     <div className="flex flex-col justify-evenly items-center w-[100vw] h-[100vh]">
-
+      <Link className="absolute top-0 left-2" href={"/user/login"}><FontAwesomeIcon icon={faArrowLeft} /></Link>
       <form
         method="POST"
         onSubmit={(e) => {
@@ -121,14 +122,14 @@ const RegisterForm = () => {
           <h3 className="font-bold hover:text-slate-400 text-4xl text-slate-600">Register</h3>
         </div>
 
-        <div className="flex justify-evenly w-[75vw] items-center gap-2">
+        <div className="flex  flex-col md:flex-row lg:flex-row justify-evenly w-[75vw] items-center gap-2">
 
           <div className="flex flex-col gap-1 items-center justify-center">
-            {items.slice(0, Math.floor(items.length / 2)).map((item) => <FormItem type={item.type} value={item.value} placeholder={item.placeholder} setValue={item.setValue} name={item.name} />)}
+            {items.slice(0, Math.floor(items.length / 2)).map((item) => <FormItem key={item.name} type={item.type} value={item.value} placeholder={item.placeholder} setValue={item.setValue} name={item.name} />)}
           </div>
 
           <div className="flex flex-col gap-1 items-center justify-center">
-            {items.slice(Math.floor(items.length / 2)).map((item) => <FormItem type={item.type} value={item.value} placeholder={item.placeholder} setValue={item.setValue} name={item.name} />)}
+            {items.slice(Math.floor(items.length / 2)).map((item) => <FormItem key={item.name} type={item.type} value={item.value} placeholder={item.placeholder} setValue={item.setValue} name={item.name} />)}
           </div>
 
 
