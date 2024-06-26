@@ -38,7 +38,7 @@ function TextArea({ content, setContent, isOpen }: TextAreaProp) {
       onChange={(e) => {
         setContent(e.target.value);
       }}
-      className="bg-transparent border-b-[0.5px] border-white outline-none p-2 min-h-[60px] w-[30vw] resize-none"
+      className="bg-transparent border-b-[0.5px] border-white outline-none p-2 min-h-[60px] w-[80vw] resize-none"
       placeholder="What's on your mind"
     />
   </>
@@ -150,7 +150,9 @@ const Header = ({ cookie }: { cookie: string }) => {
       setContent("")
       setImgSrc(undefined)
       setFormFile(undefined)
+      setIsOpen(s => !s)
     }
+
 
     setResponse(res)
 
@@ -163,18 +165,25 @@ const Header = ({ cookie }: { cookie: string }) => {
       <div className="flex gap-2 justify-around items-end">
 
       </div>
-      <div className="border-b-[0.5px]  border-t-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
-        <Suspense fallback={<Spinner />} >
-          <ProfileImage cookie={cookie} username={userData?.res.username} />
-        </Suspense>
+      <div className="lg:border-y-[0.5px] md:border-y-[0.5px] py-2 my-2 box-border flex flex-row gap-2 items-center justify-start">
+        <div className={`${isOpen ? "hidden md:block lg:block" : null}`}>
+          <Suspense fallback={<Spinner />} >
+            <ProfileImage cookie={cookie} username={userData?.res.username} />
+          </Suspense>
+        </div>
+
         {isOpen ? (
           <div
-            className={`flex justify-center w-[30vw] 15vh p-2 items-start gap-1 flex-col`}
+            className={`flex flex-col w-[99vw]  h-[100vh] justify-center p-2 items-center gap-1 lg:items-start md:items-start lg:w-[30vw] md:w-[30vw] md:h-auto lg:h-auto`}
           >
+            <FontAwesomeIcon icon={faX} className="lg:hidden md:hidden p-2 absolute top-2 left-3 text-4xl" onClick={() => setIsOpen(s => !s)} />
+
             <TextArea isOpen={isOpen} content={content} setContent={setContent} />
-            <div className="flex justify-center items-center ">
-              <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
-              <SelectVisibilityComponent visibility={visibility} setVisibility={setVisibility} />
+            <div className="w-[80vw] flex justify-start items-center">
+              <div className="flex justify-center items-center ">
+                <FileInuptComponent setImgSrc={setImgSrc} setFormFile={setFormFile} />
+                <SelectVisibilityComponent visibility={visibility} setVisibility={setVisibility} />
+              </div>
             </div>
             <button
               onClick={handlePostButtonClick}

@@ -6,11 +6,11 @@
   margin: 0;
   padding: 0;
 
-
 }
 
 *::-webkit-scrollbar {
   display: none;
+
 }
 
 body {
@@ -43,33 +43,7 @@ body {
   display: none;
 }
 
-/* Targeting scrollbar track */
-::-webkit-scrollbar {
-  width: 12px;
-  /* Set width of the scrollbar */
-  background-color: transparent;
-  /* Background color of the scrollbar track */
-}
 
-/* Targeting scrollbar thumb/handle */
-::-webkit-scrollbar-thumb {
-  background-color: #002;
-  /* Color of the scrollbar thumb */
-  border-radius: 6px;
-  /* Border radius to make it round */
-}
-
-/* Targeting scrollbar track on hover */
-::-webkit-scrollbar:hover {
-  background-color: transparent;
-  /* Change background color on hover */
-}
-
-/* Targeting scrollbar thumb/handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #002;
-  /* Change thumb color on hover */
-}
 
 @layer utilities {
   .no-scroll-bar::-webkit-scrollbar {

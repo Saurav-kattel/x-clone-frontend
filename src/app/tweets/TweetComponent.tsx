@@ -37,7 +37,8 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
 
   return (
     <div className='flex justify-center  items-center flex-col'>
-      {showDeleteModal && <div className='w-[90dvw]  h-[100vh]  top-0 z-30 absolute flex-col backdrop-blur flex justify-center items-center'>
+
+      {showDeleteModal && <div className='w-[90dvw]  h-[100vh]  top-0  z-30 absolute flex-col backdrop-blur flex justify-center items-center'>
         <DeleteConfirmationModal setShowDeleteModal={setShowDeleteModal} tweetId={data.id} imageId={data.imageId} />
       </div>}
 
@@ -46,12 +47,9 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
       </div>}
 
 
-
-      <div ref={ref} className={`flex transition flex-col justify-center m-2 w-[38vw] relative no-scroll-bar rounded-md p-2 items-center ${animation}`}>
+      <div ref={ref} className={`flex transition flex-col justify-center m-2 w-[90vw] lg:w-[38vw] relative no-scroll-bar rounded-md p-2 items-center ${animation}`}>
 
         <HeaderSection setClicked={setClicked} data={data} setShowModal={setShowModal} />
-
-
         <div className='flex w-[40vw] justify-end items-center p-1'>
           {showModal && <MoreInfoModal
             setShowDeleteModal={setShowDeleteModal}
@@ -67,9 +65,9 @@ const TweetComponent = ({ data, token, commentVis = "USER" }: { data: Tweets; to
         </div>
 
         <Link href={`/tweets/${data.id}`}>
-          < div className='p-4 flex w-[40vw]  flex-col justify-center items-center text-wrap' >
+          < div className='p-4 w-[70vw] flex md:w-[40vw]  lg:w-[40vw] flex-col justify-center items-center text-wrap' >
 
-            <p className='text-md p-2 flex items-start w-[35vw]'>
+            <p className='text-md p-2 flex items-start  w-[70vw] flex md:w-[35vw]  lg:w-[35vw]'>
               {data.content}
             </p>
 

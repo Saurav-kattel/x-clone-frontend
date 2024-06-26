@@ -18,7 +18,7 @@ function SideBarWrapper({ children }: { children: React.ReactNode }) {
   if (hasCookies) {
     return (
       <div className="flex w-[99vw]  no-scroll-bar flex-col-reverse lg:flex-row md:flex-row ">
-        <div className="sticky  bottom-4 left-0">
+        <div className="sticky z-40  lg:bg-transparent md:bg-transparent bg-[#00000e] bottom-4 left-0">
           <SideBarComponent cookie={hasCookies.value} />
         </div>
         <div className="lg:w-[40vw] no-scroll-bar w-[90vw]  border-l-[1px]  border-l-slate-500 box-border overflow-scroll ">

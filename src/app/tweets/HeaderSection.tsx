@@ -17,12 +17,12 @@ const HeaderSection = ({
   setShowModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
-    <section className='flex w-[38vw] justify-start items-center'>
-      <div className='flex w-[40vw] justify-start items-center'>
+    <section className='flex lg:w-[38vw] md:w-[38vw]  justify-start items-center'>
+      <div className='flex lg:w-[40vw] md:w-[40vw] justify-start items-center'>
         <Suspense fallback={<Spinner />}>
-          <AuthorImage width={50} height={50} userId={data.userId} author={data.author_username} />
+          <AuthorImage width={25} height={25} userId={data.userId} author={data.author_username} />
         </Suspense>
-        <div className='text-white font-bold text-md px-2 py-1'>
+        <div className='text-white text-sm md:font-bold lg:font-bold md:text-md lg:text-md px-2 py-1'>
           {data.author}
         </div>
         <SpentTimeComponent pgTime={data.createdAt.toString()} />

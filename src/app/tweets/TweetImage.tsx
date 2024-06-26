@@ -61,18 +61,19 @@ const TweetImage = ({ imageId, height = 80, width = 80, showFullImage = false }:
             height={height}
             width={width}
             loading="lazy"
-            className="w-[38vw]  p-3  rounded-lg bg-contain object-contain max-h-[50vh]"
+            className="md:w-[38vw] lg:w-[38vw] w-[80vw] p-3  rounded-lg bg-contain object-contain max-h-[50vh]"
             src={image || 'https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'}
             placeholder='blur'
             blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'
           />
           :
+
           <Image
             alt="tweet image"
             height={height}
             width={width}
             loading="lazy"
-            className="w-[38vw] h-[50dvh]  p-3 rounded-md bg-contain object-cover"
+            className="md:w-[38vw] lg:w-[38vw] w-[90vw] h-[50vh] p-3 rounded-md  bg-contain object-cover"
             src={image || 'https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'}
             placeholder='blur'
             blurDataURL='https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png'

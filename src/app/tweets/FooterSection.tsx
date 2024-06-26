@@ -84,9 +84,9 @@ const CommentSectionWrapper = ({ tweetId, setShowComment }: {
 const FooterSection = ({ token, tweetOwnerId, tweetId, userId, authorId, commentVis = "USER" }: PropType) => {
   const [showComment, setShowComment] = useState(false)
   return (
-    <div className='border-b-[1px] flex flex-col w-[40vw] items-center justify-center  border-t-slate-700'>
-      < div className='w-[40vw] flex items-center justify-center '>
-        <div className='flex gap-2 w-[35vw] justify-between items-center'>
+    <div className='border-b-[1px] flex flex-col w-[90vw] lg:w-[40vw] md:w-[40vw]  items-center justify-center  border-t-slate-700'>
+      < div className='lg:w-[40vw] md:w-[40vw] w-[90vw] flex items-center justify-center '>
+        <div className='flex gap-2 w-[80vw] lg:w-[35vw] md:w-[35vw] justify-between items-center'>
           <LikeSection tweetId={tweetId} token={token} userId={userId} />
           <CommentSectionWrapper tweetId={tweetId} setShowComment={setShowComment} />
           <div className='p-2 text-2xl'>
@@ -94,7 +94,7 @@ const FooterSection = ({ token, tweetOwnerId, tweetId, userId, authorId, comment
           </div>
         </div>
       </div>
-      <div className='flex p-2 justify-center w-[40vw] items-center '>
+      <div className='flex p-2 justify-center w-[90vw]lg:w-[40vw] md:w-[40vw] items-center '>
         {showComment && <CommentBox authorId={authorId} tweetOwnerId={tweetOwnerId} visibility={commentVis} cookie={token} tweetId={tweetId} setShowComment={setShowComment} />}
       </div>
     </div>
