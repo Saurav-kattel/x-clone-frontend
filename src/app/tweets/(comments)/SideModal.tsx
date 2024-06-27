@@ -37,12 +37,10 @@ const SideModal = ({ replyId, commentId, commenterId, tweetOwnerId, token }: { r
       <FontAwesomeIcon icon={faEllipsisVertical} onClick={() => setShowModal(s => !s)} className='cursor-pointer p-2' />
     </div>
     <div className="flex justify-end items-center">
-      {showModal && <div className='absolute w-[10dvw] p-2 h-[15dvh] border-[1px] border-slate-800 bg-[#000005]  flex flex-col justify-center items-center rounded-md'>
-        <div className='flex w-[8dvw] items-start justify-start'>
-          <div className='outline-none hover:scale-105 text-slate-800 text-xl'>
-            <button onClick={() => setShowModal(s => !s)}>X</button>
-          </div>
-        </div>
+      {showModal && <div className='absolute w-[50vw] lg:w-[10dvw] p-2 h-[15dvh] border-[1px] border-slate-800 bg-[#000005]  flex flex-col justify-center items-center rounded-md'>
+
+        <button className="outline-none absolute left-2  top-1 hover:scale-105 text-slate-800 text-xl" onClick={() => setShowModal(s => !s)}>X</button>
+
 
         <div className='flex items-center justify-center p-2'>
           <div className='text-red-400' onClick={handleButtonClick}>

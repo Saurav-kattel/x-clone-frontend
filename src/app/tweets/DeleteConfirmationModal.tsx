@@ -17,7 +17,7 @@ const DeleteConfirmationModal = ({ tweetId, setShowDeleteModal, imageId }: { ima
 
 
   return (
-    <div className='p-4 w-[40%] bg-black h-[50%] grid place-items-center shadow-md rounded-lg'>
+    <div className='p-4 lg:w-[40%] bg-black lg:h-[50%] grid place-items-center shadow-md rounded-lg'>
       <p className='text-xl font-extrabold text-red-500 text-wrap text-center p-4 '>Do you really want to delete this tweet?</p>
       <p className="w-[90%] text-slate-700 px-2  py-4 text-left">This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from search results. </p>
       <div onClick={deleteClicked}

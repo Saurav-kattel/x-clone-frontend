@@ -45,7 +45,7 @@ const MoreInfoModal = ({ setShowVisModal, setShowDeleteModal, update, setShowMod
 
   return (
     <>
-      <div className='flex flex-col w-[20vw] shadow shadow-green-300 bg-[#000]  absolute border-[0.4px] border-[#000010]  rounded-xl p-4 box-border'>
+      <div className='flex flex-col  lg:w-[20vw] w-[70vw] shadow shadow-green-300 bg-[#000]  absolute border-[0.4px] border-[#000010]  rounded-xl p-4 box-border'>
         <div className='hover:cursor-pointer'>
           <span onClick={() => setShowModal(state => !state)}>X</span>
         </div>

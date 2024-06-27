@@ -13,7 +13,7 @@ const CommentInputBox = ({ tweetId, cookie, authorId = '', parentCommentId, comm
   const dispatch = useDispatch<AppDispatch>()
   return (
     <div className='flex justify-center items-center'>
-      <div className=' bg-slate-950 rounded-3xl flex justify-center items-center w-[30vw]'>
+      <div className=' bg-slate-950 rounded-3xl flex justify-center items-center lg:w-[30vw] w-[60vw]'>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}

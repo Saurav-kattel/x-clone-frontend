@@ -19,7 +19,7 @@ const FirstTweetPage = ({ cookie, data }: { cookie: string; data: TweetRes | und
 
   return (
     <>
-      {delay && <section className='box-border  flex flex-col  gap-2 p-2 no-scroll-bar'>
+      {delay && <section className='box-border  flex flex-col items-center justify-center gap-2 p-2 no-scroll-bar'>
         {data && data.res.map((tweetData) =>
           <TweetComponent key={tweetData.id}
             token={cookie} data={tweetData} />)}

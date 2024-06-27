@@ -18,7 +18,7 @@ function CommentFooter({ tweetId, token, authorId, commentId, parentCommentId, t
   const [showRelpies, setShowRelpies] = useState(false)
   const [showInputModal, setShowInputModal] = useState(false)
   return <div>
-    <div className='flex justify-between  w-[26dvw] items-center'>
+    <div className='flex justify-between  lg:w-[26dvw] w-[80vw] items-center'>
       <button
         onClick={() => {
           setShowInputModal(st => !st)
@@ -31,7 +31,7 @@ function CommentFooter({ tweetId, token, authorId, commentId, parentCommentId, t
         onClick={() => {
           setShowRelpies(st => !st)
         }}
-        className='text-sm text-blue-600 hover:underline'>
+        className='text-sm text-blue-600 w-[80vw] hover:underline'>
         {!showRelpies ? "view reply" : "hide reply"}
       </button>
     </div>

@@ -39,7 +39,7 @@ const CommentBox = ({ cookie, authorId, setShowComment, tweetOwnerId, tweetId, s
   }, [refresh, dispatch, tweetId, cookie]);
 
   return (
-    <div className='p-4 w-[38vw] shadow shadow-slate-800 flex flex-col items-start justify-center rounded-md'>
+    <div className='p-4 lg:w-[38vw] w-[90vw] shadow shadow-slate-800 flex flex-col items-start justify-center rounded-md'>
       <div className='flex items-center gap-4'>
         {showExit && <ExitButton setShowComment={setShowComment} />}
         <h3 className='flex p-2 font-bold text-2xl text-slate-600'>Comments</h3>

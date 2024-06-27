@@ -8,7 +8,7 @@ const CommentItems = ({ data, token, tweetOwnerId }: {
   data: CommentData, token: string; tweetOwnerId: string;
 }) => {
   return (
-    <div className='ml-6 py-3 flex transition-all duration-75 flex-col px-2 rounded-md w-[30vw] items-start justify-end'>
+    <div className='lg:ml-6 ml-3  py-3 flex transition-all duration-75 flex-col px-2 rounded-md lg:w-[30vw] w-[85vw] items-start justify-end'>
       <CommentHeader data={data} cookie={token} tweetOwnerID={tweetOwnerId} />
       <CommentBody data={data} />
       <CommentFooter
