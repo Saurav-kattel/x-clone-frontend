@@ -75,10 +75,10 @@ const LoginForm = () => {
       <div
         onMouseLeave={() => setShowHiddenText(false)}
         onMouseEnter={() => setShowHiddenText(true)}
-        className={`[50vw]  h-[70dvh] flex justify-center flex-col  transition-all ease-linear items-center p-2 rounded-md hover:bg-[#00000e] md:backdrop-blur-xl xl:backdrop-blur-xl`}>
+        className={` h-[70dvh]  flex justify-center flex-col lg:w-[50vw]    transition-all ease-linear items-center p-2 rounded-md lg:hover:bg-[#00000e] md:backdrop-blur-xl xl:backdrop-blur-xl`}>
         <h2 className={`p-4 ${showHiddenText ? "text-slate-50" : "text-transparent"} font-bold text-slate-500 text-2xl`}>Welcome Back</h2>
 
-        <form method="POST" className={`flex flex-col items-center justify-center  gap-2 p-4 border border-transparent md:hover:border-slate-900 lg:hover:border-slate-900 rounded-lg`} >
+        <form method="POST" className={`flex  flex-col items-center justify-center  gap-2 p-4 border border-transparent md:hover:border-slate-900 lg:hover:border-slate-900 rounded-lg`} >
 
           <h2 className="uppercase font-semibold text-slate-400 text-xl">Login</h2>
 
