@@ -31,11 +31,11 @@ export default function UserCard({ item, token }: { item: UserData; token: strin
   }
 
   return <section>
-    <div className=" w-[30vw] flex items-center justify-between rounded-2xl p-2 ">
+    <div className=" lg:w-[30vw] w-[80vw] flex items-center justify-between rounded-2xl p-2 ">
 
-      <div className="flex items-center gap-1 w-[15vw]">
+      <div className="flex items-center gap-1 lg:w-[15vw]">
         <AuthorImage width={50} height={50} userId={item.id} author={item.username} link={true} />
-        <span className="text-sm text-slate-400 font-bold text-wrap">{item.username}</span>
+        <span className="text-sm lg:w-auto w-[30vw] text-slate-400 font-bold text-wrap overflow-ellipsis">{item.username}</span>
       </div>
 
       <div>{userData?.res.username !== item.username && <button onClick={handleClick}>{followState ? "unfollow" : "follow"} </button>}</div>

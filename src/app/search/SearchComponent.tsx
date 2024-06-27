@@ -33,6 +33,7 @@ export default function SearchComponent({ cookie }: { cookie: string }) {
     <div>
       <input placeholder="Search" className="outline-none border mt-4 border-slate-800 rounded-xl p-2  bg-transparent w-[35vw]" type="text" onChange={(e) => setQuery(e.target.value)} />
     </div>
+
     <div className="flex flex-col mt-6 items-center gap-4 justify-center">
       {data?.res ? data.res.map((item: UserData) => <UserCard key={item.id} item={item} token={cookie} />) : null}
     </div>
