@@ -67,7 +67,7 @@ function ValidUserComponent({ data, cookie, username }: { username: string; data
           <AuthorImage link={false} width={100} height={100} userId={data?.res.id ?? ""} author={fullName} />
           {username === userData?.res.username ? <div
             onClick={() => setShowEditModal((vis) => !vis)}
-            className="border w-[10vw] text-center border-slate-700 text-white py-1 px-2 bg-slate-950 hover:cursor-pointer  hover:scale-110 rounded-lg"
+            className="border lg:w-[10vw] w-[40vw] text-center border-slate-700 text-white py-1 px-2 bg-slate-950 hover:cursor-pointer  hover:scale-110 rounded-lg"
           >
             Edit profile
           </div> : <div className='w-[20vw] bg-transparent'></div>}
