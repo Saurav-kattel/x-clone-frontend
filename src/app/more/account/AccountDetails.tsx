@@ -6,18 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export function AccountDetails({ cookie }: { cookie: string }) {
+export function AccountDetails() {
   const [showModal, setShowModal] = useState(false)
 
   const { res: userData } = useSelector((state: RootState) => state.user)
   const localDateString = new Date(userData?.res.createdAt.toString() ?? "").toLocaleString()
   return <div>
-    {showModal && <div className='w-[55dvw] flex justify-center items-center h-[100vh] bg-[radial-gradient(#000020,#000010)] top-0 z-50 absolute flex-col' >
+    {showModal && <div className='lg:w-[55dvw] w-[85vw] flex justify-center items-center h-[100vh] bg-[radial-gradient(#000020,#000010)] top-0 z-50 absolute flex-col' >
 
       <FontAwesomeIcon onClick={() => setShowModal(s => !s)} icon={faArrowLeft} className="text-4xl  cursor-pointer p-2 absolute top-0 left-0" />
 
 
-      <div className="h-[50vh] flex flex-col items-center justify-center rounded-md bg-white w-[40vw]">
+      <div className="lg:w-[40vw] h-[50vh] w-[80vw] flex flex-col items-center overflow-clip justify-center rounded-md bg-white">
         <h1 className="p-2 text-4xl text-slate-900 font-extrabold"> Account Information</h1>
         <div>
 

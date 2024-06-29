@@ -41,10 +41,11 @@ const TweetFooter = ({ tweetId, token, userId }: { tweetId: string; token: strin
       setClick(!click)
     })
   }
+
   return (
     <>
-      <div className='flex w-[40dvw] flex-col justify-center items-center p-2'>
-        <div className='flex text-2xl w-[35dvw] px-4  border-y-[1px] border-y-slate-500 py-2 items-center justify-between'>
+      <div className='flex w-[90vw] lg:w-[40dvw] flex-col justify-center items-center p-2'>
+        <div className='flex text-2xl w-[90vw] lg:w-[35dvw]  px-4  border-y-[1px] border-y-slate-500 py-2 items-center justify-between'>
           <div className='flex gap-2 items-center justify-center'>
             <div onClick={() => { handleLikeClicked({ tweetId, token }) }}>
               {like ? <FontAwesomeIcon

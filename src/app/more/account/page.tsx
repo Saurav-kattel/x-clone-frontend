@@ -5,7 +5,7 @@ import getCookie from "@/app/actions/getCookies"
 
 export default function page() {
   const cookie = getCookie()
-  return <div>
+  return <div className="lg:w-auto md:w-auto w-[75vw]">
     <AccountDetails cookie={cookie} />
     <ChangePasswordComponent cookie={cookie} />
     <LogoutComponent />
